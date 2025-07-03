@@ -41,8 +41,8 @@ const na = useNavigation()
       <Text style={styles.header}>Setting</Text>
       {settings.map((item, index) => (
         <TouchableOpacity key={index} style={styles.row}
-        
-        
+      
+    
         onPress={()=>{
           if(item?.label == "Logout"){
             setisLogoutModalVisible(true)
