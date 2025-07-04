@@ -7,10 +7,8 @@ import {
   TouchableOpacity,
   Image,
    Platform,
-  ScrollView,
-} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import imageIndex from '../../../assets/imageIndex';
+ } from 'react-native';
+ import imageIndex from '../../../assets/imageIndex';
 import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import { SafeAreaView } from 'react-native-safe-area-context';
  

@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '800',
-    color: 'black',
+    color: '#3658AE',
     marginBottom: 10,
   },
   optionButton: {

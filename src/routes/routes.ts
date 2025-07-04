@@ -9,6 +9,8 @@ import PasswordReset from "../screen/auth/passwordReset/PasswordReset";
 import SignUp from "../screen/auth/signUp/SignUp";
 import Splash from "../screen/auth/splash/Splash";
 import Home from "../screen/bottom/home/Home";
+import Countdown from "../screen/bottom/home/homefile/Countdown/Countdown";
+import LegacyCalendar from "../screen/bottom/home/homefile/LegacyCalendar/LegacyCalendar";
 import MemoryLane from "../screen/bottom/home/homefile/MemoryLane/MemoryLane";
 import VaultAccess from "../screen/bottom/home/homefile/VaultAccess/VaultAccess";
 import Network from "../screen/bottom/network/Network";
@@ -55,6 +57,8 @@ const _routes = () => {
       { name: ScreenNameEnum.editProfile, Component: EditProfile },
       { name: ScreenNameEnum.VaultAccess, Component: VaultAccess },
       { name: ScreenNameEnum.SubscriptionPlan, Component: SubscriptionPlan },
+      { name: ScreenNameEnum.Countdown, Component: Countdown },
+      { name: ScreenNameEnum.LegacyCalendar, Component: LegacyCalendar },
       { name: ScreenNameEnum.MemoryLane, Component: MemoryLane },
     ],
 

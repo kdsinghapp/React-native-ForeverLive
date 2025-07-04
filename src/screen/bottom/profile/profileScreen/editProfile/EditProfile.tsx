@@ -51,18 +51,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
                                       ? { uri: getLogin.userGetData.image }
                                       :  {uri:"https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png"}
                                   }
-                                // source={imagePrfile ? { uri: imagePrfile?.path } : { uri: getLogin?.userGetData?.image }}
-                                // style={{
-                                //     borderColor: "#9DB2BF",
-                                //     height: ResponsiveSize.height(100), width: ResponsiveSize.width(100), borderRadius: 100, borderWidth: 1
-                                // }}
+                               
                                 style={{ width: 100, height: 100,borderWidth:1 ,borderRadius:100,borderColor:'#9DB2BF'}}
-                                // resizeMode="cover"
                               
                             />
                         </View>
                         <TouchableOpacity
-                            // onPress={() => setIsModalVisible(true)}
+                            onPress={() => setIsModalVisible(true)}
                             style={{ bottom: ResponsiveSize.height(25), alignItems: "center", justifyContent: "center", height: 30, width: 30, borderRadius: 30 }}>
                             <Image
                                 source={imageIndex.editpic}
