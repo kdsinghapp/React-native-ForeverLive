@@ -10,7 +10,8 @@ import toastConfig from '../utils/customToast';
 import NetInfo from '@react-native-community/netinfo';
 import NetworkStatusModal from '../compoent/NetworkStatusModal';
 import { LocationProvider } from '../LocationContext';
-import { LanguageProvider } from '../Localization/LanguageContext';
+ import { LanguageProvider } from '../Localization/LanguageContext';
+import { ThemeProvider } from '../theme/ThemeProvider';
 const AppNavigator: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean>(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,13 +30,14 @@ const AppNavigator: React.FC = () => {
       <PersistGate loading={null} persistor={persistor}>
       <LocationProvider>
       <LanguageProvider>
-
         <GestureHandlerRootView style={{ flex: 1 }}>
+        <ThemeProvider>
           <NavigationContainer>
-            {/* <NetworkStatusModal modalVisible={modalVisible} offlineText="No Internet! Please check your connection." /> */}
+         <NetworkStatusModal modalVisible={modalVisible} offlineText="No Internet! Please check your connection." /> */}
             <RegistrationRoutes />
             <Toast config={toastConfig} />
           </NavigationContainer>
+          </ThemeProvider>
         </GestureHandlerRootView>
         </LanguageProvider>
         </LocationProvider>

@@ -16,7 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = localizationStrings
       <TextInput
         style={styles.input}
         placeholder={placeholder}
-        placeholderTextColor="#AAAAAA"
+        placeholderTextColor="black"
         onChangeText={onSearchChange}
         value={value}
       />

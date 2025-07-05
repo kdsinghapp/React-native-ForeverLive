@@ -11,6 +11,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import imageIndex from '../../../../../assets/imageIndex';
 import CustomHeader from '../../../../../compoent/CustomHeader';
+import { useTheme } from '../../../../../theme/ThemeProvider';
 
 const fileData = [
   {
@@ -66,28 +67,34 @@ const fileData = [
 const MemoryLane = () => {
   const insets = useSafeAreaInsets();
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }:any) => (
     <TouchableOpacity style={styles.itemContainer}>
       <Image source={item.icon} style={styles.icon} />
       <View style={styles.textContainer}>
-        <Text style={styles.fileName}>{item.name}</Text>
-        <Text style={styles.fileDetails}>
+        <Text style={[styles.fileName,{
+                    color:theme.text
+
+        }]}>{item.name}</Text>
+        <Text style={[styles.fileDetails,{
+          color:theme.text
+        }]}>
           {item.size ? `${item.size}, ` : ''}
           modified {item.modified}
         </Text>
       </View>
     </TouchableOpacity>
   );
+  const { theme }:any = useTheme();
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: insets.top }]}>
+    <SafeAreaView style={[styles.container, { paddingTop: insets.top,backgroundColor:theme.background }]}>
        <CustomHeader label='Memory Lane' imageSource={imageIndex.backImg}/>
 
       <FlatList
         data={fileData}
         keyExtractor={item => item.id}
         renderItem={renderItem}
-        contentContainerStyle={{ paddingHorizontal: 20 }}
+        contentContainerStyle={{ paddingHorizontal: 20 ,marginTop:11}}
       />
     </SafeAreaView>
   );

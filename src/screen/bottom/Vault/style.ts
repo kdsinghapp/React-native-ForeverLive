@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import font from '../../../theme/font';
 
 const { width } = Dimensions.get('window');
@@ -7,74 +7,94 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 20,
-  },
+   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 20,marginHorizontal:11
-  },
-  welcomeText: {
     fontSize: 20,
-     color: '#000',
-     fontFamily:font.PoppinsBold
+    fontWeight: '700',
+    marginVertical: 12,
+    marginHorizontal:15
   },
-  userName: {
-    fontSize: 14,
-    color: 'black',
-     fontFamily:font.PoppinsRegular
+  tabsContainer: {
+    flexDirection: 'row',
+    marginBottom: 16,
+    marginHorizontal:15,
+    marginTop:15
 
   },
-  profileImage: {
-    width: 33,
-    height: 33,
-    resizeMode:"contain"
-   },
-  grid: {
-    paddingBottom: 40,
-    paddingHorizontal: 1, // add this
+  tab: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: '#FAFAFA',
+    borderRadius: 12,
+    marginRight: 10,
+    height:46,
+    justifyContent:"center"
   },
-  row: {
-    justifyContent: 'space-between',
-    marginBottom: 20,
+  activeTab: {
+    backgroundColor: '#6C5DD3',
+  },
+  tabText: {
+    color: '#000',
+    fontWeight: '500',
+  },
+  activeTabText: {
+    color: '#fff',
   },
   card: {
-    backgroundColor: '#F5EDFF',
-    borderRadius: 16,
-    padding: 16,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-     flex: 1, // allow flexible width inside FlatList
-    margin: 8, // gives spacing around the card,
-   },
-  iconContainer: {
     backgroundColor: '#fff',
-    borderRadius: 15,
-     marginBottom: 10,
-     padding:40
-   },
-  iconImage: {
-    width: 45,
-    height: 45,resizeMode:"contain"
+    borderRadius: 12,
+    padding: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+    marginHorizontal: 1,
+  
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.05,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
-  cardText: {
+  icon: {
+    width: 40,
+    height: 40,
+    marginRight: 12,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  title: {
+    fontWeight: '600',
     fontSize: 14,
-     color: '#252B5C',
-    textAlign: 'center',
-     fontFamily:font.PoppinsBold
-   },
-  arrowContainer: {
-   flexDirection:"row",justifyContent:"space-between" ,
-   flex:1,
-   alignItems:"center"
+    color: '#000',
   },
-  arrowIcon: {
-    width: 24,
-    height: 24,
-    resizeMode:"cover",
-    left:1
-   },
+  date: {
+    fontSize: 12,
+    color: '#999',
+  },
+  fab: {
+    position: 'absolute',
+    bottom: 24,
+    right: 24,
+  },
+  fabGradient: {
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fabPlus: {
+    color: '#fff',
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
 });
 
 export default styles;

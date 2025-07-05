@@ -1,7 +1,6 @@
 
 import { StyleSheet } from 'react-native';
-import { wp } from '../../../utils/Constant';
-import { lightTheme } from '../../../theme/ThemeProvider';
+ 
  
 const styles = StyleSheet.create({
   container: {

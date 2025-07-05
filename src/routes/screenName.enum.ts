@@ -14,6 +14,7 @@
     Countdown="Countdown",
     MemoryLane="MemoryLane",
     Service="Service"   ,
+    FingerprintScreen="FingerprintScreen",
     SubscriptionPlan="SubscriptionPlan",
     AddEmail="AddEmail",
     VaultAccess="VaultAccess",

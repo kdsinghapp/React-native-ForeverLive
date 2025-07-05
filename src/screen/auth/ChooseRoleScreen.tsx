@@ -12,7 +12,10 @@ const ChooseRoleScreen = ({ navigation }: any) => {
     const [selectedRole, setSelectedRole] = useState(''); 
     const navgation  =useNavigation()
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={{
+            flex:1,
+            backgroundColor:"white"
+        }}>
             <StatusBarComponent />
             <View style={styles.logoContainer}>
                 <View style={styles.logo}>

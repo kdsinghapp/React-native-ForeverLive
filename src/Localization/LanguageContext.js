@@ -1,13 +1,14 @@
-// src/contexts/LanguageContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import localizationStrings from './Localization';
 
-
-const LanguageContext = createContext();
+export const LanguageContext = createContext({
+  language: 'en',
+  changeLanguage: () => {},
+});
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('English');
+  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
     const loadLanguage = async () => {
@@ -32,5 +33,3 @@ export const LanguageProvider = ({ children }) => {
     </LanguageContext.Provider>
   );
 };
-
-export default LanguageContext;

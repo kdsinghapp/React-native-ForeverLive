@@ -2,19 +2,18 @@ import React from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  FlatList,
+   FlatList,
   TouchableOpacity,
   Image,
   ScrollView,
-  Platform,
- } from 'react-native';
+  } from 'react-native';
 import imageIndex from '../../assets/imageIndex';
-import font from '../../theme/font';
-import StatusBarComponent from '../../compoent/StatusBarCompoent';
+ import StatusBarComponent from '../../compoent/StatusBarCompoent';
 import CustomHeader from '../../compoent/CustomHeader';
 import CustomButton from '../../compoent/CustomButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../theme/ThemeProvider';
+import styles from './style';
 
 const notesData = [
   { id: '1', title: 'Work/Professional', time: '19/12/2024 04:53PM' },
@@ -25,7 +24,9 @@ const notesData = [
 ];
 
 const Voice = () => {
-  const renderNote = ({ item }) => (
+  const { theme }:any = useTheme();
+
+  const renderNote = ({ item }:any) => (
     <View style={styles.noteCard}>
       <View style={styles.iconContainer}>
         <Image
@@ -52,7 +53,7 @@ const Voice = () => {
   return (
     <SafeAreaView style={{
         flex:1,
-        backgroundColor:"white"
+        backgroundColor:theme.background
     }}> 
     <StatusBarComponent/> 
     <CustomHeader label='Add a Photo Memory' imageSource={imageIndex?.backImg}/>
@@ -66,7 +67,10 @@ const Voice = () => {
     flexDirection:"row",
     alignItems:"center"
   }}>
-  <Text style={styles.subHeader}>Notes</Text>
+  <Text style={[styles.subHeader,{
+            color:theme.text
+
+  }]}>Notes</Text>
   <Text style={[styles.subHeader,{
     color:"red",
    }]}>4 records</Text>
@@ -76,7 +80,7 @@ const Voice = () => {
       <FlatList
         data={notesData}
         style={{
-            marginTop:10
+            marginTop:30
         }}
         renderItem={renderNote}
         keyExtractor={(item) => item.id}
@@ -92,105 +96,12 @@ const Voice = () => {
             //   onPress={() => {
             //     navigation.navigate(ScreenNameEnum.TabNavigator)
             //   }}
-            buttonStyle={{ marginHorizontal:15 }}
+            buttonStyle={{ marginHorizontal:15 ,marginBottom:20}}
           />
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  backButton: {
-    padding: 10,
-    alignSelf: 'flex-start',
-  },
-  backArrow: {
-    fontSize: 24,
-    color: '#6A53FB',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  subHeader: {
-    fontSize: 14,
-     color:"black",fontWeight:"500"
-   },
-  createNoteCard: {
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: '#6A53FB',
-     borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 20,
-    width:"35%",
-    height:80,
-    justifyContent:"center"
-  },
-  createIcon: {
-    width: 30,
-    height: 30,
-    marginBottom: 10,
-  },
-  createText: {
-    color: '#8F52CA',
-    fontWeight: '600',
-    textAlign:"center",
-    fontSize:14
-  },
-  noteCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderRadius: 12,
-     marginBottom: 12,
-    marginHorizontal:5,
-    ...Platform.select({
-        ios: {
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.1,
-          shadowRadius: 6,
-        },
-        android: {
-          elevation: 6,
-        },
-      }),
-      
-  },
-  iconContainer: {
-     borderRadius: 10,
-    padding: 10,
-  },
-  icon: {
-    width: 55,
-    height: 55,
-   },
-  noteContent: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  noteTitle: {
-    fontWeight: '600',
-    fontSize: 16,
-  },
-  noteTime: {
-    fontSize: 12,
-    color: 'black',
-    marginTop: 4,
-  },
-  arrowBtn: {
-    padding: 10,
-  },
-  arrowText: {
-    fontSize: 20,
-    color: '#888',
-  },
-});
+
 
 export default Voice;

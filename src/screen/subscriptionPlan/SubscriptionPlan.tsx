@@ -6,12 +6,15 @@ import CustomButton from '../../compoent/CustomButton';
 import CustomHeader from '../../compoent/CustomHeader';
 import StatusBarComponent from '../../compoent/StatusBarCompoent';
 import { SafeAreaView } from 'react-native-safe-area-context';
- 
+import { useTheme } from '../../theme/ThemeProvider';
+  
 const SubscriptionPlan = () => {
+  const { theme }:any = useTheme();
+
   return (
    <SafeAreaView style={{
     flex:1,
-    backgroundColor:"white"
+    backgroundColor:theme.background
    }}>
     <StatusBarComponent/>
                     <CustomHeader imageSource={imageIndex.backImg} label={"Subscription Plan"}/>

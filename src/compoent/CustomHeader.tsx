@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from '../theme/ThemeProvider';
 
 const { width, height } = Dimensions.get('window');
 
@@ -32,6 +33,7 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
   showRightIcon = false,
 }) => {
   const navigation = useNavigation();
+  const { theme }:any = useTheme();
 
   const handleBackPress = () => {
     if (onPress) {
@@ -56,7 +58,9 @@ const CustomHeader: React.FC<CustomHeaderProps> = ({
 
       {/* Title */}
       {label !== '' && (
-        <Text style={styles.title} numberOfLines={1}>
+        <Text style={[styles.title,{
+          color:theme.text
+        }]} numberOfLines={1}>
           {label}
         </Text>
       )}

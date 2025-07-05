@@ -4,16 +4,16 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
-  Image,
-  SafeAreaView,
-  ScrollView,
+   Image,
+   ScrollView,
   Platform,
 } from 'react-native';
  import StatusBarComponent from '../../../../../compoent/StatusBarCompoent';
 import CustomHeader from '../../../../../compoent/CustomHeader';
 import imageIndex from '../../../../../assets/imageIndex';
 import font from '../../../../../theme/font';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../../../theme/ThemeProvider';
  
 const activities = [
   { id: 1, title: 'New Document Added', time: 'Just now', tag: 'New' },
@@ -24,7 +24,7 @@ const activities = [
 ];
 
 const VaultAccessScreen = () => {
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }:any) => (
     <View style={styles.card}>
       <View style={styles.iconContainer}>
        <Image source={imageIndex.Comin} style={{
@@ -47,9 +47,12 @@ const VaultAccessScreen = () => {
       </View>
     </View>
   );
+  const { theme }:any = useTheme();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
       <StatusBarComponent/>
       <CustomHeader label='Vault Access' imageSource={imageIndex.backImg}/>
       <ScrollView showsVerticalScrollIndicator={false} style={{
@@ -67,7 +70,9 @@ const VaultAccessScreen = () => {
         </View>
 
         {/* Recent Activity */}
-        <Text style={styles.sectionTitle}>Recent Activity</Text>
+        <Text style={[styles.sectionTitle,{
+          color:theme.text
+        }]}>Recent Activity</Text>
         <FlatList
           data={activities}
           renderItem={renderItem}
@@ -85,8 +90,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 16,
-  },
+   },
   header: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
-    marginTop:11,
+    marginTop:20,
     marginHorizontal:6,
     ...Platform.select({
       ios: {

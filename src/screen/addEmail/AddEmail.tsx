@@ -20,13 +20,18 @@ import TextInputField from '../../utils/TextInputField';
 import localizationStrings from '../../Localization/Localization';
 import ScreenNameEnum from '../../routes/screenName.enum';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../theme/ThemeProvider';
  
 const AddEmail = () => {
  const navigation = useNavigation()
 const route:any = useRoute()
 const {type} = route?.params || ""
+const { theme }:any = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
         <StatusBarComponent/>
 
         <CustomHeader label={ type=="Email" ?  "Add by Email" : "Add by Phone" }

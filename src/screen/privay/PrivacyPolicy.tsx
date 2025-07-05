@@ -14,6 +14,7 @@ import StatusBarComponent from '../../compoent/StatusBarCompoent';
 import CustomHeader from '../../compoent/CustomHeader';
 import { useNavigation } from '@react-navigation/native';
  import { height } from '../../utils/Constant';
+import { useTheme } from '../../theme/ThemeProvider';
 const PrivacyPolicy = () => {
     const [isLoading, setLoading] = useState(false)
     const navigation = useNavigation()
@@ -22,6 +23,7 @@ const PrivacyPolicy = () => {
         get_states_list()
     }, []);
 
+    const { theme }:any = useTheme();
 
     const get_states_list = async () => {
         try {
@@ -38,6 +40,7 @@ const PrivacyPolicy = () => {
 
     return (
         <SafeAreaView style={[styles.container, {
+            backgroundColor:theme.background
         }]}>
             {/* {isLoading ? <Loading /> : null} */}
             <StatusBarComponent />
@@ -52,11 +55,11 @@ const PrivacyPolicy = () => {
                         resizeMode="contain"
                     />
                 </View>
-                {faqData.length != 0 && (
-                    <Text style={{ color: "black", fontWeight: "800", fontSize: 18 }}>Terms and Conditions</Text>
-                )}
+                {/* {faqData.length != 0 && ( */}
+                    <Text style={{ color:theme.text, fontWeight: "800", fontSize: 18 }}>Terms and Conditions</Text>
+                {/* )} */}
                                     <Text style={{ color: "black", fontWeight: "700", fontSize: 18 }}>Privacy Policy</Text>
-                                    <Text style={{ color: "#9796A1",  fontSize: 14 ,marginTop:20,lineHeight:25 }}>
+                                    <Text style={{ color:theme.text,  fontSize: 14 ,marginTop:20,lineHeight:25 }}>
                                     This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You. We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the
                                     </Text>
 
@@ -111,8 +114,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         paddingHorizontal: 16,
         paddingVertical: 12,
-        backgroundColor: '#FFF',
-        // Add shadow on iOS
+         // Add shadow on iOS
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,

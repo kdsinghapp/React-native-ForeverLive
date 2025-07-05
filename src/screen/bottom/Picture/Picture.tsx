@@ -6,7 +6,8 @@ import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import font from '../../../theme/font';
 import ScreenNameEnum from '../../../routes/screenName.enum';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation,   } from '@react-navigation/native';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 const data = [
   { id: '1', label: 'PHOTO', screen:ScreenNameEnum.PhotoUpload,icon: imageIndex.gallery1,icon1: imageIndex.microphone  },
@@ -61,10 +62,16 @@ const CustomCard = ({ item, isActive, onPress }: any) => {
 const Picture = () => {
   const [selectedId, setSelectedId] = useState<string>('1'); // Default active
 const navigation = useNavigation()
+const { theme }:any = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
       <StatusBarComponent />
-      <Text style={styles.title}>Picture Time Flow</Text>
+      <Text style={[styles.title,{
+         color:theme.text
+      }]}>Picture Time Flow</Text>
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}

@@ -13,6 +13,7 @@ import userOtp from './userOtp';
 import localizationStrings from '../../../Localization/Localization';
 import ScreenNameEnum from '../../../routes/screenName.enum';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 export default function OtpScreen() {
   const {
@@ -26,10 +27,11 @@ export default function OtpScreen() {
     email,
     navigation
   } = userOtp()
+  const { theme }:any = useTheme();
 
   return (
     <View style={{
-      backgroundColor: '#FFF',
+      backgroundColor: theme.background,
       flex: 1,
     }}>
       {isLoading ? <Loading /> : null}
@@ -40,7 +42,9 @@ export default function OtpScreen() {
            <CustomHeader imageSource={imageIndex.backImg} />
          <ScrollView showsVerticalScrollIndicator={false} style={{ marginHorizontal: 15 }}>
           <View style={{ marginTop: 20, alignItems: "center" }}>
-            <Text style={styles.txtHeading}>Check your mail </Text>
+            <Text style={[styles.txtHeading,{
+              color:theme.text
+            }]}>Check your mail </Text>
             {email &&             <Text style={styles.txtHeading}>{email}</Text>
           }
             <Text style={styles.txtsubHeading}>

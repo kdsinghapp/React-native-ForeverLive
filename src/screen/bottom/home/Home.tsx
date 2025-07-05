@@ -15,6 +15,7 @@ import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import ScreenNameEnum from '../../../routes/screenName.enum';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 const data = [
   { label: 'Memory Lane ', icon:imageIndex.memory ,screen:ScreenNameEnum.MemoryLane},
@@ -27,6 +28,7 @@ const data = [
 ];
 
 const HomeScreen = () => {
+  const { theme }:any = useTheme();
 
   const na = useNavigation()
   const renderItem = ({ item }: any) => (
@@ -61,12 +63,20 @@ const HomeScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}> 
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}> 
     <StatusBarComponent/>
     <View style={styles.header}>
         <View>
-          <Text style={styles.welcomeText}>Welcome back</Text>
-          <Text style={styles.userName}>Adison Mango</Text>
+          <Text style={[styles.welcomeText,{
+                  color:theme.text
+
+          }]}>Welcome back</Text>
+          <Text style={[styles.userName,{
+                  color:theme.text
+
+          }]}>Adison Mango</Text>
         </View>
         <TouchableOpacity>
           <Image source={imageIndex.HomeProfile} style={styles.profileImage} />

@@ -28,8 +28,7 @@ const Styles = StyleSheet.create({
     marginTop: 20
   },
   mainView: {
-    backgroundColor: '#FFF',
-    flex: 1,
+     flex: 1,
     marginTop: hp(4)
   },
   img:{ height: 20, width: 20 }

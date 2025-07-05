@@ -15,11 +15,15 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import CustomHeader from '../../compoent/CustomHeader';
 import imageIndex from '../../assets/imageIndex';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../theme/ThemeProvider';
  const ScanCode = () => {
  const navigation = useNavigation()
- 
+ const { theme }:any = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
         <StatusBarComponent/>
 
         <CustomHeader label={"Scan QR Code" }

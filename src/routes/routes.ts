@@ -2,6 +2,7 @@ import imageIndex from "../assets/imageIndex";
 import TabNavigator from "../navigators/TabNavigator";
 import AddEmail from "../screen/addEmail/AddEmail";
 import CreateNewPassword from "../screen/auth/createNewPassword/CreateNewPassword";
+import FingerprintScreen from "../screen/auth/fingerprintScreen/FingerprintScreen";
 import Login from "../screen/auth/login/Login";
 import OnboardingScreen from "../screen/auth/onboarding/Onboarding";
 import OtpScreen from "../screen/auth/otp/OtpScreen";
@@ -60,6 +61,7 @@ const _routes = () => {
       { name: ScreenNameEnum.Countdown, Component: Countdown },
       { name: ScreenNameEnum.LegacyCalendar, Component: LegacyCalendar },
       { name: ScreenNameEnum.MemoryLane, Component: MemoryLane },
+      { name: ScreenNameEnum.FingerprintScreen, Component: FingerprintScreen },
     ],
 
     BOTTOMTAB_ROUTE: [

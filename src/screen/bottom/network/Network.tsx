@@ -17,6 +17,8 @@ import imageIndex from '../../../assets/imageIndex';
 import ScreenNameEnum from '../../../routes/screenName.enum';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import styles from './style';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 const contacts = [
   { id: '1', initials: 'BS', name: 'Brandon Siphron', email: 'brandonsiphron@gmail.com' },
@@ -27,7 +29,7 @@ const contacts = [
 
 const Network = () => {
     const nav = useNavigation()
-  const renderItem = ({ item }) => (
+  const renderItem = ({ item }:any) => (
     <View style={styles.contactCard}>
 <LinearGradient 
     start={{ x: 0, y: 1 }}
@@ -43,9 +45,12 @@ const Network = () => {
       </View>
     </View>
   );
+  const { theme }:any = useTheme();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
         <StatusBarComponent/>
         <ScrollView 
         
@@ -55,7 +60,10 @@ const Network = () => {
             <View style={{
                 marginHorizontal:15
             }}>
-      <Text style={styles.sectionTitle}>Network</Text>
+      <Text style={[styles.sectionTitle,{
+              color:theme.text
+
+      }]}>Network</Text>
 
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.actionButton} 
@@ -76,7 +84,9 @@ const Network = () => {
                 }}
                 
                 />
-          <Text style={styles.buttonText}>Add by Email</Text>
+          <Text style={[styles.buttonText,{
+              color:theme.text
+          }]}>Add by Email</Text>
 
             </View>
          </TouchableOpacity>
@@ -99,7 +109,9 @@ const Network = () => {
                 }}
                 
                 />
-          <Text style={styles.buttonText}>Add by Phone</Text>
+          <Text style={[styles.buttonText,{
+              color:theme.text
+          }]}>Add by Phone</Text>
 
             </View>
          </TouchableOpacity>
@@ -116,10 +128,14 @@ const Network = () => {
                 }}
                 
                 />
-        <Text style={styles.buttonText}>Scan QR Code</Text>
+        <Text style={[styles.buttonText,{
+            color:theme.text
+        }]}>Scan QR Code</Text>
       </TouchableOpacity>
 
-      <Text style={styles.sectionTitle}>Network</Text>
+      <Text style={[styles.sectionTitle,{
+          color:theme.text
+      }]}>Network</Text>
 
       <FlatList
         data={contacts}
@@ -134,103 +150,6 @@ const Network = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-     backgroundColor: '#fff',
-    flex: 1,
-  },
-  sectionTitle: {
-    fontSize: 18,
-     marginVertical: 12,
-    fontFamily:font.PoppinsBold ,
-    color:"black"
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-   },
-  actionButton: {
-     flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#3658AE',
-    borderWidth: 1.5,
-    borderRadius: 20,
-     marginRight: 8,
-    width:"50%" ,
-    height:107,
-    justifyContent:"center"
-  },
-  qrButton: {
-    borderColor: '#7b61ff',
-    borderWidth: 1.5,
-    borderRadius: 20,
-     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
-    flexDirection:"row",
-    height:107 ,
-    marginTop:11
-  },
-  icon: {
-    fontSize: 12,
-    marginRight: 6,
-    fontFamily:font.PoppinsRegular,
-    color:"black"
-  },
-  buttonText: {
-    fontSize: 14,
-     color: '#000',
-    fontFamily:font.PoppinsRegular ,
-    textAlign:"center" ,
-    marginLeft:10
-  },
-  contactCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 12,
-    borderRadius: 14,
-    marginBottom: 10,
-    marginHorizontal:1,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 2, // adjust as needed
-      },
-    }),
-  
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 10,
-    backgroundColor: '#3658AE',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  avatarText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  name: {
-     fontSize: 15,
-    color:"black",
-    fontFamily:font.PoppinsSemiBold
-  },
-  email: {
-    color: '#9DB2BF',
-    fontSize: 12,
-    marginTop: 2,
-    fontFamily:font.PoppinsRegular
-  },
-});
+
 
 export default Network;

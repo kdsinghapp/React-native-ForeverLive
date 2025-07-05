@@ -12,6 +12,7 @@ import imageIndex from "../../../../../assets/imageIndex";
 import ImagePickerModal from "../../../../../compoent/ImagePickerModal";
 import localizationStrings from "../../../../../Localization/Localization";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTheme } from "../../../../../theme/ThemeProvider";
  const EditProfile = () => {
     const {
         imagePrfile,
@@ -27,15 +28,21 @@ import { SafeAreaView } from "react-native-safe-area-context";
         email, setEmail
  
     } = useEdit()
+    const { theme }:any = useTheme();
 
     return (
-        <SafeAreaView style={styles.mainView}
+        <SafeAreaView style={[styles.mainView,{
+            backgroundColor:theme.background
+        }]}
         >
                             <CustomHeader imageSource={imageIndex.backImg} label={"Profile Info"}/>
                 <StatusBarComponent />
 
         <View
-            style={styles.mainView}
+            style={[styles.mainView,{
+                backgroundColor:theme.background
+
+            }]}
         >
             {isLoading ? <LoadingModal /> : null}
            
@@ -120,7 +127,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
                     />
 
                 <View style={styles.buttView}>
-                    <CustomButton title={localizationStrings?.update} 
+                    <CustomButton title={"update"} 
                     
                     // onPress={() => handleSubmit()}
                     onPress={()=>navigation.goBack()}

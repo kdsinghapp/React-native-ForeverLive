@@ -21,6 +21,7 @@ import TextInputField from '../../../utils/TextInputField';
 import font from '../../../theme/font';
 import ScreenNameEnum from '../../../routes/screenName.enum';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 export default function PasswordReset() {
   const {
@@ -32,9 +33,10 @@ export default function PasswordReset() {
     navigation,
     type, setType
   } = usePasswordReset()
+  const { theme }:any = useTheme();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor:theme.background }}>
       <StatusBarCompoent />
       {isLoading ? <Loading /> : null}
       <CustomHeader imageSource={imageIndex.backImg} />
@@ -42,12 +44,13 @@ export default function PasswordReset() {
 
         <View
           style={{
-            backgroundColor: '#FFF',
-            padding: 15,
+             padding: 15,
             flex: 1,
           }}>
           <View  >
-            <Text style={styles.txtHeading}>
+            <Text style={[styles.txtHeading,{
+              color:theme.text
+            }]}>
             Password Reset
             </Text>
             <Text style={[styles.txtsubHeading, {
@@ -69,7 +72,8 @@ export default function PasswordReset() {
                             img={imageIndex.mobile}
                             //  onChangeText={(value: string) => handleChange('fullName', value)} 
                         />
-                               <Text style={{  marginTop: 8, marginBottom: 5, fontSize: 16, color: "rgba(0, 0, 0, 1)", textAlign: "center", fontFamily:font.PoppinsBold }}>Or</Text>
+                               <Text style={{               color:theme.text
+, marginTop: 8, marginBottom: 5, fontSize: 16,   textAlign: "center", fontFamily:font.PoppinsBold }}>Or</Text>
                                <TextInputField
                              placeholder={"Email Address"} 
                             firstLogo={true}
@@ -84,7 +88,7 @@ export default function PasswordReset() {
            </View>
       </ScrollView>
       <View style={{
-        justifyContent: 'flex-start', marginBottom: 15,
+        justifyContent: 'flex-start', marginBottom: 18,
         marginHorizontal: 15
       }}>
         <CustomButton
@@ -93,8 +97,7 @@ onPress={()=>navigation.navigate(ScreenNameEnum.OtpScreen)}
 
            // onPress={() => handleForgot()
 
-           buttonStyle={{ width: "100%", marginTop: 28 }}
-        />
+         />
       </View>
     </SafeAreaView>
   );

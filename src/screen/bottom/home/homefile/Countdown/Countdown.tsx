@@ -4,8 +4,7 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  SafeAreaView,
-  StyleSheet,
+   StyleSheet,
   Platform,
   Image,
 } from 'react-native';
@@ -13,6 +12,8 @@ import CircularProgress from 'react-native-circular-progress-indicator';
 import StatusBarComponent from '../../../../../compoent/StatusBarCompoent';
 import CustomHeader from '../../../../../compoent/CustomHeader';
 import imageIndex from '../../../../../assets/imageIndex';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../../../theme/ThemeProvider';
  
 const events = [
   {
@@ -39,13 +40,17 @@ const events = [
 ];
 
 export default function CountdownMovements() {
+  const { theme }:any = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}> 
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}> 
     <StatusBarComponent/> 
     <CustomHeader imageSource={imageIndex.backImg} label='Countdown Movements'/>
    <View style={{
     marginHorizontal:15 ,
-    marginTop:18
+    marginTop:20
    }}>
        <FlatList
         data={events}
@@ -102,8 +107,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 16,
-  },
+   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
     marginTop:1,
     ...Platform.select({
       android: {
-        elevation: 7,
+        elevation: 4,
       },
       ios: {
         shadowColor: '#000',
@@ -166,7 +170,8 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 13,
      marginLeft:14 ,
-     color: '#9DB2BF',
+     color: '#9DB2BF', 
+     fontWeight:"600"
   },
   fab: {
     position: 'absolute',

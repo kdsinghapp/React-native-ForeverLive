@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,23 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from 'react-native';
 import imageIndex from '../../assets/imageIndex';
 import CustomHeader from '../../compoent/CustomHeader';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SearchBar from '../../compoent/SearchBar';
 import StatusBarComponent from '../../compoent/StatusBarCompoent';
-import font from '../../theme/font';
-import { useRoute } from '@react-navigation/native';
+ import { useRoute } from '@react-navigation/native';
+import styles from './style';
+import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
+import { PermissionsAndroid, Platform } from 'react-native';
+import { ImageFile } from '../bottom/profile/profileScreen/editProfile/EditTypes';
+import ImagePickerModal from '../../compoent/ImagePickerModal';
+import ImagePicker from "react-native-image-crop-picker";
+import { useTheme } from '../../theme/ThemeProvider';
 
-const { width } = Dimensions.get('window');
-
+ 
 const data = [
    { id: '2', image: 'https://e0.pxfuel.com/wallpapers/874/89/desktop-wallpaper-sad-boy-black-only-me-anime-boy-sad-anime-guy-png-transparent-depressed-anime-boy.jpg' },
   { id: '3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcTTgdLCzDS8a7AEz6f2pxPv0eWOIM8ye8fA&s' },
@@ -36,33 +42,125 @@ const data = [
 ];
 
 const PhotoUpload = () => {
-    const rou= useRoute()
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const pickImageFromGallery = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: false,
+    })
+      .then((image) => {
+        setImagePrfile(image)
+        setIsModalVisible(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const takePhotoFromCamera = async () => {
+    try {
+      const image: any = await ImagePicker.openCamera({
+        width: 300,
+        height: 400,
+        cropping: false,
+      });
+      setImagePrfile(image)
+      setIsModalVisible(false);
+    } catch (error: any) {
+      Alert.alert('Error', error.message);
+    }
+  };
+    const rou:any= useRoute()
     const {type}= rou?.params || ""
+    // useEffect(() => {
+    //   requestCameraPermission()
+    //  }, [])
+      const requestCameraPermission = async () => {
+        if (Platform.OS === 'android') {
+          try {
+            // Android 13+ specific media permissions
+            const permissions = Platform.Version >= 33
+              ? [
+                  PermissionsAndroid.PERMISSIONS.CAMERA,
+                  PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+                  PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+                ]
+              : [
+                  PermissionsAndroid.PERMISSIONS.CAMERA,
+                  PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                  PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                ];
+      
+            const granted = await PermissionsAndroid.requestMultiple(permissions);
+      
+            const isCameraGranted = granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED;
+            const isImageGranted = granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] === PermissionsAndroid.RESULTS.GRANTED ||
+                                   granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] === PermissionsAndroid.RESULTS.GRANTED;
+            const isVideoGranted = granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] === PermissionsAndroid.RESULTS.GRANTED;
+      
+            return isCameraGranted && isImageGranted && isVideoGranted;
+          } catch (err) {
+            console.warn(err);
+            return false;
+          }
+        } else {
+          // iOS permissions
+          try {
+            const cameraStatus = await request(PERMISSIONS.IOS.CAMERA);
+            const photoStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+            const micStatus = await request(PERMISSIONS.IOS.MICROPHONE); // For video recording with audio
+      
+            return (
+              cameraStatus === RESULTS.GRANTED &&
+              photoStatus === RESULTS.GRANTED &&
+              micStatus === RESULTS.GRANTED
+            );
+          } catch (error) {
+            console.warn('iOS Permission error:', error);
+            return false;
+          }
+        }
+      };
+      const [imagePrfile, setImagePrfile] = useState<ImageFile | null>(null);
+      const { theme }:any = useTheme();
+
   return (
     <SafeAreaView style={{
         flex:1,
-        backgroundColor:"white"
+        backgroundColor:theme.background
     }}>
         <StatusBarComponent/>
         <CustomHeader label={type =="PHOTO" ? "PHOTO":"Video"} imageSource={imageIndex.backImg}/>
 
-    <View style={styles.container}>
+    <View style={[styles.container,{
+              backgroundColor:theme.background
+
+    }]}>
     
       <View style={styles.uploadRow}>
-        <TouchableOpacity style={styles.uploadBox}>
+        <TouchableOpacity style={styles.uploadBox} 
+                onPress={()=>setIsModalVisible(true)}
+
+        >
            <Image source={imageIndex.Upload} style={{
             height:33,
             width:33
            }}/>
-          <Text style={styles.uploadText}>Tap to Upload</Text>
+          <Text style={[styles.uploadText,{
+              color:theme.text
+
+    }]}>Tap to Upload</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.uploadBox}>
+        <TouchableOpacity style={styles.uploadBox} 
+        onPress={()=>setIsModalVisible(true)}
+        >
         <Image source={imageIndex.cmaera} style={{
             height:33,
             width:33
            }}/>
-          <Text style={styles.uploadText}>Take Photo</Text>
+          <Text style={[styles.uploadText,{
+                color:theme.text
+          }]}>Take Photo</Text>
         </TouchableOpacity>
       </View>
 
@@ -82,64 +180,15 @@ const PhotoUpload = () => {
           <Image source={{ uri: item.image }} style={styles.image} />
         )}
       />
+                          <ImagePickerModal
+                        modalVisible={isModalVisible}
+                        setModalVisible={setIsModalVisible}
+                        pickImageFromGallery={pickImageFromGallery}
+                        takePhotoFromCamera={takePhotoFromCamera}
+                    />
     </View>
     </SafeAreaView>
   );
 };
 
 export default PhotoUpload;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingHorizontal: 16,
-   },
-  title: {
-    fontSize: 22,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  uploadRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  uploadBox: {
-    width: (width - 48) / 2,
-    height: 80,
-    borderRadius: 12,
-    borderWidth: 1.5,
-    borderColor: '#A685E2',
-    borderStyle: 'dashed',
-    marginTop:15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  uploadIcon: {
-    fontSize: 24,
-  },
-  uploadText: {
-    fontSize: 14,
-    marginTop: 5,
-    color:"balck",
-    fontFamily:font.PoppinsRegular
-  },
-  searchInput: {
-    height: 45,
-    borderRadius: 10,
-    backgroundColor: '#F0F0F0',
-    paddingHorizontal: 16,
-    marginBottom: 20,
-  },
-  gallery: {
-    gap: 10,
-  },
-  image: {
-    width: (width - 48) / 3,
-    height: 120,
-    borderRadius: 20,
-    marginBottom: 12,
-  },
-});

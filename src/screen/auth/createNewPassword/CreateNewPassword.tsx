@@ -20,6 +20,7 @@ import Styles from './style';
 import localizationStrings from '../../../Localization/Localization';
 import ScreenNameEnum from '../../../routes/screenName.enum';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 export default function CreateNewPassword() {
 
@@ -33,10 +34,12 @@ export default function CreateNewPassword() {
     secureConfirmText, setSecureConfirmText ,
     navigation
   } = useCreate()
+  const { theme }:any = useTheme();
+
   return (
     <SafeAreaView style={{
       flex:1,
-      backgroundColor:"white"
+      backgroundColor:theme.background
     }}>
       <StatusBarCompoent />
       <CustomHeader imageSource={imageIndex.backImg} />
@@ -45,7 +48,10 @@ export default function CreateNewPassword() {
         <View
           style={Styles.mainView}>
           <View  >
-            <Text style={styles.txtHeading}>{localizationStrings?.create_new_password}</Text>
+            <Text style={[styles.txtHeading,{
+                    color:theme.text
+
+            }]}>{localizationStrings?.create_new_password}</Text>
             <Text style={[styles.txtsubHeading, {
               lineHeight: 25
             }]}>

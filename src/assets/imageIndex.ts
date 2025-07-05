@@ -1,6 +1,7 @@
 export default {
   splashBag: require('./images/splashBag.png'),
   nextarrow: require('./images/nextarrow.png'),
+  figr: require('./images/figr.png'),
   onBag: require('./images/onbag.png'),
   face: require('./images/face.png'),
   g: require('./images/g.png'),
@@ -8,6 +9,8 @@ export default {
   g1: require('./images/g1.png'),
   lo: require('./images/lo.png'),
   fram: require('./images/fram.jpg'),
+  dark: require('./images/dark.png'),
+  dark1: require('./images/dark1.png'),
   face1: require('./images/face1.png'),
   city: require('./images/city.png'),
   appLogLogin: require('./images/appLogLogin.png'),

@@ -36,13 +36,13 @@
   <string>We need access to your camera to take photos and videos.</string>
 
    <key>NSPhotoLibraryUsageDescription</key>
-<string>We need access to your photo library.</string>
+<string>This app needs access to your photo library.</string>
  
    <key>NSPhotoLibraryAddUsageDescription</key>
    <string>We need permission to save photos to your library.</string>
 
    <key>NSMicrophoneUsageDescription</key>
-    <string>We need access to your microphone to record videos.</string>
+    <string>This app needs access to the microphone for video recording.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>UILaunchStoryboardName</key>

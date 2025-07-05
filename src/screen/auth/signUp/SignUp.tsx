@@ -19,6 +19,7 @@ import Styles from './style';
 import useSignup from './useSinup';
 import localizationStrings from '../../../Localization/Localization';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 export default function SignUp() {
     const {
@@ -29,16 +30,16 @@ export default function SignUp() {
         handleSignup,
         navigation,
     } = useSignup()
+    const { theme }:any = useTheme();
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor:theme.background }}>
             <StatusBarCompoent />
             <ScrollView showsVerticalScrollIndicator={false} >
                 {isLoading ? <Loading /> : null}
                 <View
                     style={{
-                        backgroundColor: '#FFF',
-                        padding: 15,
+                         padding: 15,
                         flex: 1,
                         marginTop: hp(4)
                     }}>
@@ -49,7 +50,9 @@ export default function SignUp() {
                         />
                     </View>
                     <View style={{ marginTop: 22 }}>
-                        <Text style={styles.txtHeading}>Create Account</Text>
+                        <Text style={[styles.txtHeading,{
+                            color:theme.text
+                        }]}>Create Account</Text>
                         <Text style={[styles.txtsubHeading, {
                             marginTop:5
                          }]}>

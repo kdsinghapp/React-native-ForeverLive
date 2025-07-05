@@ -24,55 +24,68 @@ import { PermissionsAndroid, Platform } from 'react-native';
   const getLogin = useSelector((state: any) => state?.feature);
   const [countryModal, setCountryModal] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState({ country: 'United Arab Emirates', code: '+971', flag: '🇦🇪' });
-//  useEffect(() => {
-//   requestCameraPermission()
-//  }, [])
-  const requestCameraPermission = async () => {
+  useEffect(() => {
     if (Platform.OS === 'android') {
-      try {
-        // Android 13+ specific media permissions
-        const permissions = Platform.Version >= 33
-          ? [
-              PermissionsAndroid.PERMISSIONS.CAMERA,
-              PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-              PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-            ]
-          : [
-              PermissionsAndroid.PERMISSIONS.CAMERA,
-              PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-            ];
-  
-        const granted = await PermissionsAndroid.requestMultiple(permissions);
-  
-        const isCameraGranted = granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED;
-        const isImageGranted = granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] === PermissionsAndroid.RESULTS.GRANTED ||
-                               granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] === PermissionsAndroid.RESULTS.GRANTED;
-        const isVideoGranted = granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] === PermissionsAndroid.RESULTS.GRANTED;
-  
-        return isCameraGranted && isImageGranted && isVideoGranted;
-      } catch (err) {
-        console.warn(err);
-        return false;
-      }
+      requestCameraPermission(); // Android
     } else {
-      // iOS permissions
-      try {
-        const cameraStatus = await request(PERMISSIONS.IOS.CAMERA);
-        const photoStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
-        const micStatus = await request(PERMISSIONS.IOS.MICROPHONE); // For video recording with audio
-  
-        return (
-          cameraStatus === RESULTS.GRANTED &&
-          photoStatus === RESULTS.GRANTED &&
-          micStatus === RESULTS.GRANTED
-        );
-      } catch (error) {
-        console.warn('iOS Permission error:', error);
-        return false;
-      }
+      // Optional: For iOS
+      // requestIOSPermissions();
     }
-  };
+  }, []);
+  
+ const requestCameraPermission = async () => {
+  if (Platform.OS === 'android') {
+    try {
+      const permissions = Platform.Version >= 33
+        ? [
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+          ]
+        : [
+            PermissionsAndroid.PERMISSIONS.CAMERA,
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          ];
+
+      const granted = await PermissionsAndroid.requestMultiple(permissions);
+
+      const isCameraGranted = granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED;
+      const isImageGranted =
+        granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] === PermissionsAndroid.RESULTS.GRANTED ||
+        granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] === PermissionsAndroid.RESULTS.GRANTED;
+
+      const isVideoGranted =
+        granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] === PermissionsAndroid.RESULTS.GRANTED ||
+        granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] === PermissionsAndroid.RESULTS.GRANTED;
+
+      if (!isCameraGranted || !isImageGranted || !isVideoGranted) {
+        Alert.alert('Permission Denied', 'Camera or media permissions were denied.');
+      }
+
+    } catch (err) {
+      console.warn('Android permission error:', err);
+    }
+  } else {
+    try {
+      const cameraStatus = await request(PERMISSIONS.IOS.CAMERA);
+      const photoStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+      const micStatus = await request(PERMISSIONS.IOS.MICROPHONE);
+
+      if (
+        cameraStatus !== RESULTS.GRANTED ||
+        photoStatus !== RESULTS.GRANTED ||
+        micStatus !== RESULTS.GRANTED
+      ) {
+        Alert.alert('Permission Denied', 'Please allow camera, photo, and microphone access in Settings.');
+      }
+
+    } catch (err) {
+      console.warn('iOS permission error:', err);
+    }
+  }
+};
+
   
   const handleCountrySelect = (countryData) => {
     setSelectedCountry(countryData);

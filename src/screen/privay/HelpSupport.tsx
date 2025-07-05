@@ -20,6 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { height } from '../../utils/Constant';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useTheme } from '../../theme/ThemeProvider';
 
 
 const HelpSupportScreen = () => {
@@ -56,9 +57,12 @@ const HelpSupportScreen = () => {
       hideSubscription.remove();
     };
   }, []);
+  const { theme }:any = useTheme();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
       <StatusBarComponent />
       {isLoading && <Loading />}
       <CustomHeader

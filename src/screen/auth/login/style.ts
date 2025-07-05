@@ -1,11 +1,10 @@
 
 import { StyleSheet } from 'react-native';
 import { wp } from '../../../utils/Constant';
-import { lightTheme } from '../../../theme/ThemeProvider';
-import font from '../../../theme/font';
+ import font from '../../../theme/font';
  
 const Styles = StyleSheet.create({
-  mainView:{ flex: 1, backgroundColor: lightTheme.background },
+  mainView:{ flex: 1, backgroundColor: "white" },
   text: {
     fontSize: 16,
     lineHeight: 24,

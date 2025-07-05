@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import localizationStrings from '../Localization/Localization';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface ImagePickerModalProps {
   modalVisible: boolean;
@@ -15,6 +16,8 @@ const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
   pickImageFromGallery,
   takePhotoFromCamera,
 }) => {
+  const { theme }:any = useTheme();
+
   return (
     <Modal
       transparent
@@ -23,10 +26,14 @@ const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
       onRequestClose={() => setModalVisible(false)}
     >
       <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
+        <View style={[styles.modalOverlay]}>
+          <View style={[styles.modalContainer,{
+            backgroundColor:theme.background
+          }]}>
             <View style={styles.handleBar} />
-            <Text allowFontScaling={false} style={styles.title}>{localizationStrings?.choose_option}</Text>
+            <Text allowFontScaling={false} style={[styles.title,{
+                color:theme.text
+            }]}>{localizationStrings?.choose_option}</Text>
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(false);
@@ -34,7 +41,10 @@ const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
               }}
               style={styles.optionButton}
             >
-              <Text allowFontScaling={false} style={styles.optionText}>📷  {localizationStrings?.pick_from_gallery}</Text>
+              <Text allowFontScaling={false} style={[styles.optionText,{
+                            color:theme.background
+
+              }]}>📷  {localizationStrings?.pick_from_gallery}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {

@@ -21,6 +21,7 @@ import useLogin from './useLogin';
  import localizationStrings from '../../../Localization/Localization';
 import font from '../../../theme/font';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../theme/ThemeProvider';
  
 export default function Login() {
   const {
@@ -32,8 +33,12 @@ export default function Login() {
     emailError,
     passwordError,
      email, password } = useLogin()
+     const { theme }:any = useTheme();
+
   return (
-    <SafeAreaView style={Styles.mainView}>
+    <SafeAreaView style={[Styles.mainView,{
+      backgroundColor:theme.background
+    }]}>
       <StatusBarCompoent backgroundColor='white' />
       {loading ? <Loading /> : null}
       <ScrollView showsVerticalScrollIndicator={false} >
@@ -51,7 +56,10 @@ export default function Login() {
             />
           </View>
           <View style={{ marginTop: 22 }}>
-            <Text style={styles.txtHeading}>{localizationStrings?.login}</Text>
+            <Text style={[styles.txtHeading,{
+                    color:theme.text
+
+            }]}>{localizationStrings?.login}</Text>
             <Text style={[styles.txtsubHeading, {
               fontFamily: font.PoppinsRegular,
               color:"#9DB2BF" ,
@@ -137,7 +145,7 @@ export default function Login() {
                 }}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={()=>navigation.navigate(ScreenNameEnum.FingerprintScreen)}>
               <Image
                 source={imageIndex.face1}
                 style={{

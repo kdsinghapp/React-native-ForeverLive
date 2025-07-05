@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, Image, Keyboard, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import _routes from "../routes/routes";
+import { useTheme } from "../theme/ThemeProvider";
 
 type TabScreen = {
   name: string;
@@ -32,6 +33,7 @@ export default function TabNavigator() {
       keyboardDidHideListener.remove();
     };
   }, []);
+  const { theme }:any = useTheme();
 
   return (
     <Tab.Navigator
@@ -42,6 +44,7 @@ export default function TabNavigator() {
           display: isKeyboardVisible ? "none" : "flex",
           paddingTop: 12,
           height: 70,
+          backgroundColor:theme.tab
         },
       }}
     >
@@ -54,7 +57,8 @@ export default function TabNavigator() {
             tabBarIcon: ({ focused }) => (
               <>
                 <Image
-                  source={focused ? screen.logo1 : screen.logo}
+                  source={focused ? screen.logo1 : screen.logo} 
+                  tintColor={theme.text}
                   style={{
                     width: 50,
                     height: 50,
