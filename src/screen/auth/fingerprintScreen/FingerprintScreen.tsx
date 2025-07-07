@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image,   ScrollView } from 'react-native';
   import imageIndex from '../../../assets/imageIndex';
 import CustomHeader from '../../../compoent/CustomHeader';
 import font from '../../../theme/font';
 import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import CustomButton from '../../../compoent/CustomButton';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const FingerprintScreen = () => {
   const navigation = useNavigation()

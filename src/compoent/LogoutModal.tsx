@@ -3,18 +3,16 @@ import {
   Modal,
   View,
   Text,
-  TouchableOpacity,
-  StyleSheet,
+   StyleSheet,
   Dimensions,
-  Image,
-  Platform,
+   Platform,
 } from "react-native";
 import imageIndex from "../assets/imageIndex";
 import localizationStrings from "../Localization/Localization";
 import CustomButton from "./CustomButton";
+import { useTheme } from "../theme/ThemeProvider";
 
-const { width } = Dimensions.get("window");
-
+ 
 type LogoutModalProps = {
   visible: boolean;
   onClose: () => void;
@@ -22,6 +20,9 @@ type LogoutModalProps = {
 };
 
 const LogoutModal: React.FC<LogoutModalProps> = ({ visible, onClose, onConfirm }) => {
+  
+  const { theme }:any = useTheme();
+
   return (
     <Modal
       transparent={true}
@@ -30,7 +31,9 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ visible, onClose, onConfirm }
       onRequestClose={onClose}
     >
       <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
+        <View style={[styles.modalContent,{
+          backgroundColor:theme.background
+        }]}>
           {/* Drag Handle */}
           <View style={styles.dragHandle} />
 
@@ -40,12 +43,15 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ visible, onClose, onConfirm }
           </TouchableOpacity> */}
 
           {/* Modal Title & Message */}
-          <Text style={styles.title}>Log Out?</Text>
+          <Text style={[styles.title,{
+            color:theme.text
+          }]}>Log Out?</Text>
           <Text style={styles.subtitle}>{localizationStrings?.logout_confirmation}</Text>
 
           {/* Logout Button */}
           {/* <TouchableOpacity style={styles.logoutButton} onPress={onConfirm}>
-            <Text style={styles.logoutText}>{localizationStrings?.logout}</Text>
+            <Text style={styles.logo
+            utText}>{localizationStrings?.logout}</Text>
           </TouchableOpacity> */}
          <CustomButton
             title= {"Yes Log out"}

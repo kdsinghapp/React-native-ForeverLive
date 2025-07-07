@@ -94,7 +94,7 @@ const MemoryLane = () => {
         data={fileData}
         keyExtractor={item => item.id}
         renderItem={renderItem}
-        contentContainerStyle={{ paddingHorizontal: 20 ,marginTop:11}}
+        contentContainerStyle={{ paddingHorizontal: 15 ,marginTop:11}}
       />
     </SafeAreaView>
   );

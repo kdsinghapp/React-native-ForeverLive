@@ -24,7 +24,8 @@
   
   const darkTheme = {
     mode: 'dark',
-    background: '#000000',
+    background: '#000822',
+    // background: '#000000',
     text: '#FFFFFF',
     primary: '#3658AE',
     tab: '#000822',

@@ -42,7 +42,7 @@
    <string>We need permission to save photos to your library.</string>
 
    <key>NSMicrophoneUsageDescription</key>
-    <string>This app needs access to the microphone for video recording.</string>
+<string>This app needs access to your microphone to record audio.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>UILaunchStoryboardName</key>

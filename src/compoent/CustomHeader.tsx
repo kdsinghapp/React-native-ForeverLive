@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   iconLeft: {
     position: 'absolute',
-    left: width * 0.04,
+    left: width * 0.02,
     zIndex: 10,
     padding: 8,
   },

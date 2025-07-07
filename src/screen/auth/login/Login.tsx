@@ -22,7 +22,9 @@ import useLogin from './useLogin';
 import font from '../../../theme/font';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../../../theme/ThemeProvider';
- 
+ import { Alert } from 'react-native';
+// import ReactNativeBiometrics from 'react-native-biometrics';
+
 export default function Login() {
   const {
     navigation,
@@ -34,7 +36,57 @@ export default function Login() {
     passwordError,
      email, password } = useLogin()
      const { theme }:any = useTheme();
-
+    //  const checkBiometric = async () => {
+    //   const rnBiometrics = new ReactNativeBiometrics();
+    //   const { available, biometryType } = await rnBiometrics.isSensorAvailable();
+    
+    //   if (available) {
+    //     console.log('Biometric available:', biometryType); // logs: FaceID, TouchID, Biometrics
+    
+    //     rnBiometrics.simplePrompt({ promptMessage: 'Unlock with biometrics' })
+    //       .then(resultObject => {
+    //         const { success } = resultObject;
+    
+    //         if (success) {
+    //           Alert.alert('Success', 'Authenticated with biometrics!');
+    //         } else {
+    //           Alert.alert('Cancelled', 'User cancelled the biometric prompt.');
+    //         }
+    //       })
+    //       .catch(() => {
+    //         Alert.alert('Error', 'Biometric authentication failed.');
+    //       });
+    //   } else {
+    //     Alert.alert('Unavailable', 'Biometric auth not available on this device.');
+    //   }
+    // };
+    
+    // const checkBiometric = async () => {
+    //   const rnBiometrics = new ReactNativeBiometrics();
+    //   const { available, biometryType } = await rnBiometrics.isSensorAvailable();
+  
+    //   if (available) {
+    //     console.log('Biometric available:', biometryType);
+  
+    //     rnBiometrics
+    //       .simplePrompt({ promptMessage: 'Unlock with biometrics' })
+    //       .then(resultObject => {
+    //         const { success } = resultObject;
+  
+    //         if (success) {
+    //           Alert.alert('Success', 'Authenticated with biometrics!');
+    //         } else {
+    //           Alert.alert('Cancelled', 'User cancelled the biometric prompt.');
+    //         }
+    //       })
+    //       .catch(() => {
+    //         Alert.alert('Error', 'Biometric authentication failed.');
+    //       });
+    //   } else {
+    //     Alert.alert('Unavailable', 'Biometric auth not available on this device.');
+    //   }
+    // };
+  
   return (
     <SafeAreaView style={[Styles.mainView,{
       backgroundColor:theme.background
@@ -157,8 +209,17 @@ export default function Login() {
             </TouchableOpacity>
           </View>
         </View>
-        <View
-        style={Styles.titlView}>
+     
+
+
+<TouchableOpacity  
+
+style={Styles.titlView} 
+
+// onPress={checkBiometric}
+
+>
+
           <ImageBackground source={imageIndex.google} 
           
           style={{
@@ -169,7 +230,7 @@ export default function Login() {
 
           </ImageBackground>
     
-      </View>
+      </TouchableOpacity>
       </ScrollView>
       
     </SafeAreaView>

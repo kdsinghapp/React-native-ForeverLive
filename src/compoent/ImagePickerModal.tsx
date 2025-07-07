@@ -42,18 +42,18 @@ const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
               style={styles.optionButton}
             >
               <Text allowFontScaling={false} style={[styles.optionText,{
-                            color:theme.background
+                            // color:theme.text
 
               }]}>📷  {localizationStrings?.pick_from_gallery}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(false);
-                takePhotoFromCamera();
+                // takePhotoFromCamera();
               }}
               style={styles.optionButton}
             >
-              <Text allowFontScaling={false} style={styles.optionText}>📸 {localizationStrings?.take_photo}</Text>
+              <Text allowFontScaling={false} style={[styles.optionText,]}>📸 {localizationStrings?.take_photo}</Text>
             </TouchableOpacity> 
 
           </View>

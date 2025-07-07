@@ -4,6 +4,10 @@ require Pod::Executable.execute_command('node', ['-p',
     "react-native/scripts/react_native_pods.rb",
     {paths: [process.argv[1]]},
   )', __dir__]).strip
+require_relative '../node_modules/react-native/scripts/react_native_pods'
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+
 
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
@@ -13,7 +17,7 @@ if linkage != nil
   Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
   use_frameworks! :linkage => linkage.to_sym
 end
-permissions_path = '../node_modules/react-native-permissions/ios'
+# permissions_path = '../node_modules/react-native-permissions/ios'
 
 target 'ForeverLive' do
   config = use_native_modules!
@@ -23,9 +27,14 @@ target 'ForeverLive' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
-  pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
-  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
-  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  # ✅ Add permission pods here
+  # pod 'Permission-Camera', :path => "#{permissions_path}/Camera"
+  # pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
+  # pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+
+
 
 
   post_install do |installer|

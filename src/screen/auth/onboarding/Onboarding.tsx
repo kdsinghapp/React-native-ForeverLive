@@ -16,6 +16,7 @@ import imageIndex from '../../../assets/imageIndex';
 import styles from './style';
 import slides, { Slide } from './coustomData';
 import ScreenNameEnum from '../../../routes/screenName.enum';
+import { useTheme } from '../../../theme/ThemeProvider';
 
 const { width } = Dimensions.get('window');
 
@@ -28,14 +29,20 @@ const OnboardingScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     const index = Math.round(contentOffsetX / width);
     setCurrentIndex(index);
   };
+  const { theme }:any = useTheme();
 
   const renderSlide = ({ item }: { item: Slide }) => (
     <View style={styles.slide}>
       <ImageBackground source={item.image} style={styles.image} resizeMode='cover' />
 
       <View style={styles.textContainer}>
-        <Text style={styles.title}>It’s Picture Time</Text>
-        <Text style={styles.description}>
+        <Text style={[styles.title,{
+          color:theme.text
+        }]}>It’s Picture Time</Text>
+        <Text style={[styles.description,{
+                    color:theme.text
+
+        }]}>
         Start capturing moments that matter{"\n"}forever.
         </Text>
       </View>
@@ -43,7 +50,9 @@ const OnboardingScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,{
+      backgroundColor:theme.background
+    }]}>
       <StatusBar backgroundColor="transparent" translucent />
       <FlatList
         data={slides}
