@@ -1,7 +1,15 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import {
+  Modal,
+  View,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  StyleSheet,
+} from 'react-native';
 import localizationStrings from '../Localization/Localization';
 import { useTheme } from '../theme/ThemeProvider';
+import CustomButton from './CustomButton';
 
 interface ImagePickerModalProps {
   modalVisible: boolean;
@@ -16,47 +24,56 @@ const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
   pickImageFromGallery,
   takePhotoFromCamera,
 }) => {
-  const { theme }:any = useTheme();
+  const { theme }: any = useTheme();
+
+  const closeModal = () => setModalVisible(false);
 
   return (
     <Modal
       transparent
       visible={modalVisible}
       animationType="slide"
-      onRequestClose={() => setModalVisible(false)}
+      onRequestClose={closeModal}
     >
-      <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-        <View style={[styles.modalOverlay]}>
-          <View style={[styles.modalContainer,{
-            backgroundColor:theme.background
-          }]}>
-            <View style={styles.handleBar} />
-            <Text allowFontScaling={false} style={[styles.title,{
-                color:theme.text
-            }]}>{localizationStrings?.choose_option}</Text>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(false);
-                pickImageFromGallery();
-              }}
-              style={styles.optionButton}
-            >
-              <Text allowFontScaling={false} style={[styles.optionText,{
-                            // color:theme.text
+      <TouchableWithoutFeedback onPress={closeModal}>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback>
+            <View style={[styles.modalContainer, { backgroundColor: theme.background }]}>
+              <View style={styles.handleBar} />
 
-              }]}>📷  {localizationStrings?.pick_from_gallery}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setModalVisible(false);
-                // takePhotoFromCamera();
-              }}
-              style={styles.optionButton}
-            >
-              <Text allowFontScaling={false} style={[styles.optionText,]}>📸 {localizationStrings?.take_photo}</Text>
-            </TouchableOpacity> 
+              <Text allowFontScaling={false} style={[styles.title, { color: theme.text }]}>
+                {localizationStrings?.choose_option}
+              </Text>
 
-          </View>
+              <TouchableOpacity
+                onPress={() => {
+                  closeModal();
+                  pickImageFromGallery();
+                }}
+                style={styles.optionButton}
+              >
+                <Text allowFontScaling={false} style={styles.optionText}>
+                  📷 {localizationStrings?.pick}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  closeModal();
+                  takePhotoFromCamera();
+                }}
+                style={styles.optionButton}
+              >
+                <Text allowFontScaling={false} style={styles.optionText}>
+                  📸 {localizationStrings?.take}
+                </Text>
+              </TouchableOpacity>
+              <CustomButton
+            title= {localizationStrings?.cancel}
+            onPress={closeModal} 
+            buttonStyle={{ width: "100%", marginTop: 15 }}
+          />
+            </View>
+          </TouchableWithoutFeedback>
         </View>
       </TouchableWithoutFeedback>
     </Modal>
@@ -70,20 +87,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
-    backgroundColor: 'white',
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    width: '100%',
     alignItems: 'center',
-    gap: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
-    justifyContent:"center"
+    gap: 10,
   },
   handleBar: {
     width: 40,
@@ -95,7 +108,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '800',
-    color: '#3658AE',
     marginBottom: 10,
   },
   optionButton: {
@@ -104,25 +116,24 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent:"center"
   },
   optionText: {
     fontSize: 16,
-    color: '#333',
     fontWeight: '500',
+    color: '#333',
   },
   cancelButton: {
     width: '100%',
-    backgroundColor: 'black',
+    backgroundColor: '#000',
     paddingVertical: 15,
-    borderRadius: 15,
+    borderRadius: 10,
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
   cancelText: {
     fontSize: 16,
-    color: 'white',
     fontWeight: '600',
+    color: '#fff',
   },
 });
 

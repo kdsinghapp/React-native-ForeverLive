@@ -4,7 +4,7 @@ import {
   View,
   Text,
    StyleSheet,
-  Dimensions,
+ 
    Platform,
 } from "react-native";
 import imageIndex from "../assets/imageIndex";

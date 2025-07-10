@@ -5,17 +5,14 @@ import {
    TouchableOpacity,
   Image,
    FlatList,
-  Platform,
-  StatusBar,
   ScrollView,
 } from 'react-native';
 import imageIndex from '../../../assets/imageIndex';
 import styles from './style';
 import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import ScreenNameEnum from '../../../routes/screenName.enum';
-import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '../../../theme/ThemeProvider';
+ import { SafeAreaView } from 'react-native-safe-area-context';
+ import useHome from './useHome';
 
 const data = [
   { label: 'Memory Lane ', icon:imageIndex.memory ,screen:ScreenNameEnum.MemoryLane},
@@ -28,13 +25,17 @@ const data = [
 ];
 
 const HomeScreen = () => {
-  const { theme }:any = useTheme();
-
-  const na = useNavigation()
-  const renderItem = ({ item }: any) => (
+const {
+  navigation,
+  loading,
+   theme,
+  isLogin
+  
+}= useHome()
+   const renderItem = ({ item }: any) => (
     <TouchableOpacity style={styles.card}  
     onPress={()=>{
-      na.navigate(item?.screen)
+      navigation.navigate(item?.screen)
     }}
     >
       <View style={styles.iconContainer}>
@@ -52,7 +53,6 @@ const HomeScreen = () => {
 >
   {item.label}
 </Text>
-
         <Image
           source={imageIndex.arrowRights}
           style={styles.arrowIcon}
@@ -76,10 +76,24 @@ const HomeScreen = () => {
           <Text style={[styles.userName,{
                   color:theme.text
 
-          }]}>Adison Mango</Text>
+          }]}>{isLogin?.userData?.user_data?.full_name}</Text>
         </View>
-        <TouchableOpacity>
-          <Image source={imageIndex.HomeProfile} style={styles.profileImage} />
+        <TouchableOpacity onPress={()=>navigation.navigate(ScreenNameEnum.editProfile)}> 
+        <Image
+  source={
+    isLogin?.userData?.user_data?.image
+      ? { uri: isLogin.userData.user_data.image }
+      : imageIndex.HomeProfile // डिफ़ॉल्ट इमेज
+  }
+  style={{
+    height: 50,
+    width: 50,
+    borderRadius: 25, // Perfectly circular
+  }}
+  resizeMode="cover"
+/>
+
+        {/* <Image source={imageIndex.HomeProfile} style={styles.profileImage} /> */}
         </TouchableOpacity>
       </View>
       <ScrollView 

@@ -72,14 +72,28 @@ export default function SignUp() {
                         {errors.fullName ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.fullName}</Text> : null}
                         <TextInputField
                             lable= {"Phone No."}
-                            text={credentials.password}
-                            onChangeText={(value: string) => handleChange('password', value)} 
+                            text={credentials.mobile}
+                            onChangeText={(value: string) => handleChange('mobile', value)} 
                             placeholder={'Phone No.'}
                             firstLogo={true}
                             showEye={false}
+                            type={"decimal-pad"}
                             img={imageIndex.mobile}
                         />
-                           <TouchableOpacity
+                                                                        {errors.mobile ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.mobile}</Text> : null}
+
+                        {/* <TextInputField
+                             text={credentials.city}
+                            onChangeText={(value: string) => handleChange('city', value)} 
+                            placeholder={'City'}
+                            firstLogo={true}
+                            showEye={false}
+                            type={"decimal-pad"}
+                            img={imageIndex.city}
+                        />
+                                                {errors.city ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.city}</Text> : null} */}
+
+                           {/* <TouchableOpacity
                         // onPress={() => setDropOpen(true)}
                         style={{
                             flexDirection: 'row',
@@ -111,21 +125,32 @@ export default function SignUp() {
                         </View>
                         <Image source={imageIndex.arrowDown} 
                              style={{ height: 11, width: 18, right: 10 }} resizeMode='contain' />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                         <TextInputField
                             lable={localizationStrings?.email} 
-
                             placeholder= {"Email Address"} 
-
                             text={credentials.email}
                             onChangeText={(value: string) => handleChange('email', value)} 
-
                             firstLogo={true}
                             img={imageIndex.sms}
                         />
                         {errors.email ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.email}</Text> : null}
-                      
-                          <TextInputField
+                       
+                        <TextInputField
+                            type={"decimal-pad"}
+                            lable={localizationStrings?.password}
+                            text={credentials.password}
+                            onChangeText={(value: string) => handleChange('password', value)} 
+                            placeholder={'Password'}
+                            firstLogo={true}
+                            showEye={true}
+                            img={imageIndex.lock}
+                        />
+                        {errors.password ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.password}</Text> : null}
+                    
+                    
+                    
+                        <TextInputField
                             lable= {localizationStrings?.confirm_password}
                             text={credentials.conPassword}
                             onChangeText={(value: string) => handleChange('conPassword', value)} 
@@ -135,24 +160,13 @@ export default function SignUp() {
                             img={imageIndex.lock}
                         />  
                         {errors.conPassword ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.conPassword}</Text> : null}
-                        <TextInputField
-                            type={"decimal-pad"}
-                            lable={localizationStrings?.mobile}
-                            text={credentials.mobile}
-                            onChangeText={(value: string) => handleChange('mobile', value)} 
-                            placeholder={'Password'}
-                            firstLogo={true}
-                            showEye={true}
-                            img={imageIndex.lock}
-                        />
-                        {errors.mobile ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.mobile}</Text> : null}
                     </View>
                     <CustomButton
                         title={localizationStrings?.sign_up}
-                        // onPress={() => handleSignup()}
-                        onPress={() => {
-                            navigation.navigate(ScreenNameEnum.LoginScreen)
-                        }}
+                      onPress={() => handleSignup()}
+                        // onPress={() => {
+                        //     navigation.navigate(ScreenNameEnum.LoginScreen)
+                        // }}
                         buttonStyle={{ width: "100%", marginTop: 3 }}
                     />
                   

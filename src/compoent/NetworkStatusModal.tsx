@@ -31,7 +31,7 @@ const NetworkStatusModal: React.FC<Props> = ({
    
 
   const getStatusText = () => {
-    if (isConnected === null) return checkingText || localizationStrings?.connection;
+    if (isConnected === null) return checkingText || localizationStrings?.in;
     return isConnected ? onlineText || localizationStrings?.Online : offlineText || localizationStrings?.internet;
   };
 

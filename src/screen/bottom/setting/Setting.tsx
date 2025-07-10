@@ -12,8 +12,7 @@ import imageIndex from '../../../assets/imageIndex';
 import ScreenNameEnum from '../../../routes/screenName.enum';
  import LogoutModal from '../../../compoent/LogoutModal';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './style';
- import useSetting from './useSetting';
+  import useSetting from './useSetting';
 import getStyles from './style';
 
 const SettingScreen = () => {
@@ -29,12 +28,13 @@ const SettingScreen = () => {
 
   ];
 
- const {    isEnabled,  
+ const {        isEnabled,  
   theme, toggleTheme,
   isEnabledDark,
   isLogoutModalVisible,setisLogoutModalVisible ,
   toggleSwitch ,
-  navigation} = useSetting()
+  navigation ,
+  handleLogout} = useSetting()
   const styles = getStyles(theme); // 👈 dynamic style generation
 
    return (
@@ -106,8 +106,7 @@ const SettingScreen = () => {
         <LogoutModal
   visible={isLogoutModalVisible}
   onClose={() => setisLogoutModalVisible(false)}
-  onConfirm={() => setisLogoutModalVisible(false)}
-  // onConfirm={handleLogout}
+   onConfirm={handleLogout}
 />
     </ScrollView>
   

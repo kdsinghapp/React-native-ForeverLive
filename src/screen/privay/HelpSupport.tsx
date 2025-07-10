@@ -21,6 +21,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { height } from '../../utils/Constant';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useTheme } from '../../theme/ThemeProvider';
+import { Support_Api } from '../../redux/Api/AuthApi';
 
 
 const HelpSupportScreen = () => {
@@ -34,14 +35,19 @@ const HelpSupportScreen = () => {
       navigation.goBack();
     }
     else {
+       
+      let data = {
+        title: SupportHelp,
+       id:isLogin?.userData?.user_data?.id ,
+       navigation:navigation
+   }
       try {
-        // const response = await Support_Api(SupportHelp, setLoading, isLogin?.userData?.id, navigation);
+        const response = await Support_Api(data,setLoading);
       } catch (error) {
       }
     }
 
   }
-
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {

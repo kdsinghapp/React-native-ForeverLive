@@ -18,6 +18,7 @@ const useSignup = () => {
     fullName: '',
     conPassword: '',
     mobile: '',
+    city:""
   });
 
   const handleChange = (field: keyof Credentials, value: string) => {
@@ -26,7 +27,7 @@ const useSignup = () => {
   };
 
   const validateFields = (): boolean => {
-    const { email, password, fullName, conPassword, mobile } = credentials;
+    const { email, password, fullName, conPassword, mobile ,city} = credentials;
     let validationErrors: Errors = {};
 
     if (!email.trim()) {
@@ -40,6 +41,9 @@ const useSignup = () => {
     if (!mobile.trim()) {
       validationErrors.mobile = localizationStrings?.mob;
     }
+    // if (!city.trim()) {
+    //   validationErrors.city = "Plese enter city";
+    // }
     if (!password.trim()) {
       validationErrors.password = localizationStrings?.password_required;
     } else if (password.length < 6) {
@@ -72,9 +76,8 @@ const useSignup = () => {
         fullName: credentials.fullName,
         navigation: navigation,
         mobile: credentials.mobile,
-        roleType:role
-      };
-      await SinupUserApi(params, setisLoading);
+       };
+       await SinupUserApi(params, setisLoading);
     } catch (error) {
       console.error('Signup Error:', error);
     }

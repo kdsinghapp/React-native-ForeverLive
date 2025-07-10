@@ -11,7 +11,7 @@ import { useTheme } from '../../../theme/ThemeProvider';
 
 const data = [
   { id: '1', label: 'PHOTO', screen:ScreenNameEnum.PhotoUpload,icon: imageIndex.gallery1,icon1: imageIndex.microphone  },
-  { id: '2', label: 'VIDEO', screen:ScreenNameEnum.PhotoUpload, icon: imageIndex.videoplay,icon1: imageIndex.microphone },
+  { id: '2', label: 'VIDEO', screen:ScreenNameEnum.VideoUpload, icon: imageIndex.videoplay,icon1: imageIndex.microphone },
   { id: '3', label: 'TEXT',screen:ScreenNameEnum.TextScreen, icon: imageIndex.text ,icon1: imageIndex.text},
   { id: '4', label: 'VOICE',screen:ScreenNameEnum.Voice, icon: imageIndex.microphone ,icon1: imageIndex.microphone},
   // { id: '5', label: 'AI PROMPT', icon: imageIndex.gallery1 ,icon1: imageIndex.video},

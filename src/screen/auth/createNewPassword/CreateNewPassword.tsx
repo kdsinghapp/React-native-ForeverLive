@@ -109,10 +109,8 @@ export default function CreateNewPassword() {
       <View style={Styles.btnView}>
         <CustomButton
           title={'SAVE'}
-          onPress={()=>{
-            navigation.navigate(ScreenNameEnum.LoginScreen)
-          }}
-          // onPress={() => validateAndSubmit()}
+        
+          onPress={() => validateAndSubmit()}
         />
       </View>
     </SafeAreaView>

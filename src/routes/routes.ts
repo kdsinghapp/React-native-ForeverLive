@@ -26,6 +26,8 @@ import PrivacyPolicy from "../screen/privay/PrivacyPolicy";
 import ScanCode from "../screen/scanCode/ScanCode";
 import SubscriptionPlan from "../screen/subscriptionPlan/SubscriptionPlan";
 import TextScreen from "../screen/textScreen/TextScreen";
+import VideoPlay from "../screen/videoPlay/VideoPlay";
+import VideoUpload from "../screen/VideoUpload/VideoUpload";
 import Voice from "../screen/voice/Voice";
 import ScreenNameEnum from "./screenName.enum";
 import { useSelector } from "react-redux";
@@ -62,6 +64,8 @@ const _routes = () => {
       { name: ScreenNameEnum.LegacyCalendar, Component: LegacyCalendar },
       { name: ScreenNameEnum.MemoryLane, Component: MemoryLane },
       { name: ScreenNameEnum.FingerprintScreen, Component: FingerprintScreen },
+      { name: ScreenNameEnum.VideoUpload, Component: VideoUpload },
+      { name: ScreenNameEnum.VideoPlay, Component: VideoPlay },
     ],
 
     BOTTOMTAB_ROUTE: [

@@ -10,23 +10,24 @@ import ResponsiveSize from "../../../../../utils/ResponsiveSize";
 import CustomHeader from "../../../../../compoent/CustomHeader";
 import imageIndex from "../../../../../assets/imageIndex";
 import ImagePickerModal from "../../../../../compoent/ImagePickerModal";
-import localizationStrings from "../../../../../Localization/Localization";
-import { SafeAreaView } from "react-native-safe-area-context";
+ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../../../../theme/ThemeProvider";
+import DatePicker from 'react-native-date-picker';
+
  const EditProfile = () => {
     const {
-        imagePrfile,
-        isLoading,
-        navigation,
-        takePhotoFromCamera,
+         isLoading,
+         takePhotoFromCamera,
         pickImageFromGallery,
         isModalVisible, setIsModalVisible,
-        fullName, setFullName,
-        PhoneNumber, setPhoneNumber,
         handleSubmit,
-        getLogin,
-        email, setEmail
- 
+        credentials, 
+        handleChange ,
+        date, setDate ,
+        open, setOpen,
+        isLogin,
+        imageProfile
+
     } = useEdit()
     const { theme }:any = useTheme();
 
@@ -35,7 +36,7 @@ import { useTheme } from "../../../../../theme/ThemeProvider";
             backgroundColor:theme.background
         }]}
         >
-                            <CustomHeader imageSource={imageIndex.backImg} label={"Profile Info"}/>
+                   <CustomHeader imageSource={imageIndex.backImg} label={"Profile Info"}/>
                 <StatusBarComponent />
 
         <View
@@ -45,17 +46,16 @@ import { useTheme } from "../../../../../theme/ThemeProvider";
             }]}
         >
             {isLoading ? <LoadingModal /> : null}
-           
                 <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}  >
                     <View style={styles.profileContainer}>
                         <View style={styles.iamgeView}>
                             <Image
                                 resizeMode="cover"
                                 source={
-                                    imagePrfile
-                                      ? { uri: imagePrfile.path }
-                                      : getLogin?.userGetData?.image
-                                      ? { uri: getLogin.userGetData.image }
+                                    imageProfile
+                                      ? { uri: imageProfile.path }
+                                      : isLogin?.userData?.user_data.image
+                                      ? { uri: isLogin?.userData?.user_data.image }
                                       :  {uri:"https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png"}
                                   }
                                
@@ -77,47 +77,43 @@ import { useTheme } from "../../../../../theme/ThemeProvider";
                     <View style={{ marginHorizontal: 15 }}>
                     <View  >
                         <TextInputField
- 
-                              placeholder={"Martin Mango"}
+                              placeholder={"FullName"}
                             firstLogo={false}
                             img={imageIndex.prfoile}
-                            onChangeText={setEmail}
-                            text={email}
+                            text={credentials.fullName}
+                            onChangeText={(value: string) => handleChange('fullName', value)} 
+                        />
+                    </View>
+                        <TextInputField
+                             placeholder={"Email"}
+                             firstLogo={false}
+                             text={credentials.email}
+                             onChangeText={(value: string) => handleChange('email', value)} 
+                         />
+
+                    </View>
+                    <View style={{ marginHorizontal: 15 }}>
+                        <TextInputField
+                            type={"decimal-pad"}
+                             placeholder={"Mobile"}
+                             firstLogo={false}
+                             img={imageIndex.prfoile}
+                             text={credentials.mobile}
+                             onChangeText={(value: string) => handleChange('mobile', value)} 
+                        />
+                    </View>
+                    <TouchableOpacity 
+                     onPress={() => setOpen(true)}
+                    style={{ marginHorizontal: 15 }}>
+                        <TextInputField
+                              placeholder={date.toLocaleDateString()}
+                            firstLogo={false}
                             editable={false}
-                            
-                        />
-                    </View>
-                        <TextInputField
-                             placeholder={"MartinMango@gmail.com"}
-                             firstLogo={false}
-                             img={imageIndex.prfoile}
-                            onChangeText={setFullName}
-                            text={fullName}
-                        />
-
-                    </View>
-                    
-
-                    <View style={{ marginHorizontal: 15 }}>
-                        <TextInputField
-                            type={"decimal-pad"}
-                             placeholder={"9856741236"}
-                             firstLogo={false}
-                             img={imageIndex.prfoile}
-                            onChangeText={setPhoneNumber}
-                            text={PhoneNumber}
-                        />
-                    </View>
-                    <View style={{ marginHorizontal: 15 }}>
-                        <TextInputField
-                            type={"decimal-pad"}
-                             placeholder={"12/02/2025"}
-                            firstLogo={false}
                             img={imageIndex.prfoile}
-                            onChangeText={setPhoneNumber}
-                            text={PhoneNumber}
+                            // onChangeText={setPhoneNumber}
+                            // text={PhoneNumber}
                         />
-                    </View>
+                    </TouchableOpacity>
                 </ScrollView >
                     <ImagePickerModal
                         modalVisible={isModalVisible}
@@ -129,10 +125,22 @@ import { useTheme } from "../../../../../theme/ThemeProvider";
                 <View style={styles.buttView}>
                     <CustomButton title={"update"} 
                     
-                    // onPress={() => handleSubmit()}
-                    onPress={()=>navigation.goBack()}
-                    />
+                      onPress={() => handleSubmit()}
+                     />
                 </View>
+                <DatePicker
+        modal
+        open={open}
+        date={date}
+        mode="date" // or "time" or "datetime"
+        onConfirm={(date) => {
+          setOpen(false);
+          setDate(date);
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
+      />
                 {/* <CountryCodeModal
         visible={isModalVisible}
         onSelect={handleCountrySelect}

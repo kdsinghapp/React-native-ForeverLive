@@ -13,14 +13,14 @@ import SearchBar from '../../compoent/SearchBar';
 import StatusBarComponent from '../../compoent/StatusBarCompoent';
 import styles from './style';
 import ImagePickerModal from '../../compoent/ImagePickerModal';
-import usePhotoUpload from './usePhotoUpload';
+import usePhotoUpload from './useVideoUpload';
 import UploadConfirmationModal from '../../compoent/UploadConfirmationModal';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
 import LoadingModal from '../../utils/Loader';
-import ImagLoader from '../../compoent/ImagLoader';
+import ScreenNameEnum from '../../routes/screenName.enum';
  
 
-const PhotoUpload = () => {
+const VideoUpload = () => {
   const {
     imageProfile,
     isModalVisible,
@@ -32,21 +32,20 @@ const PhotoUpload = () => {
     camerImage,
     uploadModal, setUploadModal,
     videoList
-,loading,
+,
+loading,
+navigation,
 uploadFile,
-setImageProfile,
-imgloading, setimgloading
-  } = usePhotoUpload();
+   } = usePhotoUpload();
   return (
     <SafeAreaView style={{
         flex:1,
         backgroundColor:theme.background
     }}>
+            {loading ? <LoadingModal /> : null}
 
         <StatusBarComponent/>
-        {loading ? <LoadingModal /> : null}
-
-        <CustomHeader label={type =="PHOTO" ? "PHOTO":"Video"} imageSource={imageIndex.backImg}/>
+        <CustomHeader label={"Video"} imageSource={imageIndex.backImg}/>
 
     <View style={[styles.container,{
               backgroundColor:theme.background
@@ -71,7 +70,7 @@ imgloading, setimgloading
         style={{ height: 33, width: 33 }} 
       />
       <Text style={[styles.uploadText, { color: theme.text }]}>
-        Tap to Upload
+      Upload a Video
       </Text>
     </View>
   )}
@@ -93,7 +92,7 @@ imgloading, setimgloading
       style={{ height: 33, width: 33 }} 
     />
     <Text style={[styles.uploadText, { color: theme.text }]}>
-      Take Photo
+    Record 
     </Text>
   </View>
 )}
@@ -111,24 +110,17 @@ imgloading, setimgloading
   style={{ marginTop: 30 }}
   columnWrapperStyle={{ justifyContent: 'space-between' }}
    renderItem={({ item }) =>  {
-     return(
-      <View style={{
-        width: '32%',
-        aspectRatio: 1,
-        marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        overflow: 'hidden',
-        backgroundColor: '#f0f0f0',
+    console.log("item",item)
+    return(
+      <TouchableOpacity onPress={()=>{
+        navigation.navigate(ScreenNameEnum.VideoPlay,{
+          item:item?.file_path
+        })
       }}>
-      {imgloading && <ImagLoader />}
-      <Image 
-       onLoadStart={() => setimgloading(true)}
-       onLoadEnd={() => setimgloading(false)}
-       onError={() => setimgloading(false)}  // Add this line
-      source={{ uri: item.file_path }} style={styles.image} />
-      </View>
+              <Image source={imageIndex?.video} style={styles.image} />
+
+
+      </TouchableOpacity>
     )
   }}
   ListEmptyComponent={() => {
@@ -145,11 +137,11 @@ imgloading, setimgloading
   takePhotoFromCamera={takePhotoFromCamera}
 />
 <UploadConfirmationModal
-  image={imageProfile?.path || camerImage?.path}
+  // image={imageProfile?.path || camerImage?.path}
   visible={uploadModal}
   onClose={() => {
     setUploadModal(false);
-    setImageProfile(null);
+    // setImageProfile("");
   }}
   onConfirm={uploadFile}
 />
@@ -160,4 +152,4 @@ imgloading, setimgloading
   );
 };
 
-export default PhotoUpload;
+export default VideoUpload;

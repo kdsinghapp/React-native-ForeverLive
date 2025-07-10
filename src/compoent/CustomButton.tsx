@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Text,
   StyleSheet,
@@ -7,15 +7,18 @@ import {
   Platform,
   TouchableOpacity,
   View,
+  GestureResponderEvent,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface CustomButtonProps {
   title: string;
-  onPress: () => void;
+  onPress: (event: GestureResponderEvent) => void;
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
   disabled?: boolean;
+  gradientColors?: string[];
+  gradientStyle?: ViewStyle;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
@@ -24,14 +27,16 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   buttonStyle,
   textStyle,
   disabled = false,
+  gradientColors = ['#8F52CA', '#3658AE', '#19A3BD'],
+  gradientStyle,
 }) => {
   return (
     <View style={[styles.shadowWrapper, buttonStyle]}>
       <LinearGradient
         start={{ x: 0, y: 2 }}
         end={{ x: 2, y: 0 }}
-        colors={['#8F52CA', '#3658AE', '#19A3BD']}
-        style={[styles.gradient, disabled && styles.disabledGradient]}
+        colors={gradientColors}
+        style={[styles.gradient, gradientStyle, disabled && styles.disabledGradient]}
       >
         <TouchableOpacity
           onPress={onPress}
@@ -39,9 +44,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
           activeOpacity={0.8}
           style={styles.touchable}
         >
-          <Text style={[styles.buttonText, textStyle]}>
-            {title}
-          </Text>
+          <Text style={[styles.buttonText, textStyle]}>{title}</Text>
         </TouchableOpacity>
       </LinearGradient>
     </View>
@@ -60,7 +63,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
       },
       android: {
-        elevation: 5,
+        // elevation: 5,
+        // backgroundColor: 'transparent',
       },
     }),
   },
@@ -86,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButton;
+export default memo(CustomButton);

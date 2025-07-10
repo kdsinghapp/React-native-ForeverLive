@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
  import { useNavigation } from '@react-navigation/native';
-import { GetaboutusePolicyApi } from '../../../../redux/Api/AuthApi';
- const useAboutFootb = () => {
+  const useAboutFootb = () => {
    const [isLoading,setisLoading] = useState()
    const navigation = useNavigation();
   const [AboutData, setAboutData] = useState<any>([]);
   
 
-  useEffect(()=>{
-    GetAbout()
-  },[])
+  // useEffect(()=>{
+  //   GetAbout()
+  // },[])
   const GetAbout = async () => {
     try {
-        const state = await GetaboutusePolicyApi(setisLoading);
-        if (state) {
-              setAboutData(state?.result);   
-        }
+        // const state = await GetaboutusePolicyApi(setisLoading);
+        // if (state) {
+        //       setAboutData(state?.result);   
+        // }
     } catch (error) {
          setAboutData([]);  
     }

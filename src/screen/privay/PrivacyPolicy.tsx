@@ -15,10 +15,10 @@ import CustomHeader from '../../compoent/CustomHeader';
 import { useNavigation } from '@react-navigation/native';
  import { height } from '../../utils/Constant';
 import { useTheme } from '../../theme/ThemeProvider';
+import { PrivacyPolicyApi } from '../../redux/Api/AuthApi';
 const PrivacyPolicy = () => {
     const [isLoading, setLoading] = useState(false)
-    const navigation = useNavigation()
-    const [faqData, setFaqData] = useState([])
+     const [faqData, setFaqData] = useState<any>([])
     useEffect(() => {
         get_states_list()
     }, []);
@@ -27,9 +27,10 @@ const PrivacyPolicy = () => {
 
     const get_states_list = async () => {
         try {
-            const state = await Policies_Api(setLoading);
+            const state = await PrivacyPolicyApi(setLoading);
             if (state) {
-                setFaqData(state?.result);  // `result` ke andar `description` hai
+                console.log("state",state)
+                setFaqData(state?.data);  // `result` ke andar `description` hai
             }
         } catch (error) {
             setFaqData([]);
@@ -42,12 +43,14 @@ const PrivacyPolicy = () => {
         <SafeAreaView style={[styles.container, {
             backgroundColor:theme.background
         }]}>
-            {/* {isLoading ? <Loading /> : null} */}
+            {isLoading ? <Loading /> : null}
             <StatusBarComponent />
             <CustomHeader
                
                 imageSource={imageIndex.backImg} label="Privacy Policy" />
-            <ScrollView contentContainerStyle={styles.contentContainer}>
+            <ScrollView 
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainer}>
                 <View style={styles.illustrationWrapper}>
                     <Image
                         source={imageIndex.Privacy}
@@ -59,20 +62,17 @@ const PrivacyPolicy = () => {
                     <Text style={{ color:theme.text, fontWeight: "800", fontSize: 18 }}>Terms and Conditions</Text>
                 {/* )} */}
                                     <Text style={{ color: "black", fontWeight: "700", fontSize: 18 }}>Privacy Policy</Text>
-                                    <Text style={{ color:theme.text,  fontSize: 14 ,marginTop:20,lineHeight:25 }}>
-                                    This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You. We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection and use of information in accordance with this Privacy Policy. This Privacy Policy has been created with the help of the
-                                    </Text>
+                                 
 
 
-                {/* {faqData &&
-                    <HTML
-                        source={{ html: faqData?.description || '<p>No content available</p>' }}
-                        contentWidth={width}
-                        tagsStyles={styles.htmlStyles}
+                                    {faqData?.length > 0 && (
+  <HTML
+    source={{ html: faqData[0]?.privacy_policy_text || '<p>No content available</p>' }}
+    contentWidth={width}
+    tagsStyles={styles.htmlStyles}
+  />
+)}
 
-                    />
-
-                } */}
             </ScrollView>
         </SafeAreaView>
 

@@ -79,12 +79,12 @@ export default function OtpScreen() {
         <View style={styles.btn}>
           <CustomButton
             title={localizationStrings?.submit}
-            // onPress={() =>
-            //   handleVerifyOTP()
-            //  }
-            onPress={()=>
-              navigation.navigate(ScreenNameEnum.CreatePassword)
-            }
+            onPress={() =>
+              handleVerifyOTP()
+             }
+            // onPress={()=>
+            //   navigation.navigate(ScreenNameEnum.CreatePassword)
+            // }
           />
         </View>
       </SafeAreaView>

@@ -64,6 +64,7 @@ export default function TextInputField({ ...props }) {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             editable={props.editable}
+            multiline={props.multiline}
           />
 
           {/* Eye Icon for Password Visibility */}

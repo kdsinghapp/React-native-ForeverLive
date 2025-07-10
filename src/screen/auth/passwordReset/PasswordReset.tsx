@@ -59,26 +59,22 @@ export default function PasswordReset() {
              Please put your mobile number to reset your password
             </Text>
           </View>
- 
-    
         </View>
-
-
-
         <View style={{ marginTop: ResponsiveSize.marginTop(7), paddingVertical: hp(1), marginHorizontal:15 }}>
-                        <TextInputField
+                        {/* <TextInputField
                              placeholder={"Phone Number"} 
                             firstLogo={true}
                             img={imageIndex.mobile}
                             //  onChangeText={(value: string) => handleChange('fullName', value)} 
-                        />
-                               <Text style={{               color:theme.text
-, marginTop: 8, marginBottom: 5, fontSize: 16,   textAlign: "center", fontFamily:font.PoppinsBold }}>Or</Text>
+                        /> */}
+                               {/* <Text style={{               color:theme.text
+, marginTop: 8, marginBottom: 5, fontSize: 16,   textAlign: "center", fontFamily:font.PoppinsBold }}>Or</Text> */}
                                <TextInputField
+                               text={credentials.email}
                              placeholder={"Email Address"} 
                             firstLogo={true}
                             img={imageIndex.mobile}
-                            //  onChangeText={(value: string) => handleChange('fullName', value)} 
+                              onChangeText={(value: string) => handleChange('email', value)} 
                         />
 
         {errors.email && <ErrorText message={errors.email} Styles={{
@@ -93,9 +89,9 @@ export default function PasswordReset() {
       }}>
         <CustomButton
           title={localizationStrings?.submit}
-onPress={()=>navigation.navigate(ScreenNameEnum.OtpScreen)}
+// onPress={()=>navigation.navigate(ScreenNameEnum.OtpScreen)}
 
-           // onPress={() => handleForgot()
+           onPress={() => handleForgot()}
 
          />
       </View>

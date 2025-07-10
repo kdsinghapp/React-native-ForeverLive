@@ -6,7 +6,7 @@ interface EmptyListComponentProps {
     message?: string;
 }
 
-const EmptyListComponent: React.FC<EmptyListComponentProps> = ({ message = localizationStrings?.not_found_data }) => {
+const EmptyListComponent: React.FC<EmptyListComponentProps> = ({ message =localizationStrings?.noData}) => {
     return (
         <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>{message}</Text>

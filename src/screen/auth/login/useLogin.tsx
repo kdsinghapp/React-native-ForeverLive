@@ -1,21 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import {   useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { LoginUserApi } from '../../../redux/Api/AuthApi';
 import { LoginParams, RootStackParamList } from './LoginTypes';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
- import localizationStrings from '../../../Localization/Localization';
+  import localizationStrings from '../../../Localization/Localization';
 
 const useLogin = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    // const [email, setEmail] = useState<string>(''); 
-               const [password, setPassword] = useState<string>('');
-        const [email, setEmail] = useState<string>(''); 
-        // const [email, setEmail] = useState<string>('Raghav@gmail.com'); 
-  //  const [email, setEmail] = useState<string>('Seller13@gmail.com'); 
-      // const [email, setEmail] = useState<string>('Seller13@gmail.com'); 
-      // const [password, setPassword] = useState<string>('1234567');
+ const [password, setPassword] = useState<string>('123456');
+    const [email, setEmail] = useState<string>('aman@gmail.com'); 
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
@@ -42,9 +36,7 @@ const useLogin = () => {
     }
   };
   const LoginFunction = async (): Promise<void> => {
-  const role = await AsyncStorage.getItem('userRole');
- 
-    const trimmedEmail = email.trim();
+     const trimmedEmail = email.trim();
     const trimmedPassword = password.trim();
     if (!trimmedEmail) {
       setEmailError(localizationStrings?.email_required);
@@ -68,8 +60,7 @@ const useLogin = () => {
       const params: LoginParams = {
         email: trimmedEmail,
         password: trimmedPassword,
-        usertype:role,
-        navigation,
+         navigation,
       };
        await LoginUserApi(params, setLoading, dispatch);
     } catch (error) {

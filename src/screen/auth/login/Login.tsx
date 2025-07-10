@@ -22,8 +22,7 @@ import useLogin from './useLogin';
 import font from '../../../theme/font';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../../../theme/ThemeProvider';
- import { Alert } from 'react-native';
-// import ReactNativeBiometrics from 'react-native-biometrics';
+ // import ReactNativeBiometrics from 'react-native-biometrics';
 
 export default function Login() {
   const {
@@ -122,16 +121,16 @@ export default function Login() {
           </View>
           <View style={{ marginTop: ResponsiveSize.marginTop(20), paddingVertical: hp(1), }}>
             <TextInputField
-               // text={email}
-              // onChangeText={handleIdentityText}
+               text={email}
+              onChangeText={handleIdentityText}
               placeholder={localizationStrings?.email}
               firstLogo={true}
               img={imageIndex.sms}
             />
             {emailError ? <Text style={Styles.redText}>{emailError}</Text> : null}
             <TextInputField
-               // text={password}
-              // onChangeText={handlePassText}
+               text={password}
+              onChangeText={handlePassText}
               placeholder={localizationStrings?.password}
               firstLogo={true}
               showEye={true}
@@ -153,12 +152,12 @@ export default function Login() {
           </View>
           <CustomButton
             title= {localizationStrings?.login}
-            // onPress={() => LoginFunction()
-            // }
+            onPress={() => LoginFunction()
+            }
 
-              onPress={() => {
-                navigation.navigate(ScreenNameEnum.TabNavigator)
-              }}
+              // onPress={() => {
+              //   navigation.navigate(ScreenNameEnum.TabNavigator)
+              // }}
             buttonStyle={{ width: "100%", marginTop: 15 }}
           />
 
