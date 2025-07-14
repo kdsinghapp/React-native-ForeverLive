@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import font from '../../../theme/font';
-import { Platform } from 'react-native';
+ import { Platform } from 'react-native';
+import font from '../../theme/font';
 
   
 const styles = StyleSheet.create({
@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   
   },
   avatar: {
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     borderRadius: 10,
     backgroundColor: '#3658AE',
     alignItems: 'center',

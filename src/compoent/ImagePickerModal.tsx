@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import localizationStrings from '../Localization/Localization';
 import { useTheme } from '../theme/ThemeProvider';
@@ -56,17 +57,20 @@ const ImagePickerModal: React.FC<ImagePickerModalProps> = ({
                   📷 {localizationStrings?.pick}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  closeModal();
-                  takePhotoFromCamera();
-                }}
-                style={styles.optionButton}
-              >
-                <Text allowFontScaling={false} style={styles.optionText}>
-                  📸 {localizationStrings?.take}
-                </Text>
-              </TouchableOpacity>
+              {Platform.OS !== 'ios' && (
+  <TouchableOpacity
+    onPress={() => {
+      closeModal();
+      takePhotoFromCamera();
+    }}
+    style={styles.optionButton}
+  >
+    <Text allowFontScaling={false} style={styles.optionText}>
+      📸 {localizationStrings?.take}
+    </Text>
+  </TouchableOpacity>
+)}
+
               <CustomButton
             title= {localizationStrings?.cancel}
             onPress={closeModal} 

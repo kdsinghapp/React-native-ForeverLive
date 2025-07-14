@@ -669,6 +669,55 @@ const GetUploadFile = async (setLoading,type) => {
   };
   
   
+  const GetUpVoiceFile = async (setLoading) => {
+    setLoading(true);
+  
+    try {
+      const token = await AsyncStorage.getItem("token");
+  
+      if (!token) {
+        throw new Error("Token not found");
+      }
+      const formData = new FormData();
+
+      formData.append("file_type", "AUDIO");
+  
+      const response = await fetch(`${base_url}/get-files`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      });
+  
+      const text = await response.text();
+  
+      // Safely parse JSON
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (parseError) {
+        throw new Error("Invalid server response");
+      }
+  
+      setLoading(false);
+  
+      if (json.status == "1") {
+        successToast(json.message || "Uploaded successfully");
+      } else {
+        errorToast(json.message || "Upload failed");
+      }
+  
+      return json;
+  
+    } catch (error) {
+      console.error("Upload error:", error);
+      setLoading(false);
+      errorToast("Network error or invalid response");
+    }
+  };
   const GetNote = async (setLoading) => {
     setLoading(true);
     try {
@@ -753,6 +802,229 @@ const GetUploadFile = async (setLoading,type) => {
     }
   };
   
+
+
+  const UploadVoice = async (param, setLoading) => {
+    try {
+      setLoading(true);
   
+      const token = await AsyncStorage.getItem("token");
+      if (!token) throw new Error("User authentication token not found");
   
-export {CreateNoteSave,Get_post_Api,UploadFile1,GetNote,UploadFile,GetUploadFile,PrivacyPolicyApi, Support_Api,  LoginUserApi, UpdateProfile_Api, SinupUserApi, ForgotPassUserApi, OtpUserApi, UpdatePassUserApi }  
+      if (!param?.Audio.uri) throw new Error("No audio file selected");
+  
+      let uri = param?.Audio.uri;
+      if (Platform.OS === "android" && uri.startsWith("file:////")) {
+        uri = uri.replace("file:////", "file:///");
+      }
+      const formData = new FormData();
+      formData.append("file", {
+        uri: uri,
+        type: param?.Audio.type,
+        name: param?.Audio.name,
+      });
+  
+      formData.append("file_type", "AUDIO");
+  console.log("formData",formData)
+      const response = await fetch(`${base_url}/upload-filemedia`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        body: formData,
+      });
+      console.log("response3 44:", response);
+
+      const responseText = await response.text();
+      console.log("Upload Response Text:", responseText);
+  
+      let json;
+            console.log("json 44:", json);
+
+      try {
+        json = JSON.parse(responseText);
+      } catch (e) {
+        throw new Error("Server returned an invalid response");
+      }
+  
+      if (json.status === "1") {
+        successToast(json.message || "Audio uploaded successfully");
+      } else {
+        console.error("111 error:", error);
+
+        errorToast(json.message || "Upload failed");
+      }
+  
+      return json;
+    } catch (error) {
+      console.error("Upload error:", error);
+      errorToast(error.message || "Upload failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const GetPlan_Api = async (setLoading) => {
+    setLoading(true);
+  
+    try {
+      const token = await AsyncStorage.getItem("token");
+  
+      const response = await fetch(`${base_url}/common/plans`, {
+        method: 'GET', // ✅ Use GET method for fetching
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const responseData = await response.json();
+  
+      if (responseData.status === "1") {
+        successToast(responseData.message);
+
+        return responseData;
+
+      } else {
+        errorToast(responseData.error || "Something went wrong");
+        return null;
+      }
+  
+    } catch (error) {
+      console.error("API call error:", error);
+      errorToast("Network error");
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+
+
+
+
+
+
+  const AddgmailMob = async (params,setLoading) => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) {
+        throw new Error("Token not found");
+      }
+     const formData = new FormData();
+      formData.append("contact", params?.filed);
+      formData.append("type", params?.type);
+      const response = await fetch(`${base_url}/add-network`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      });
+  
+      const text = await response.text();
+  
+      // Safely parse JSON
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (parseError) {
+        throw new Error("Invalid server response");
+      }
+  
+      setLoading(false);
+  
+      if (json.status == "1") {
+        successToast(json.message || "Uploaded successfully");
+      } else {
+        errorToast(json.message || "Upload failed");
+      }
+  
+      return json;
+  
+    } catch (error) {
+      console.error("Upload error:", error);
+      setLoading(false);
+      errorToast("Network error or invalid response");
+    }
+  };
+  
+
+
+  const NetworksApi = async (setLoading) => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) throw new Error("Token not found");
+      const response = await fetch(`${base_url}/networks`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+  
+      const text = await response.text();
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (parseError) {
+        throw new Error("Invalid server response");
+      }
+  
+      if (json.status === "1") {
+        successToast(json.message || "Fetched notes successfully");
+      } else {
+        errorToast(json.message || "Failed to fetch notes");
+      }
+  
+      return json;
+    } catch (error) {
+      console.error("Fetch notes error:", error);
+      errorToast("Network error or invalid response");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const GetRequestApi = async (setLoading) => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) throw new Error("Token not found");
+      const response = await fetch(`${base_url}/get-requests`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      });
+  
+      const text = await response.text();
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (parseError) {
+        throw new Error("Invalid server response");
+      }
+  
+      if (json.status === "1") {
+        successToast(json.message || "Fetched notes successfully");
+      } else {
+        errorToast(json.message || "Failed to fetch notes");
+      }
+  
+      return json;
+    } catch (error) {
+      console.error("Fetch notes error:", error);
+      errorToast("Network error or invalid response");
+    } finally {
+      setLoading(false);
+    }
+  };
+export {GetRequestApi,CreateNoteSave,NetworksApi,AddgmailMob,GetPlan_Api,UploadVoice,GetUpVoiceFile,Get_post_Api,UploadFile1,GetNote,UploadFile,GetUploadFile,PrivacyPolicyApi, Support_Api,  LoginUserApi, UpdateProfile_Api, SinupUserApi, ForgotPassUserApi, OtpUserApi, UpdatePassUserApi }  

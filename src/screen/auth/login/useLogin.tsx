@@ -10,6 +10,7 @@ const useLogin = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
  const [password, setPassword] = useState<string>('123456');
     const [email, setEmail] = useState<string>('aman@gmail.com'); 
+    // const [email, setEmail] = useState<string>('raghav@gmail.com'); 
   const [emailError, setEmailError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);

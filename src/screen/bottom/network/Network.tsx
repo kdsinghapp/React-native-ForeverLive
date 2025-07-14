@@ -1,74 +1,112 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  FlatList,
+   FlatList,
   TouchableOpacity,
-   TextInput,
-  Platform,
   Image,
   ScrollView,
 } from 'react-native';
 import StatusBarComponent from '../../../compoent/StatusBarCompoent';
-import font from '../../../theme/font';
-import LinearGradient from 'react-native-linear-gradient';
-import imageIndex from '../../../assets/imageIndex';
+ import imageIndex from '../../../assets/imageIndex';
 import ScreenNameEnum from '../../../routes/screenName.enum';
-import { useNavigation } from '@react-navigation/native';
+  import styles from './style';
+ import useNetwork from './useNetwork';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles from './style';
-import { useTheme } from '../../../theme/ThemeProvider';
-
-const contacts = [
-  { id: '1', initials: 'BS', name: 'Brandon Siphron', email: 'brandonsiphron@gmail.com' },
-  { id: '2', initials: 'MC', name: 'Makenna Curtis', email: 'makennacurtis@gmail.com' },
-  { id: '3', initials: 'AG', name: 'Ann Gouse', email: 'anngouse@gmail.com' },
-  { id: '4', initials: 'JB', name: 'Jaxson Baptista', email: 'brandonsiphron@gmail.com' },
-];
+ import LoadingModal from '../../../utils/Loader';
+import moment from 'moment';
+ 
+ 
 
 const Network = () => {
-    const nav = useNavigation()
-  const renderItem = ({ item }:any) => (
-    <View style={styles.contactCard}>
-<LinearGradient 
-    start={{ x: 0, y: 1 }}
-    end={{ x: 2, y: 0 }}
-    colors={['#8F52CA', '#3658AE', '#19A3BD']}
-  style={styles.avatar}
->
-        <Text style={styles.avatarText}>{item.initials}</Text>
-        </LinearGradient>  
-            <View>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.email}>{item.email}</Text>
+const {     
+      navigation,
+  loading,
+   theme,
+   contacts,
+   handleAccept ,
+   handleReject ,
+   getRequest
+   }= useNetwork()
+
+   const renderItem = ({ item }:any) =>  {
+     return(
+<View style={styles.contactCard}>
+  {item?.user?.image ?   (
+     <Image  
+     style={{ height: 55, width: 55, borderRadius: 10, marginRight: 10 }}
+     source={{ uri: item?.user?.image }}
+   />
+  ):
+  
+  <Image  
+  style={{ height: 40, width: 40, borderRadius: 20, marginRight: 10 }}
+  source={imageIndex.prfoile}
+/>
+  }
+   <View style={{ flex: 1 }}>
+     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Text style={styles.name}>{item?.user?.full_name}</Text>
+      <Text style={styles.name}>
+  {item?.user?.comapny_status
+    ? item.user.comapny_status.charAt(0).toUpperCase() + item.user.comapny_status.slice(1).toLowerCase()
+    : ''}
+</Text>
+    </View>
+    <Text style={styles.email}>{item?.user?.email}</Text>
+  </View>
+</View>
+
+    )
+   }
+  const renderItem1 = ({ item }:any) => {
+    const createdAt = item?.user.created_at;
+    const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YYYY, h:mm A");
+    return(
+      <View style={styles.card}>
+      <Image source={{ uri: item.user.image }} style={styles.avatar} />
+      <View style={{ flex: 1 }}>
+        <View>
+        <Text style={styles.name}>{item?.user?.full_name}</Text>
+        <Text style={styles.name}>{formattedDate}</Text>
+        </View>
+           <View style={styles.buttonRow1}>
+            <TouchableOpacity
+              style={[styles.button, styles.acceptButton]}
+              onPress={() => handleAccept(item.id)}
+            >
+              <Text style={styles.buttonText1}>Accept</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, styles.rejectButton]}
+              onPress={() => handleReject(item.id)}
+            >
+              <Text style={styles.buttonText1}>Reject</Text>
+            </TouchableOpacity>
+          </View>
       </View>
     </View>
-  );
-  const { theme }:any = useTheme();
-
+    )
+  }
   return (
     <SafeAreaView style={[styles.container,{
       backgroundColor:theme.background
     }]}>
         <StatusBarComponent/>
+        {loading ? <LoadingModal /> : null}
         <ScrollView 
-        
         showsVerticalScrollIndicator={false}
          >
-
             <View style={{
                 marginHorizontal:15
             }}>
       <Text style={[styles.sectionTitle,{
               color:theme.text
-
       }]}>Network</Text>
-
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.actionButton} 
-        onPress={()=>nav.navigate(ScreenNameEnum.AddEmail,{
-            type:"Email"
+        onPress={()=>navigation.navigate(ScreenNameEnum.AddEmail,{
+            type:"EMAIL"
         })}
         >
             <View style={{
@@ -82,7 +120,6 @@ const Network = () => {
                     width:33 ,
                     resizeMode:"contain"
                 }}
-                
                 />
           <Text style={[styles.buttonText,{
               color:theme.text
@@ -91,9 +128,8 @@ const Network = () => {
             </View>
          </TouchableOpacity>
          <TouchableOpacity style={styles.actionButton}
-         
-         onPress={()=>nav.navigate(ScreenNameEnum.AddEmail,{
-            type:"Phone"
+         onPress={()=>navigation.navigate(ScreenNameEnum.AddEmail,{
+            type:"NUMBER"
         })}
          >
             <View style={{
@@ -118,7 +154,7 @@ const Network = () => {
       </View>
 
       <TouchableOpacity style={styles.qrButton}
-         onPress={()=>nav.navigate(ScreenNameEnum.ScanCode)}
+         onPress={()=>navigation.navigate(ScreenNameEnum.ScanCode)}
       >
       <Image source={imageIndex?.scanning} 
                 style={{
@@ -137,11 +173,23 @@ const Network = () => {
           color:theme.text
       }]}>Network</Text>
 
+<FlatList
+        data={getRequest}
+        renderItem={renderItem1}
+        keyExtractor={(item:any) => item.id}
+        contentContainerStyle={styles.list}
+      
+      />
       <FlatList
         data={contacts}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item:any) => item.id}
         contentContainerStyle={{ paddingBottom: 20 }}
+        // ListEmptyComponent={() => {
+        //   return(
+        //     <EmptyListComponent/>
+        //   )
+        // }}
       />
 
 </View>

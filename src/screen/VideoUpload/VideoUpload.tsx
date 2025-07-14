@@ -117,7 +117,7 @@ uploadFile,
           item:item?.file_path
         })
       }}>
-              <Image source={imageIndex?.video} style={styles.image} />
+              <Image source={imageIndex?.play} style={styles.image} />
 
 
       </TouchableOpacity>

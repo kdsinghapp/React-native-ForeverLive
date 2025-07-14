@@ -1,15 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import localizationStrings from '../Localization/Localization';
+import { useTheme } from '../theme/ThemeProvider';
 
 interface EmptyListComponentProps {
     message?: string;
 }
 
 const EmptyListComponent: React.FC<EmptyListComponentProps> = ({ message =localizationStrings?.noData}) => {
+    const { theme }:any = useTheme();
+
     return (
         <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>{message}</Text>
+            <Text style={[styles.emptyText,{
+                color:theme.text
+            }]}>{message}</Text>
         </View>
     );
 };

@@ -1,12 +1,12 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { Alert, PermissionsAndroid, Platform } from 'react-native';
-import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
-import ImagePicker from 'react-native-image-crop-picker';
+ import ImagePicker from 'react-native-image-crop-picker';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../theme/ThemeProvider';
 import { ImageFile } from '../bottom/profile/profileScreen/editProfile/EditTypes';
 import {  GetUploadFile,  UploadFile } from '../../redux/Api/AuthApi';
+import { launchCamera } from 'react-native-image-picker';
 
 const usePhotoUpload = () => {
   const navigation = useNavigation<any>();
@@ -26,6 +26,24 @@ const usePhotoUpload = () => {
   GetFunction()
 
  },[])
+ const requestCameraPermission = async () => {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'Camera Permission',
+        message: 'App needs access to your camera',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  } catch (err) {
+    console.warn(err);
+    return false;
+  }
+};
 
   const pickImageFromGallery = () => {
     ImagePicker.openPicker({
@@ -43,72 +61,106 @@ const usePhotoUpload = () => {
         console.log("Gallery error:", error);
       });
   };
-  const takePhotoFromCamera = async () => {
-    try {
-      const hasPermission = await requestCameraPermission();
-      if (!hasPermission) {
-        Alert.alert("Permission Denied", "Camera permission is required.");
-        return;
-      }
-      const image: any = await ImagePicker.openCamera({
-        width: 300,
-        height: 400,
-        cropping: false,
-      });
-      // setcamerImage(image);
-      setImageProfile(image);
+const takePhotoFromCamera = async () => {
+  if (Platform.OS === 'android') {
+    const hasPermission = await requestCameraPermission();
+    if (!hasPermission) {
+      Alert.alert('Permission Denied', 'Camera permission is required.');
+      return;
+    }
+  }
+
+  const options = {
+    mediaType: 'photo',
+    cameraType: 'back',
+    saveToPhotos: true,
+  };
+
+  launchCamera(options, response => {
+    if (response.didCancel) {
+      console.log('User cancelled camera');
+    } else if (response.errorCode) {
+      console.log('Camera error: ', response.errorMessage);
+      Alert.alert('Camera Error', response.errorMessage || 'Unknown error');
+    } else {
+      const imageUri:any = response?.assets?.[0]?.uri;
+      console.log('Image URI:', imageUri);
+      setImageProfile(imageUri);
       setIsModalVisible(false);
       setUploadModal(true)
-    } catch (error: any) {
-      Alert.alert("Error", error.message || "Camera access failed");
+
     }
-  };
+  });
+};
+;
 
-  const requestCameraPermission = async (): Promise<boolean> => {
-    if (Platform.OS === 'android') {
-      try {
-        const permissions =
-          Platform.Version >= 33
-            ? [
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-                PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-              ]
-            : [
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-              ];
+  
+  // const takePhotoFromCamera = async () => {
+  //   try {
+  //     const hasPermission = await requestCameraPermission();
+  //     if (!hasPermission) {
+  //       Alert.alert("Permission Denied", "Camera permission is required.");
+  //       return;
+  //     }
+  //     const image: any = await ImagePicker.openCamera({
+  //       width: 300,
+  //       height: 400,
+  //       cropping: false,
+  //     });
+  //     // setcamerImage(image);
+  //     setImageProfile(image);
+  //     setIsModalVisible(false);
+  //     setUploadModal(true)
+  //   } catch (error: any) {
+  //     Alert.alert("Error", error.message || "Camera access failed");
+  //   }
+  // };
 
-        const granted = await PermissionsAndroid.requestMultiple(permissions);
+  // const requestCameraPermission = async (): Promise<boolean> => {
+  //   if (Platform.OS === 'android') {
+  //     try {
+  //       const permissions =
+  //         Platform.Version >= 33
+  //           ? [
+  //               PermissionsAndroid.PERMISSIONS.CAMERA,
+  //               PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+  //               PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+  //             ]
+  //           : [
+  //               PermissionsAndroid.PERMISSIONS.CAMERA,
+  //               PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+  //               PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+  //             ];
 
-        return (
-          granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED &&
-          (granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] === PermissionsAndroid.RESULTS.GRANTED ||
-            granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] === PermissionsAndroid.RESULTS.GRANTED) &&
-          (granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] === PermissionsAndroid.RESULTS.GRANTED ||
-            true)
-        );
-      } catch (err) {
-        console.warn("Android permission error:", err);
-        return false;
-      }
-    } else {
-      try {
-        const cameraStatus = await request(PERMISSIONS.IOS.CAMERA);
-        const photoStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
-        const micStatus = await request(PERMISSIONS.IOS.MICROPHONE);
-        return (
-          cameraStatus === RESULTS.GRANTED &&
-          photoStatus === RESULTS.GRANTED &&
-          micStatus === RESULTS.GRANTED
-        );
-      } catch (error) {
-        console.warn("iOS permission error:", error);
-        return false;
-      }
-    }
-  };
+  //       const granted = await PermissionsAndroid.requestMultiple(permissions);
+
+  //       return (
+  //         granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED &&
+  //         (granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] === PermissionsAndroid.RESULTS.GRANTED ||
+  //           granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] === PermissionsAndroid.RESULTS.GRANTED) &&
+  //         (granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] === PermissionsAndroid.RESULTS.GRANTED ||
+  //           true)
+  //       );
+  //     } catch (err) {
+  //       console.warn("Android permission error:", err);
+  //       return false;
+  //     }
+  //   } else {
+  //     try {
+  //       const cameraStatus = await request(PERMISSIONS.IOS.CAMERA);
+  //       const photoStatus = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
+  //       const micStatus = await request(PERMISSIONS.IOS.MICROPHONE);
+  //       return (
+  //         cameraStatus === RESULTS.GRANTED &&
+  //         photoStatus === RESULTS.GRANTED &&
+  //         micStatus === RESULTS.GRANTED
+  //       );
+  //     } catch (error) {
+  //       console.warn("iOS permission error:", error);
+  //       return false;
+  //     }
+  //   }
+  // };
   
   const GetFunction = async () => {
     try {
@@ -125,14 +177,18 @@ const usePhotoUpload = () => {
      }
   };
   
-  const uploadFile = async () => {
+  const uploadFiles = async () => {
+    setUploadModal(false);
+
     try {
       const params = {
-        img:imageProfile?.path,
+        img:imageProfile?.path ||imageProfile,
          navigation: navigation, 
          type:"IMAGE"
 
       };
+      setUploadModal(false);
+
       const response = await UploadFile(params, setLoading);
       if (response) {
        setUploadModal(false)
@@ -159,7 +215,7 @@ const usePhotoUpload = () => {
     camerImage ,
     videoList ,
     setImageProfile,
-    uploadFile ,
+    uploadFiles ,
     imgloading, setimgloading
   };
 };

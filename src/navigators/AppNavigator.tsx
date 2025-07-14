@@ -33,7 +33,7 @@ const AppNavigator: React.FC = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
         <ThemeProvider>
           <NavigationContainer>
-         <NetworkStatusModal modalVisible={modalVisible} offlineText="No Internet! Please check your connection." /> */}
+         <NetworkStatusModal modalVisible={modalVisible} offlineText="No Internet! Please check your connection." />  
             <RegistrationRoutes />
             <Toast config={toastConfig} />
           </NavigationContainer>

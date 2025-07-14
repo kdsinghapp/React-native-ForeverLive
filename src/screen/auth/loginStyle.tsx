@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   txtHeading: {
-     fontSize: 26,
+     fontSize: 18,
      color: '#000000',
     textAlign:"center" ,fontFamily:font.PoppinsBold
   },

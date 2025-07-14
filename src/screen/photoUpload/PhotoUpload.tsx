@@ -18,6 +18,7 @@ import UploadConfirmationModal from '../../compoent/UploadConfirmationModal';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
 import LoadingModal from '../../utils/Loader';
 import ImagLoader from '../../compoent/ImagLoader';
+import ScreenNameEnum from '../../routes/screenName.enum';
  
 
 const PhotoUpload = () => {
@@ -27,13 +28,14 @@ const PhotoUpload = () => {
     setIsModalVisible,
     pickImageFromGallery,
     takePhotoFromCamera,
-    theme,
+    theme,navigation
+    ,
     type,
     camerImage,
     uploadModal, setUploadModal,
     videoList
 ,loading,
-uploadFile,
+uploadFiles,
 setImageProfile,
 imgloading, setimgloading
   } = usePhotoUpload();
@@ -123,11 +125,17 @@ imgloading, setimgloading
         backgroundColor: '#f0f0f0',
       }}>
       {imgloading && <ImagLoader />}
+      ?
+      <TouchableOpacity onPress={()=>navigation.navigate(ScreenNameEnum.ImageZoom,{
+        images:item.file_path
+
+      })}>
       <Image 
        onLoadStart={() => setimgloading(true)}
        onLoadEnd={() => setimgloading(false)}
        onError={() => setimgloading(false)}  // Add this line
       source={{ uri: item.file_path }} style={styles.image} />
+      </TouchableOpacity>
       </View>
     )
   }}
@@ -145,13 +153,13 @@ imgloading, setimgloading
   takePhotoFromCamera={takePhotoFromCamera}
 />
 <UploadConfirmationModal
-  image={imageProfile?.path || camerImage?.path}
+  image={imageProfile?.path || imageProfile}
   visible={uploadModal}
   onClose={() => {
     setUploadModal(false);
     setImageProfile(null);
   }}
-  onConfirm={uploadFile}
+  onConfirm={uploadFiles}
 />
 
 

@@ -1,45 +1,44 @@
 import React from 'react';
 import {
   View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-   TextInput,
+   StyleSheet,
   Platform,
-  Image,
-  ScrollView,
+   ScrollView,
 } from 'react-native';
 import StatusBarComponent from '../../compoent/StatusBarCompoent';
 import font from '../../theme/font';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import CustomHeader from '../../compoent/CustomHeader';
+ import CustomHeader from '../../compoent/CustomHeader';
 import imageIndex from '../../assets/imageIndex';
 import CustomButton from '../../compoent/CustomButton';
 import TextInputField from '../../utils/TextInputField';
-import localizationStrings from '../../Localization/Localization';
-import ScreenNameEnum from '../../routes/screenName.enum';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme } from '../../theme/ThemeProvider';
- 
+  import { SafeAreaView } from 'react-native-safe-area-context';
+import useAddEmail from './useAddEmail';
+import LoadingModal from '../../utils/Loader';
+  
 const AddEmail = () => {
- const navigation = useNavigation()
-const route:any = useRoute()
-const {type} = route?.params || ""
-const { theme }:any = useTheme();
 
+const { navigation,
+  loading,
+  setLoading,
+  theme,
+
+
+  type ,
+  
+  AddType ,
+  email,setemail,
+  mob,setMoB
+}= useAddEmail()
   return (
     <SafeAreaView style={[styles.container,{
       backgroundColor:theme.background
     }]}>
         <StatusBarComponent/>
-
-        <CustomHeader label={ type=="Email" ?  "Add by Email" : "Add by Phone" }
-
+        {loading ? <LoadingModal /> : null}
+       <CustomHeader label={ type=="EMAIL" ?  "Add by Email" : "Add by Phone" }
         imageSource={imageIndex.backImg}
         />
         <ScrollView 
-        
         showsVerticalScrollIndicator={false}
          >
 
@@ -47,18 +46,18 @@ const { theme }:any = useTheme();
                 marginHorizontal:15 ,
                 marginTop:15
             }}>
- { type=="Email" ? (
+ { type=="EMAIL" ? (
    <TextInputField
-   // text={email}
-  // onChangeText={handleIdentityText}
+   text={email}
+  onChangeText={setemail}
   placeholder={"email"}
   firstLogo={true}
   img={imageIndex.sms}
 />
  ):(
   <TextInputField
-  // text={email}
- // onChangeText={handleIdentityText}
+  text={mob}
+ onChangeText={setMoB}
  placeholder={"Phone No."}
  firstLogo={true}
  img={imageIndex.mobile}
@@ -67,12 +66,10 @@ const { theme }:any = useTheme();
 
  <CustomButton
             title= {"Add"}
-            // onPress={() => LoginFunction()
-            // }
+            onPress={() => AddType()
+            }
 
-              onPress={() => {
-                navigation.goBack()
-              }}
+               
             buttonStyle={{  marginTop:15 }}
           />
 

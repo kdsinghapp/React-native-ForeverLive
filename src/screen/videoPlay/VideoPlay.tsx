@@ -3,16 +3,16 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
   Text,
   StyleSheet,
   Platform,
+  Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Video, { OnLoadData, OnProgressData } from "react-native-video";
- 
-const { width, height } = Dimensions.get("window");
+import imageIndex from "../../assets/imageIndex";
 
- 
+const { width, height } = Dimensions.get("window");
 
 const VideoPlay: React.FC<any> = ({ route, navigation }) => {
   const { item } = route.params;
@@ -43,100 +43,106 @@ const VideoPlay: React.FC<any> = ({ route, navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Close Button */}
       <TouchableOpacity style={styles.closeButton} onPress={() => navigation.goBack()}>
         <Text style={styles.closeText}>✕</Text>
       </TouchableOpacity>
 
-      {/* Video Component */}
+      {/* Video */}
       <Video
         source={{ uri: item }}
         ref={videoPlayer}
         style={styles.video}
-        resizeMode="cover"
+        resizeMode="contain"
         paused={paused}
         muted={isMuted}
         onLoad={handleLoad}
         onProgress={handleProgress}
         onEnd={handleEnd}
-        repeat={false}
       />
 
-      {/* Play/Pause Center Button */}
-      <TouchableOpacity style={styles.centerPlayPause} onPress={() => setPaused(!paused)}>
-        {/* <Image
-          source={
-            paused
-              ? require("../../assets/Cropping/videoCircle.png") // Replace with your play icon
-              : require("../../assets/Cropping/pause.png")       // Replace with your pause icon
-          }
-          style={styles.playPauseIcon}
-        /> */}
+      {/* Play/Pause Button */}
+      <TouchableOpacity style={styles.playPauseButton} onPress={() => setPaused(!paused)}>
+        {/* <Text style={styles.playPauseText}>{paused ? "▶" : "⏸"}</Text>  */}
+        {paused ? (
+  <Text style={styles.playPauseText}>▶</Text>
+) : (
+  <Image
+    source={imageIndex.playcircle}
+    style={{
+      height: 66,
+      width: 66,
+      resizeMode: "contain",
+    }}
+  />
+)}
+
+      
       </TouchableOpacity>
 
-      {/* Time and Mute Bar */}
-      <View style={styles.bottomBar}>
+      {/* Bottom Controls */}
+      <View style={styles.controls}>
         <Text style={styles.timerText}>
           {secondsToTime(currentTime)} / {secondsToTime(duration)}
         </Text>
         <TouchableOpacity onPress={() => setIsMuted(!isMuted)}>
-          <Text style={styles.muteText}>{isMuted ? "Unmute" : "Mute"}</Text>
+          <Text style={styles.muteText}>{isMuted ? "🔇" : "🔊"}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
-
-export default VideoPlay;
-
 const styles = StyleSheet.create({
   container: {
-    width,
-    height,
-    backgroundColor: "black",
-    justifyContent: "center",
+    flex: 1,
+     justifyContent: "center",
+    alignItems: "center",
   },
   closeButton: {
     position: "absolute",
     top: Platform.OS === "ios" ? 50 : 20,
     right: 20,
     zIndex: 10,
+    padding: 10,
   },
   closeText: {
-    color: "white",
-    fontSize: 24,
+    color: "#fff",
+    fontSize: 28,
   },
   video: {
-    width: "100%",
-    height: "100%",
+    width: width,
+    height: height,
   },
-  centerPlayPause: {
+  playPauseButton: {
     position: "absolute",
-    top: height / 2 - 25,
+    top: height / 2 - 30,
     alignSelf: "center",
-    zIndex: 5,
+    zIndex: 10,
+    padding: 20,
   },
-  playPauseIcon: {
-    height: 50,
-    width: 50,
-    tintColor: "white",
+  playPauseText: {
+    fontSize: 50,
+    color: "#fff",
+    opacity: 0.8,
   },
-  bottomBar: {
+  controls: {
     position: "absolute",
-    bottom: 30,
-    width: "100%",
+    bottom: 40,
+    width: width - 40,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingHorizontal: 20,
     alignItems: "center",
+    paddingHorizontal: 10,
   },
   timerText: {
-    color: "white",
-    fontSize: 14,
+    color: "#fff",
+    fontSize: 16,
   },
   muteText: {
-    color: "white",
-    fontSize: 14,
+    color: "#fff",
+    fontSize: 22,
   },
 });
+
+export default VideoPlay;

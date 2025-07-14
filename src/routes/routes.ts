@@ -20,9 +20,11 @@ import EditProfile from "../screen/bottom/profile/profileScreen/editProfile/Edit
 import Setting from "../screen/bottom/setting/Setting";
  import Vault from "../screen/bottom/Vault/Vault";
 import ChangeLanguage from "../screen/ChangeLanguage/ChangeLanguage";
+import ImageZoom from "../screen/ImageZoom/ImageZoom";
  import PhotoUpload from "../screen/photoUpload/PhotoUpload";
 import HelpSupportScreen from "../screen/privay/HelpSupport";
 import PrivacyPolicy from "../screen/privay/PrivacyPolicy";
+import Reject from "../screen/reject/Reject";
 import ScanCode from "../screen/scanCode/ScanCode";
 import SubscriptionPlan from "../screen/subscriptionPlan/SubscriptionPlan";
 import TextScreen from "../screen/textScreen/TextScreen";
@@ -66,6 +68,8 @@ const _routes = () => {
       { name: ScreenNameEnum.FingerprintScreen, Component: FingerprintScreen },
       { name: ScreenNameEnum.VideoUpload, Component: VideoUpload },
       { name: ScreenNameEnum.VideoPlay, Component: VideoPlay },
+      { name: ScreenNameEnum.ImageZoom, Component: ImageZoom },
+      { name: ScreenNameEnum.Reject, Component: Reject },
     ],
 
     BOTTOMTAB_ROUTE: [

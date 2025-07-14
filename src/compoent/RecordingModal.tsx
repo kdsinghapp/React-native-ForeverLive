@@ -168,7 +168,8 @@ type Props = {
   onPlayRecording: () => void;
   recordingTime: number;
   playbackTime: number;
-  totalDuration?: number;
+  totalDuration?: number; 
+  onSubmit?: ()=> void
 };
 
 const RecordingModal: React.FC<Props> = ({
@@ -182,6 +183,7 @@ const RecordingModal: React.FC<Props> = ({
   recordingTime,
   playbackTime,
   totalDuration,
+  onSubmit
 }) => {
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -241,10 +243,39 @@ const RecordingModal: React.FC<Props> = ({
               <Text style={styles.btnText}>▶️ Play</Text>
             </TouchableOpacity>
           </View>
+          <View style={{
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginHorizontal: 16,
+    marginTop: 20,
 
-          <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-            <Text style={styles.closeText}>✖ Close</Text>
+
+}}>
+          <TouchableOpacity onPress={onClose} style={{
+              paddingVertical: 12,
+              paddingHorizontal: 24,
+              borderRadius: 8,
+              alignItems: 'center',
+              flex: 1,
+              marginHorizontal: 5,
+              backgroundColor: '#8F52CA', // Blue background
+
+          }}>
+            <Text style={styles.closeText}>Close</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={onSubmit} style={{
+              paddingVertical: 12,
+              backgroundColor: '#3658AE', // Blue background
+
+              paddingHorizontal: 24,
+              borderRadius: 8,
+              alignItems: 'center',
+              flex: 1,
+              marginHorizontal: 5,
+          }}>
+            <Text style={styles.closeText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
         </View>
       </View>
     </Modal>
@@ -321,7 +352,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   closeText: {
-    color: '#999',
+    color: '#FFFFFF', // White text
     fontSize: 16,
+    fontWeight: '600',
   },
 });
