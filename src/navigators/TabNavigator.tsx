@@ -43,8 +43,9 @@ export default function TabNavigator() {
         tabBarStyle: {
           display: isKeyboardVisible ? "none" : "flex",
           paddingTop: 12,
-          height: 70,
-          backgroundColor:theme.tab
+           backgroundColor:theme.tab ,
+           justifyContent:"center" ,
+           alignItems:"center"
         },
       }}
     >

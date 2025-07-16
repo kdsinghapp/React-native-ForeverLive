@@ -52,7 +52,7 @@ export default function SignUp() {
                     <View style={{ marginTop: 22 }}>
                         <Text style={[styles.txtHeading,{
                             color:theme.text
-                        }]}>Create Account</Text>
+                        }]}>{localizationStrings?.createAccount}</Text>
                         <Text style={[styles.txtsubHeading, {
                             marginTop:5
                          }]}>
@@ -71,10 +71,9 @@ export default function SignUp() {
                         />
                         {errors.fullName ? <Text style={{ color: 'red', fontSize: 12, marginTop: 2 }}>{errors.fullName}</Text> : null}
                         <TextInputField
-                            lable= {"Phone No."}
-                            text={credentials.mobile}
+                             text={credentials.mobile}
                             onChangeText={(value: string) => handleChange('mobile', value)} 
-                            placeholder={'Phone No.'}
+                            placeholder={localizationStrings.mobile}
                             firstLogo={true}
                             showEye={false}
                             type={"decimal-pad"}
@@ -120,8 +119,6 @@ export default function SignUp() {
                                 }}>City
                                 </Text>
                             </View>
-
-
                         </View>
                         <Image source={imageIndex.arrowDown} 
                              style={{ height: 11, width: 18, right: 10 }} resizeMode='contain' />
@@ -141,7 +138,7 @@ export default function SignUp() {
                             lable={localizationStrings?.password}
                             text={credentials.password}
                             onChangeText={(value: string) => handleChange('password', value)} 
-                            placeholder={'Password'}
+                            placeholder={localizationStrings?.password}
                             firstLogo={true}
                             showEye={true}
                             img={imageIndex.lock}
@@ -154,7 +151,7 @@ export default function SignUp() {
                             lable= {localizationStrings?.confirm_password}
                             text={credentials.conPassword}
                             onChangeText={(value: string) => handleChange('conPassword', value)} 
-                            placeholder={'Password'}
+                            placeholder={localizationStrings?.password}
                             firstLogo={true}
                             showEye={true}
                             img={imageIndex.lock}

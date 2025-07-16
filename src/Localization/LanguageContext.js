@@ -3,12 +3,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import localizationStrings from './Localization';
 
 export const LanguageContext = createContext({
-  language: 'en',
+  language: 'English',
   changeLanguage: () => {},
 });
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('English');
 
   useEffect(() => {
     const loadLanguage = async () => {

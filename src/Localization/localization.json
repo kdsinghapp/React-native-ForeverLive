@@ -4,7 +4,7 @@
       "yourPass":"PLEASE PUT YPUR MOBLIE NUMBER TO",
       "signup_form_prompt": "Fill your information below or register with your social account",
       "full_name": "Full Name",
-      "email": "Phone or email",
+      "email": "email",
       "password": "Password",
       "confirm_password": "Confirm Password",
       "mobile": "Mobile",
@@ -41,9 +41,18 @@
 "no": "No",
 "logout_confirmation": "Are you sure you want to log out?",
 "noData":"No data available",
-"Settings":"Open Setting"
+"Settings":"Open Setting" ,
+"language":"Language" ,
+"createAccount":"Create Account" ,
+"Network":"Network"
       },
    "French": {
+    "Network":"Réseau"
+,
+    "createAccount":"Créer un compte",
+
+    "language":"Langue"
+,
     "Settings":"Réglage ouvert"
 ,
   "sign_up": "S'inscrire",

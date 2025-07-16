@@ -8,6 +8,7 @@ import { useTheme } from '../../theme/ThemeProvider';
 import { ImageFile } from '../bottom/profile/profileScreen/editProfile/EditTypes';
 import {  GetUploadFile,   UploadFile1 } from '../../redux/Api/AuthApi';
 import { requestCameraPermissions } from '../../requestCameraPermissions';
+import { launchCamera } from 'react-native-image-picker';
 
 const useVideoUpload = () => {
   const navigation = useNavigation<any>();
@@ -23,7 +24,7 @@ const useVideoUpload = () => {
   const [camerImage, setcamerImage] = useState<ImageFile | null>(null);
  useEffect(()=>{
   GetFunction()
-  checkPermissionsAndProceed()
+  // checkPermissionsAndProceed()
   // requestCameraPermissions()
   // requestCameraPermission()
  },[])
@@ -64,30 +65,54 @@ const useVideoUpload = () => {
   //       console.log('Camera video error:', error);
   //     });
   // };
-  const takePhotoFromCamera = async () => {
-    // const permissionGranted = await requestCameraPermissions();
+  // const takePhotoFromCamera = async () => {
+  //   // const permissionGranted = await requestCameraPermissions();
   
-    // if (!permissionGranted) {
-    //   Alert.alert('Permission Denied', 'Camera or audio permission is required.');
-    //   return;
-    // }
+  //   // if (!permissionGranted) {
+  //   //   Alert.alert('Permission Denied', 'Camera or audio permission is required.');
+  //   //   return;
+  //   // }
   
-    ImagePicker.openCamera({
-      mediaType: 'video',
-      includeBase64: false,
-      compressVideoPreset: 'MediumQuality',
-    })
-      .then((video) => {
-        console.log('Recorded video:', video);
-        setImageProfile(video);
-        setIsModalVisible(false);
+  //   ImagePicker.openCamera({
+  //     mediaType: 'video',
+  //     includeBase64: false,
+  //     compressVideoPreset: 'MediumQuality',
+  //   })
+  //     .then((video) => {
+  //       console.log('Recorded video:', video);
+  //       setImageProfile(video);
+  //       setIsModalVisible(false);
+  //       setUploadModal(true);
+  //     })
+  //     .catch((error) => {
+  //       console.log('Camera video error:', error?.message || error);
+  //     });
+  // };
+  const takePhotoFromCamera = () => {
+    launchCamera(
+      {
+        mediaType: 'video',
+        videoQuality: 'high',
+        durationLimit: 60, // max 60 sec
+        cameraType: 'back',
+      },
+      (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled video recording');
+        } else if (response.errorCode) {
+          Alert.alert("Error", response.errorMessage || "Unknown error");
+        } else {
+          const videoUri = response.assets?.[0]?.uri;
+          console.log('Video URI:', videoUri);
+          setImageProfile(videoUri)
+         setIsModalVisible(false);
         setUploadModal(true);
-      })
-      .catch((error) => {
-        console.log('Camera video error:', error?.message || error);
-      });
+          // Upload or play video here
+        }
+      }
+    );
   };
-  
+
   
  
   const requestCameraPermission = async (): Promise<boolean> => {
@@ -156,7 +181,7 @@ const useVideoUpload = () => {
     setUploadModal(false)
     try {
       const params = {
-        img:imageProfile?.path,
+        img:imageProfile?.path ||imageProfile,
          navigation: navigation,  
          type:"VIDEO"
       };

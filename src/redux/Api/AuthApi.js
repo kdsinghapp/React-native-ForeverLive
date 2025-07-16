@@ -1026,5 +1026,98 @@ const GetUploadFile = async (setLoading,type) => {
     } finally {
       setLoading(false);
     }
+  }; 
+
+
+
+
+
+  const AcceptApi = async (param, setLoading) => {
+    try {
+      setLoading(true);
+  
+      const token = await AsyncStorage.getItem("token");
+      if (!token) throw new Error("User authentication token not found");
+  
+      const formData = new FormData();
+      formData.append("status", param.status);
+      formData.append("id", param.userId);
+  
+      const response = await fetch(`${base_url}/request-status-change`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+        body: formData,
+      });
+  
+      const responseText = await response.text();
+  
+      let json;
+      try {
+        json = JSON.parse(responseText);
+        console.log("Response JSON:", json);
+      } catch (e) {
+        throw new Error("Server returned an invalid response");
+      }
+  
+      if (json.status === "1") {
+        successToast(json.message);
+      } else {
+        errorToast(json.message || "Upload failed");
+      }
+  
+      return json;
+    } catch (error) {
+      console.error("Upload error:", error);
+      errorToast(error.message || "Upload failed");
+    } finally {
+      setLoading(false);
+    }
   };
-export {GetRequestApi,CreateNoteSave,NetworksApi,AddgmailMob,GetPlan_Api,UploadVoice,GetUpVoiceFile,Get_post_Api,UploadFile1,GetNote,UploadFile,GetUploadFile,PrivacyPolicyApi, Support_Api,  LoginUserApi, UpdateProfile_Api, SinupUserApi, ForgotPassUserApi, OtpUserApi, UpdatePassUserApi }  
+  
+  
+  const getUserdata = async (setLoading,id) => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (!token) throw new Error("Token not found");
+  
+      const response = await fetch(`${base_url}/get-userdata`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: id,
+        }),
+      });
+  
+      const text = await response.text();
+      let json;
+      try {
+        json = JSON.parse(text);
+      } catch (parseError) {
+        throw new Error("Invalid server response");
+      }
+  
+      if (json.status === "1") {
+        successToast(json.message || "Fetched notes successfully");
+      } else {
+        errorToast(json.message || "Failed to fetch notes");
+      }
+  
+      return json;
+    } catch (error) {
+      console.error("Fetch notes error:", error);
+      errorToast("Network error or invalid response");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+export {GetRequestApi,getUserdata,AcceptApi,CreateNoteSave,NetworksApi,AddgmailMob,GetPlan_Api,UploadVoice,GetUpVoiceFile,Get_post_Api,UploadFile1,GetNote,UploadFile,GetUploadFile,PrivacyPolicyApi, Support_Api,  LoginUserApi, UpdateProfile_Api, SinupUserApi, ForgotPassUserApi, OtpUserApi, UpdatePassUserApi }  

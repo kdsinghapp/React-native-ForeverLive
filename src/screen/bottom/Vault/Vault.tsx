@@ -13,6 +13,8 @@ import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../../../theme/ThemeProvider';
 import styles from './style';
+import Voice from '../../voice/Voice';
+import EmptyListComponent from '../../../compoent/EmptyListComponent';
  
 const tabs = ['Capsules', 'Letters', 'Audio',  ];
 
@@ -56,7 +58,6 @@ const VaultScreen = () => {
               color:theme.text
 
       }]}>Vault</Text>
-
       <View style={styles.tabsContainer}>
         {tabs.map((tab) => (
        
@@ -79,11 +80,13 @@ const VaultScreen = () => {
           </TouchableOpacity>
          ))}
       </View>
-
+ 
       <FlatList
-        data={data}
+        data={[]}
         keyExtractor={(item) => item.id}
         renderItem={renderItem} 
+        ListEmptyComponent={() => <EmptyListComponent />}
+
         style={{
           marginHorizontal:15 ,
           marginTop:15

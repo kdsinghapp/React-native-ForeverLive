@@ -17,9 +17,7 @@ import usePhotoUpload from './usePhotoUpload';
 import UploadConfirmationModal from '../../compoent/UploadConfirmationModal';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
 import LoadingModal from '../../utils/Loader';
-import ImagLoader from '../../compoent/ImagLoader';
-import ScreenNameEnum from '../../routes/screenName.enum';
- 
+ import PhotoCard from '../../compoent/card/photoCard/PhotoCard';
 
 const PhotoUpload = () => {
   const {
@@ -28,8 +26,7 @@ const PhotoUpload = () => {
     setIsModalVisible,
     pickImageFromGallery,
     takePhotoFromCamera,
-    theme,navigation
-    ,
+    theme, 
     type,
     camerImage,
     uploadModal, setUploadModal,
@@ -44,12 +41,9 @@ imgloading, setimgloading
         flex:1,
         backgroundColor:theme.background
     }}>
-
         <StatusBarComponent/>
         {loading ? <LoadingModal /> : null}
-
         <CustomHeader label={type =="PHOTO" ? "PHOTO":"Video"} imageSource={imageIndex.backImg}/>
-
     <View style={[styles.container,{
               backgroundColor:theme.background
 
@@ -78,7 +72,6 @@ imgloading, setimgloading
     </View>
   )}
 </TouchableOpacity>
-
         <TouchableOpacity style={styles.uploadBox} 
         onPress={takePhotoFromCamera}
         >
@@ -99,53 +92,20 @@ imgloading, setimgloading
     </Text>
   </View>
 )}
-
-      
         </TouchableOpacity>
       </View>
 
    <SearchBar placeholder="Search"/>
-       <FlatList 
+   <FlatList 
   showsVerticalScrollIndicator={false}
   data={videoList}
-  keyExtractor={(item:any) => item?.id?.toString()}
+  keyExtractor={(item: any) => item?.id?.toString()}
   numColumns={3}
   style={{ marginTop: 30 }}
   columnWrapperStyle={{ justifyContent: 'space-between' }}
-   renderItem={({ item }) =>  {
-     return(
-      <View style={{
-        width: '32%',
-        aspectRatio: 1,
-        marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10,
-        overflow: 'hidden',
-        backgroundColor: '#f0f0f0',
-      }}>
-      {imgloading && <ImagLoader />}
-      ?
-      <TouchableOpacity onPress={()=>navigation.navigate(ScreenNameEnum.ImageZoom,{
-        images:item.file_path
-
-      })}>
-      <Image 
-       onLoadStart={() => setimgloading(true)}
-       onLoadEnd={() => setimgloading(false)}
-       onError={() => setimgloading(false)}  // Add this line
-      source={{ uri: item.file_path }} style={styles.image} />
-      </TouchableOpacity>
-      </View>
-    )
-  }}
-  ListEmptyComponent={() => {
-    return(
-      <EmptyListComponent/>
-    )
-  }}
+  renderItem={({ item }) => <PhotoCard item={item} />}
+  ListEmptyComponent={() => <EmptyListComponent />}
 />
-
 <ImagePickerModal
   modalVisible={isModalVisible}
   setModalVisible={setIsModalVisible}
@@ -161,8 +121,6 @@ imgloading, setimgloading
   }}
   onConfirm={uploadFiles}
 />
-
-
     </View>
     </SafeAreaView>
   );

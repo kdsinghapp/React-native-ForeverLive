@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
- import {   GetRequestApi, NetworksApi } from '../../../redux/Api/AuthApi';
+ import {   AcceptApi, GetRequestApi, NetworksApi } from '../../../redux/Api/AuthApi';
 import { useTheme } from '../../../theme/ThemeProvider';
 const useNetwork = () => {
   const navigation = useNavigation<any>();
@@ -27,6 +27,11 @@ const useNetwork = () => {
     } finally {
      }
   };
+ 
+
+
+
+
   const GetRequests = async () => {
     try {
        const response = await NetworksApi(setLoading);
@@ -41,14 +46,42 @@ const useNetwork = () => {
     } finally {
      }
   };
-  const handleAccept = (userId) => {
-    console.log("Accepted user:", userId);
-    // ✅ Add accept API call here
+  const handleAccept =async (userId:any) => {
+     try {
+      let pams={
+        status:"Accept",
+         userId:userId,
+      }
+      const response = await AcceptApi(pams,setLoading);
+     if (response) {
+      GetRequests()
+     } else {
+       console.warn("No response or invalid response data.");
+     }
+
+   } catch (error) {
+     console.error("Login error:", error);
+   } finally {
+    }
   };
 
-  const handleReject = (userId) => {
-    console.log("Rejected user:", userId);
-    // ❌ Add reject API call here
+  const handleReject = async (userId:any) => {
+     try {
+      let pams={
+        status:"Reject",
+        userId:userId,
+      }
+      const response = await AcceptApi(pams,setLoading);
+     if (response) {
+      GetRequests()
+     } else {
+       console.warn("No response or invalid response data.");
+     }
+
+   } catch (error) {
+     console.error("Login error:", error);
+   } finally {
+    }
   };
    return {
     navigation,

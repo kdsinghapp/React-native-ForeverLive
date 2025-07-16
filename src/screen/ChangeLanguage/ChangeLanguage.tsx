@@ -32,7 +32,7 @@ const ChangeLanguage = ({ navigation }: any) => {
     <SafeAreaView style={[styles.container,{
       backgroundColor:theme.background
     }]}>
-      <CustomHeader label={'Language'} imageSource={imageIndex.backImg} />
+      <CustomHeader label={localizationStrings?.language} imageSource={imageIndex.backImg} />
 
       <TouchableOpacity
   style={styles.menuItem}

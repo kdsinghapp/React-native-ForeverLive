@@ -26,23 +26,24 @@ const AppNavigator: React.FC = () => {
   }, []);
   return (
 
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-      <LocationProvider>
+<Provider store={store}>
+  <PersistGate loading={null} persistor={persistor}>
+    <LocationProvider>
       <LanguageProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
-        <ThemeProvider>
           <NavigationContainer>
-         <NetworkStatusModal modalVisible={modalVisible} offlineText="No Internet! Please check your connection." />  
-            <RegistrationRoutes />
-            <Toast config={toastConfig} />
+            <ThemeProvider>
+              <NetworkStatusModal modalVisible={modalVisible} offlineText="No Internet! Please check your connection." />  
+              <RegistrationRoutes />
+              <Toast config={toastConfig} />
+            </ThemeProvider>
           </NavigationContainer>
-          </ThemeProvider>
         </GestureHandlerRootView>
-        </LanguageProvider>
-        </LocationProvider>
-      </PersistGate>
-    </Provider>
+      </LanguageProvider>
+    </LocationProvider>
+  </PersistGate>
+</Provider>
+
 
   );
 };

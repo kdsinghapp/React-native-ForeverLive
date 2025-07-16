@@ -1,11 +1,12 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTheme } from '../../theme/ThemeProvider';
-import { NetworksApi } from '../../redux/Api/AuthApi';
+import { getUserdata, NetworksApi } from '../../redux/Api/AuthApi';
   const useReject = () => {
   const navigation = useNavigation<any>();
-  const route: any = useRoute();
-   const { theme }: any = useTheme();
+  const route:any = useRoute();
+  const { item } = route.params;
+    const { theme }: any = useTheme();
     const [loading, setLoading] = useState(false);
    const [contacts, setcontacts] = useState([]);
   useEffect(()=>{
@@ -13,13 +14,13 @@ import { NetworksApi } from '../../redux/Api/AuthApi';
  },[])
   const GetFunction = async () => {
     try {
-       const response = await NetworksApi(setLoading);
+       const response = await getUserdata(setLoading,item?.user_id);
       if (response && response.data) {
-        setcontacts(response.data)
+        console.log("response.data",response.data)
+         setcontacts(response.data)
       } else {
         console.warn("No response or invalid response data.");
       }
-
     } catch (error) {
       console.error("Login error:", error);
     } finally {

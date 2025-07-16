@@ -44,7 +44,7 @@ const SettingScreen = () => {
       flex:1,
     }}>
       <StatusBarComponent/>
-    <ScrollView style={styles.container}>
+    <ScrollView  showsVerticalScrollIndicator={false} style={styles.container}>
       <Text style={styles.header}>Setting</Text>
       {settings.map((item, index) => (
   <TouchableOpacity

@@ -20,6 +20,8 @@ import LoadingModal from '../../utils/Loader';
 import ScreenNameEnum from '../../routes/screenName.enum';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
 import font from '../../theme/font';
+import PhotoCard from '../../compoent/card/photoCard/PhotoCard';
+import CustomHeader from '../../compoent/CustomHeader';
  
  
 
@@ -59,7 +61,9 @@ const {
   return (
     <SafeAreaView style={[styles.container,{
       backgroundColor:theme.background
-    }]}>
+    }]}> 
+        <CustomHeader imageSource={imageIndex.backImg} label={"Acces user"}/>
+
         <StatusBarComponent/>
         {loading ? <LoadingModal /> : null}
         <ScrollView 
@@ -68,14 +72,20 @@ const {
             <View style={{
                 marginHorizontal:15
             }}>
- 
+ <FlatList 
+  showsVerticalScrollIndicator={false}
+  data={contacts}
+  keyExtractor={(item: any) => item?.id?.toString()}
+  numColumns={3}
+  style={{ marginTop: 30 }}
+  columnWrapperStyle={{ justifyContent: 'space-between' }}
+  renderItem={({ item }) => <PhotoCard item={item} />}
+  ListEmptyComponent={() => <EmptyListComponent />}
+/>
 
-     
- 
-
-<FlatList
+{/* <FlatList
         data={contacts}
-        renderItem={renderItem1}
+        renderItem={({ item }) => <PhotoCard item={item} />}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         ListHeaderComponent={() => (
@@ -93,7 +103,7 @@ const {
             <EmptyListComponent/>
           )
         }}
-      />
+      /> */}
 </View>
       </ScrollView>
     </SafeAreaView>

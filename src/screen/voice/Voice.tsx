@@ -20,14 +20,14 @@ import EmptyListComponent from '../../compoent/EmptyListComponent';
 import AudioModal from '../../compoent/AudioModal/AudioModal';
 import moment from 'moment';
 import PlayAudio from '../../compoent/PlayAudio/PlayAudio';
-
+ 
  
 
 const Voice = () => { 
   const {   
     navigation,
     loading,
-   
+    type,
     theme,
    
       modalVisible, setModalVisible , 
@@ -74,7 +74,7 @@ const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YY
         flex:1,
         backgroundColor:theme.background
     }}> 
-     
+      
     {loading ? <LoadingModal /> : null}
     <StatusBarComponent/> 
     <CustomHeader label='Add a Photo Memory' imageSource={imageIndex?.backImg}/>
