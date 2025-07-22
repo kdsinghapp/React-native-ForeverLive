@@ -1120,4 +1120,38 @@ const GetUploadFile = async (setLoading,type) => {
   };
   
 
-export {GetRequestApi,getUserdata,AcceptApi,CreateNoteSave,NetworksApi,AddgmailMob,GetPlan_Api,UploadVoice,GetUpVoiceFile,Get_post_Api,UploadFile1,GetNote,UploadFile,GetUploadFile,PrivacyPolicyApi, Support_Api,  LoginUserApi, UpdateProfile_Api, SinupUserApi, ForgotPassUserApi, OtpUserApi, UpdatePassUserApi }  
+  const Get_Memory = async (
+    setLoading ,
+  ) => {
+    setLoading(true);
+  
+    try {
+      const token = await AsyncStorage.getItem("token");
+   
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // ⬅️ Send token properly
+        },
+      };
+  
+      const response = await fetch(`${base_url}/folders/get-memory-data`, requestOptions); // ✅ await here
+      const responseData = await response.json(); // ✅ parse JSON
+  
+      if (responseData.status === "1") {
+        return responseData;
+      } else {
+        errorToast(responseData.error || "Something went wrong");
+        return null;
+      }
+  
+    } catch (error) {
+      console.error("API call error:", error);
+      errorToast("Network error");
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+export {GetRequestApi,Get_Memory,getUserdata,AcceptApi,CreateNoteSave,NetworksApi,AddgmailMob,GetPlan_Api,UploadVoice,GetUpVoiceFile,Get_post_Api,UploadFile1,GetNote,UploadFile,GetUploadFile,PrivacyPolicyApi, Support_Api,  LoginUserApi, UpdateProfile_Api, SinupUserApi, ForgotPassUserApi, OtpUserApi, UpdatePassUserApi }  

@@ -53,7 +53,7 @@ import DatePicker from 'react-native-date-picker';
                                 resizeMode="cover"
                                 source={
                                     imageProfile
-                                      ? { uri: imageProfile.path }
+                                      ? { uri: imageProfile }
                                       : isLogin?.userData?.user_data.image
                                       ? { uri: isLogin?.userData?.user_data.image }
                                       :  {uri:"https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png"}

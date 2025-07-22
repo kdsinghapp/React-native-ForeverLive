@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useTheme } from '../../theme/ThemeProvider';
 import { ImageFile } from '../bottom/profile/profileScreen/editProfile/EditTypes';
 import {  GetUploadFile,  UploadFile } from '../../redux/Api/AuthApi';
-import { launchCamera } from 'react-native-image-picker';
+ import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 
 const usePhotoUpload = () => {
   const navigation = useNavigation<any>();
@@ -45,21 +45,48 @@ const usePhotoUpload = () => {
   }
 };
 
-  const pickImageFromGallery = () => {
-    ImagePicker.openPicker({
-      width: 300,
-      height: 400,
-      cropping: false,
-    })
-      .then((image) => {
+  // const pickImageFromGallery = () => {
+  //   ImagePicker.openPicker({
+  //     width: 300,
+  //     height: 400,
+  //     cropping: false,
+  //   })
+  //     .then((image) => {
         
-        setImageProfile(image);
-        setIsModalVisible(false);
-        setUploadModal(true)
-      })
-      .catch((error) => {
-        console.log("Gallery error:", error);
+  //       setImageProfile(image);
+  //       setIsModalVisible(false);
+  //       setUploadModal(true)
+  //     })
+  //     .catch((error) => {
+  //       console.log("Gallery error:", error);
+  //     });
+  // };
+  
+  const pickImageFromGallery = async () => {
+    setTimeout(() => {
+      const options = {
+        mediaType: 'photo',
+        maxWidth: 300,
+        maxHeight: 400,
+        quality: 0.8,
+        includeBase64: false,
+      };
+  
+      launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.errorCode) {
+          console.log('Image Picker Error: ', response.errorMessage);
+        } else if (response.assets && response.assets.length > 0) {
+          const imageUri = response.assets?.[0]?.uri;
+          console.log("image",imageUri)
+          setImageProfile(imageUri)
+          setUploadModal(true)
+           setIsModalVisible(false);
+          setIsModalVisible(false);
+        }
       });
+    }, 200); // Delay helps when launched from modal or state update
   };
 const takePhotoFromCamera = async () => {
   if (Platform.OS === 'android') {
@@ -182,7 +209,7 @@ const takePhotoFromCamera = async () => {
 
     try {
       const params = {
-        img:imageProfile?.path ||imageProfile,
+        img:imageProfile ||imageProfile,
          navigation: navigation, 
          type:"IMAGE"
 

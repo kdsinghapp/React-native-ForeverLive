@@ -18,8 +18,10 @@ const {    navigation,
   theme,
   plan, setplan} =useSubscriptionPlan()
 
-  const PlanCard = ({ item }) => (
-    <LinearGradient
+  const PlanCard = ({ item }) =>  {
+    const priceArray = item.price?.split(" or ") || [];
+    return(
+      <LinearGradient
       start={{ x: 0, y: 2 }}
       end={{ x: 2, y: 0 }}
       colors={['#8F52CA', '#3658AE', '#19A3BD']}
@@ -29,19 +31,18 @@ const {    navigation,
         <Image source={imageIndex?.free} style={styles.icon} />
         <Text style={styles.planTitle}>{item.title} Plan</Text>
         <Text style={styles.description}>{item.description ||"3 uploads, 1 trusted contact, 1 social platform"}</Text>
-        <Text style={{
-          color:"black" ,
-          bottom:11, 
-          fontSize:11
-        }}>₹{item.price} / {item.duration}</Text>
+        {priceArray.map((price, index) => (
+  <Text key={index} style={{ color: "black", fontSize: 15, marginBottom: 2 ,bottom:11 }}>
+    ₹{price}
+  </Text>
+))}
         <TouchableOpacity style={styles.button}>
           <CustomButton title={'Upgrade Now'} />
         </TouchableOpacity>
       </View>
     </LinearGradient>
-  );
-  
-  
+    )
+  }
   
   return (
    <SafeAreaView style={{

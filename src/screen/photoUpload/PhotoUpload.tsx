@@ -56,7 +56,7 @@ imgloading, setimgloading
 >
   {imageProfile ? (
     <Image 
-      source={{ uri: imageProfile.path }} 
+      source={{ uri: imageProfile }} 
       style={{ height: 60, width: 60 }} 
       resizeMode="cover" 
     />

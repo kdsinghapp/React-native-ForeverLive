@@ -41,7 +41,7 @@ const SettingScreen = () => {
 
     <SafeAreaView  style={{
       backgroundColor: theme.background,
-      flex:1,
+      flex:1, 
     }}>
       <StatusBarComponent/>
     <ScrollView  showsVerticalScrollIndicator={false} style={styles.container}>

@@ -20,6 +20,7 @@ useEffect(()=>{
     try {
        const response = await GetPlan_Api(setLoading);
       if (response && response.data) {
+        console.log("sss",response.data)
          setplan(response.data)
       } else {
         console.warn("No response or invalid response data.");

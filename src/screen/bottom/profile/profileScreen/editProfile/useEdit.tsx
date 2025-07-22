@@ -8,7 +8,7 @@ import { check, request, PERMISSIONS, RESULTS } from 'react-native-permissions';
 import { Get_post_Api, UpdateProfile_Api } from '../../../../../redux/Api/AuthApi';
 import { loginSuccess } from '../../../../../redux/feature/authSlice';
 import { ImageFile } from './EditTypes';
-
+import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 const useEdit = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -100,16 +100,42 @@ const useEdit = () => {
     setCountryModal(false);
   };
 
-  const pickImageFromGallery = async () => {
-    try {
-      const image = await ImagePicker.openPicker({ width: 300, height: 400, cropping: false });
-      setImageProfile(image);
-      setIsModalVisible(false);
-    } catch (error) {
-      console.log('Image Picker Error:', error);
-    }
-  };
+  // const pickImageFromGallery = async () => {
+  //   try {
+  //     const image = await ImagePicker.openPicker({ width: 300, height: 400, cropping: false });
+  //     setImageProfile(image);
+  //     setIsModalVisible(false);
+  //   } catch (error) {
+  //     console.log('Image Picker Error:', error);
+  //   }
+  // };
 
+  const pickImageFromGallery = async () => {
+    setTimeout(() => {
+      const options = {
+        mediaType: 'photo',
+        maxWidth: 300,
+        maxHeight: 400,
+        quality: 0.8,
+        includeBase64: false,
+      };
+  
+      launchImageLibrary(options, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.errorCode) {
+          console.log('Image Picker Error: ', response.errorMessage);
+        } else if (response.assets && response.assets.length > 0) {
+          const imageUri = response.assets?.[0]?.uri;
+          console.log("image",imageUri)
+          setImageProfile(imageUri)
+           setIsModalVisible(false);
+          setIsModalVisible(false);
+        }
+      });
+    }, 200); // Delay helps when launched from modal or state update
+  };
+ 
   const takePhotoFromCamera = async () => {
     try {
       const image = await ImagePicker.openCamera({ width: 300, height: 400, cropping: false });
@@ -144,7 +170,7 @@ const useEdit = () => {
         mob: credentials.mobile,
         fulle: credentials.fullName,
         navigation: navigation,
-        profile: imageProfile?.path,
+        profile: imageProfile,
         dob: date.toLocaleDateString(),
       };
 

@@ -6,6 +6,7 @@ const getStyles = (theme: any) =>
     container: {
       flex: 1,
       backgroundColor: theme.background,
+
     },
     header: {
       fontSize: 22,
