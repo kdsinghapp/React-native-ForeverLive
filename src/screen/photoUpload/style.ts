@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   uploadBox: {
     width: (width - 48) / 2,
-    height: 80,
+    height: 120,
     borderRadius: 12,
     borderWidth: 1.5,
     borderColor: '#A685E2',
@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
     color:"balck",
-    fontFamily:font.PoppinsRegular
+    fontFamily:font.PoppinsRegular,
+    textAlign:"center" ,
+    marginBottom:14
   },
   searchInput: {
     height: 45,

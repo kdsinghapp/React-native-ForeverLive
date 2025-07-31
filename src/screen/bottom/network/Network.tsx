@@ -31,7 +31,7 @@ const {
    }= useNetwork()
 
    const renderItem = ({ item }:any) =>  {
-    console.log("item",item)
+  
      return(
 <View style={styles.contactCard}>
   {item?.user?.image ?   (
@@ -62,7 +62,7 @@ const {
   }}
 >
 
-  {item?.status?.toLowerCase() === 'accept' ? <Text>Acces user</Text> : <Text>{item?.status}</Text>
+  {item?.status?.toLowerCase() === 'accept' ? <Text>{localizationStrings?.Accesuser}</Text> : <Text>{item?.status}</Text>
   
 }
 </Text>
@@ -75,8 +75,7 @@ const {
     )
    }
   const renderItem1 = ({ item }:any) => {
-    console.log("item",item)
-     const createdAt = item?.user.created_at;
+      const createdAt = item?.user.created_at;
     const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YYYY, h:mm A");
     return(
       <View style={styles.card}>
@@ -93,13 +92,13 @@ const {
              style={[styles.button, styles.acceptButton]}
              onPress={() => handleAccept(item.id)}
            >
-             <Text style={styles.buttonText1}>Accept</Text>
+             <Text style={styles.buttonText1}>{localizationStrings?.Accept}</Text>
            </TouchableOpacity>
            <TouchableOpacity
              style={[styles.button, styles.rejectButton]}
              onPress={() => handleReject(item.id)}
            >
-             <Text style={styles.buttonText1}>Reject</Text>
+             <Text style={styles.buttonText1}>{localizationStrings?.Reject}</Text>
            </TouchableOpacity>
          </View>
         )}
@@ -121,8 +120,8 @@ const {
                 marginHorizontal:15
             }}>
       <Text style={[styles.sectionTitle,{
-              color:theme.text
-      }]}>{localizationStrings.Network}</Text>
+              color:theme.text,
+       }]}>{localizationStrings.Network}</Text>
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.actionButton} 
         onPress={()=>navigation.navigate(ScreenNameEnum.AddEmail,{
@@ -132,18 +131,20 @@ const {
             <View style={{
                 flexDirection:"row",
                 alignItems:"center",
-                justifyContent:"center"
+                justifyContent:"center" ,
+                flex:1
             }}>
                 <Image source={imageIndex?.sms} 
                 style={{
                     height:33,
                     width:33 ,
-                    resizeMode:"contain"
+                    resizeMode:"contain" ,
+             
                 }}
                 />
           <Text style={[styles.buttonText,{
               color:theme.text
-          }]}>Add by Email</Text>
+          }]}>{localizationStrings?.Add}</Text>
 
             </View>
          </TouchableOpacity>
@@ -166,8 +167,8 @@ const {
                 
                 />
           <Text style={[styles.buttonText,{
-              color:theme.text
-          }]}>Add by Phone</Text>
+              color:theme.text,
+           }]}>{localizationStrings?.byPhone}</Text>
 
             </View>
          </TouchableOpacity>
@@ -186,12 +187,12 @@ const {
                 />
         <Text style={[styles.buttonText,{
             color:theme.text
-        }]}>Scan QR Code</Text>
+        }]}>{localizationStrings?.Scan}</Text>
       </TouchableOpacity>
 
       <Text style={[styles.sectionTitle,{
           color:theme.text
-      }]}>Network</Text>
+      }]}>{localizationStrings?.Network}</Text>
       
 
 <FlatList

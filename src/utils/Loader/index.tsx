@@ -9,6 +9,7 @@ import {
   Image
 } from 'react-native';
 import imageIndex from '../../assets/imageIndex';
+import localizationStrings from '../../Localization/Localization';
 
 const LoadingModal = ({ visible }:any) => {
   return (
@@ -25,7 +26,7 @@ const LoadingModal = ({ visible }:any) => {
             resizeMode:"contain"
           }}/>
           {/* <ActivityIndicator size="large" color="#150149"  style={{marginTop:10}} /> */}
-          <Text style={styles.loadingText}>Please wait...</Text>
+          <Text style={styles.loadingText}>{localizationStrings?.Please}</Text>
         </View>
       </View>
     </Modal>

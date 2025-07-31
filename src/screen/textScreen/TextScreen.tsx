@@ -17,6 +17,7 @@ import LoadingModal from '../../utils/Loader';
 import Createnote from '../../compoent/Createnote';
 import moment from 'moment';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
+import localizationStrings from '../../Localization/Localization';
  
 const TextScreen = () => {
 const {  
@@ -69,7 +70,7 @@ const formattedDate = moment(originalDateStr).format("DD/MM/YYYY hh:mmA")
       <Text style={[styles.subHeader,{
                 color:theme.text
 
-      }]}>Your Template</Text>
+      }]}>{localizationStrings?.YourTemplate}</Text>
 
       <TouchableOpacity style={styles.createNoteCard} 
       onPress={()=>setIsModalVisible(true)}
@@ -81,7 +82,7 @@ const formattedDate = moment(originalDateStr).format("DD/MM/YYYY hh:mmA")
         <Text style={[styles.createText,{
                           color:theme.text
 
-        }]}>Create Note</Text>
+        }]}>{localizationStrings?.CreateNote}</Text>
       </TouchableOpacity>
 
       <Text style={[styles.subHeader,{

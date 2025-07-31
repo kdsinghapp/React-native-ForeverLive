@@ -5,8 +5,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Platform,
-  ActivityIndicator,
+ 
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Video from "react-native-video";
@@ -14,6 +13,7 @@ import imageIndex from "../../assets/imageIndex";
 import StatusBarComponent from "../../compoent/StatusBarCompoent";
 import CustomHeader from "../../compoent/CustomHeader";
 import { useTheme } from "../../theme/ThemeProvider";
+import localizationStrings from "../../Localization/Localization";
 
 const { width, height } = Dimensions.get("window");
 
@@ -31,7 +31,7 @@ const VideoPlay: React.FC<any> = ({ route }) => {
       backgroundColor:theme.background
     }]}>
       <StatusBarComponent />
-      <CustomHeader imageSource={imageIndex.backImg} label={"Video View"} />
+      <CustomHeader imageSource={imageIndex.backImg} label={localizationStrings?.VideoView} />
 
       <View style={styles.videoWrapper}>
         <Video

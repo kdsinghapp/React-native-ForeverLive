@@ -8,6 +8,7 @@ import {
  } from 'react-native';
 import SoundPlayer from 'react-native-sound-player';
 import CustomButton from '../CustomButton';
+import localizationStrings from '../../Localization/Localization';
 
 const { width } = Dimensions.get('window');
 
@@ -54,8 +55,8 @@ console.log("audioUri",audioUri)
     >
       <View style={styles.overlay}>
         <View style={styles.modalBox}>
-          <Text style={styles.title}>🎵 Audio Preview</Text>
-          <Text style={styles.description}>Use the buttons below to control playback.</Text>
+          <Text style={styles.title}>🎵 {localizationStrings?.AudioPreview}</Text>
+          <Text style={styles.description}>{localizationStrings?.playback}</Text>
 
           <View style={styles.buttonRow}>
             
@@ -73,7 +74,7 @@ console.log("audioUri",audioUri)
           <View style={styles.buttonRow}>
           <CustomButton
             title= {
-                "Close"
+                localizationStrings?.Close
             }
             onPress={() => onClose()
             }

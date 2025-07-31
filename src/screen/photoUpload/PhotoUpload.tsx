@@ -18,6 +18,7 @@ import UploadConfirmationModal from '../../compoent/UploadConfirmationModal';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
 import LoadingModal from '../../utils/Loader';
  import PhotoCard from '../../compoent/card/photoCard/PhotoCard';
+import localizationStrings from '../../Localization/Localization';
 
 const PhotoUpload = () => {
   const {
@@ -67,7 +68,7 @@ imgloading, setimgloading
         style={{ height: 33, width: 33 }} 
       />
       <Text style={[styles.uploadText, { color: theme.text }]}>
-        Tap to Upload
+        {localizationStrings?.TaptoUpload}
       </Text>
     </View>
   )}
@@ -88,7 +89,7 @@ imgloading, setimgloading
       style={{ height: 33, width: 33 }} 
     />
     <Text style={[styles.uploadText, { color: theme.text }]}>
-      Take Photo
+      {localizationStrings?.Take}
     </Text>
   </View>
 )}

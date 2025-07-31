@@ -51,12 +51,12 @@ export default function PasswordReset() {
             <Text style={[styles.txtHeading,{
               color:theme.text
             }]}>
-            Password Reset
+            {localizationStrings?.PasswordReset}
             </Text>
             <Text style={[styles.txtsubHeading, {
                marginTop: 8
             }]}>
-             Please put your mobile number to reset your password
+{localizationStrings?.resettext}
             </Text>
           </View>
         </View>
@@ -71,7 +71,7 @@ export default function PasswordReset() {
 , marginTop: 8, marginBottom: 5, fontSize: 16,   textAlign: "center", fontFamily:font.PoppinsBold }}>Or</Text> */}
                                <TextInputField
                                text={credentials.email}
-                             placeholder={"Email Address"} 
+                             placeholder={localizationStrings?.EmailAddress} 
                             firstLogo={true}
                             img={imageIndex.mobile}
                               onChangeText={(value: string) => handleChange('email', value)} 

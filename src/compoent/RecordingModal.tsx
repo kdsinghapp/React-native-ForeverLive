@@ -157,6 +157,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import localizationStrings from '../Localization/Localization';
 
 type Props = {
   visible: boolean;
@@ -208,7 +209,7 @@ const RecordingModal: React.FC<Props> = ({
     <Modal transparent visible={visible} animationType="slide">
       <View style={styles.overlay}>
         <View style={styles.modalBox}>
-          <Text style={styles.title}>🎤 Voice Recorder</Text>
+          <Text style={styles.title}>🎤 {localizationStrings?.VoiceRecorder}</Text>
 
           {/* <View style={styles.timerContainer}>
             <Text style={styles.timerText}>{renderTimer()}</Text>
@@ -220,14 +221,14 @@ const RecordingModal: React.FC<Props> = ({
                 style={[styles.actionButton, styles.stopButton]}
                 onPress={onStopRecording}
               >
-                <Text style={styles.btnText}>⏹ Stop</Text>
+                <Text style={styles.btnText}>⏹ {localizationStrings?.Stop}</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
                 style={[styles.actionButton, styles.startButton]}
                 onPress={onStartRecording}
               >
-                <Text style={styles.btnText}>🎙 Start</Text>
+                <Text style={styles.btnText}>🎙 {localizationStrings?.Start}</Text>
               </TouchableOpacity>
             )}
 
@@ -240,7 +241,7 @@ const RecordingModal: React.FC<Props> = ({
               onPress={onPlayRecording}
               disabled={!hasRecording}
             >
-              <Text style={styles.btnText}>▶️ Play</Text>
+              <Text style={styles.btnText}>▶️ {localizationStrings?.Play}</Text>
             </TouchableOpacity>
           </View>
           <View style={{
@@ -261,7 +262,7 @@ const RecordingModal: React.FC<Props> = ({
               backgroundColor: '#8F52CA', // Blue background
 
           }}>
-            <Text style={styles.closeText}>Close</Text>
+            <Text style={styles.closeText}>{localizationStrings?.Close}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={onSubmit} style={{
               paddingVertical: 12,
@@ -273,7 +274,7 @@ const RecordingModal: React.FC<Props> = ({
               flex: 1,
               marginHorizontal: 5,
           }}>
-            <Text style={styles.closeText}>Submit</Text>
+            <Text style={styles.closeText}>{localizationStrings?.Submit}</Text>
           </TouchableOpacity>
         </View>
         </View>

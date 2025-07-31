@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
  import { height } from '../../utils/Constant';
 import { useTheme } from '../../theme/ThemeProvider';
 import { PrivacyPolicyApi } from '../../redux/Api/AuthApi';
+import localizationStrings from '../../Localization/Localization';
 const PrivacyPolicy = () => {
     const [isLoading, setLoading] = useState(false)
      const [faqData, setFaqData] = useState<any>([])
@@ -47,7 +48,7 @@ const PrivacyPolicy = () => {
             <StatusBarComponent />
             <CustomHeader
                
-                imageSource={imageIndex.backImg} label="Privacy Policy" />
+                imageSource={imageIndex.backImg} label={localizationStrings?.PrivacyPolicy} />
             <ScrollView 
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.contentContainer}>
@@ -61,7 +62,7 @@ const PrivacyPolicy = () => {
                 {/* {faqData.length != 0 && ( */}
                     <Text style={{ color:theme.text, fontWeight: "800", fontSize: 18 }}>Terms and Conditions</Text>
                 {/* )} */}
-                                    <Text style={{ color: "black", fontWeight: "700", fontSize: 18 }}>Privacy Policy</Text>
+                                    <Text style={{ color: "black", fontWeight: "700", fontSize: 18 }}>{localizationStrings?.PrivacyPolicy}</Text>
                                  
 
 

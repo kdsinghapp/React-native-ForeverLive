@@ -22,6 +22,7 @@ import { height } from '../../utils/Constant';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useTheme } from '../../theme/ThemeProvider';
 import { Support_Api } from '../../redux/Api/AuthApi';
+import localizationStrings from '../../Localization/Localization';
 
 
 const HelpSupportScreen = () => {
@@ -72,7 +73,7 @@ const HelpSupportScreen = () => {
       <StatusBarComponent />
       {isLoading && <Loading />}
       <CustomHeader
-                      label="Help & Support"
+                      label= {localizationStrings?.HelpSupport}
                       imageSource={imageIndex.backImg}
                   />
       <KeyboardAvoidingView
@@ -121,8 +122,8 @@ const HelpSupportScreen = () => {
                           fontWeight: '800',
                         }}
                       >
-                        How can we help?
-                      </Text>
+{localizationStrings?.can}       
+               </Text>
                       <TextInput
                         value={SupportHelp}
                         onChangeText={setSupportHelp}
@@ -135,7 +136,7 @@ const HelpSupportScreen = () => {
                           textAlignVertical: 'top',
                           flex: 1
                         }}
-                        placeholder="Type Here..."
+                        placeholder={localizationStrings?.Type}
                         placeholderTextColor="#3658AE"
                         multiline
                       />
@@ -146,7 +147,7 @@ const HelpSupportScreen = () => {
 
               {!keyboardVisible && (
                 <View style={styles.buttonContainer}>
-                  <CustomButton title="Submit" onPress={handleSubmit}  
+                  <CustomButton title={localizationStrings?.Submit} onPress={handleSubmit}  
                   buttonStyle={{
                     backgroundColor:"#F39C12"
                   }}

@@ -45,7 +45,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ visible, onClose, onConfirm }
           {/* Modal Title & Message */}
           <Text style={[styles.title,{
             color:theme.text
-          }]}>Log Out?</Text>
+          }]}>{localizationStrings?.Log}?</Text>
           <Text style={styles.subtitle}>{localizationStrings?.logout_confirmation}</Text>
 
           {/* Logout Button */}
@@ -54,7 +54,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ visible, onClose, onConfirm }
             utText}>{localizationStrings?.logout}</Text>
           </TouchableOpacity> */}
          <CustomButton
-            title= {"Yes Log out"}
+            title= {localizationStrings?.Yesout}
             onPress={onConfirm}
 
            
@@ -62,13 +62,13 @@ const LogoutModal: React.FC<LogoutModalProps> = ({ visible, onClose, onConfirm }
           />
           <Text  
           onPress={onClose}
-          style={{
+          style={{ 
             textAlign:"center",
             marginTop:15,
             marginBottom:11,
             color:"#3658AE" ,
             fontSize:14
-          }}>Cancel</Text>
+          }}>{localizationStrings?.Cancel}</Text>
         </View>
       </View>
     </Modal>

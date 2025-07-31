@@ -20,6 +20,7 @@ import EmptyListComponent from '../../compoent/EmptyListComponent';
 import AudioModal from '../../compoent/AudioModal/AudioModal';
 import moment from 'moment';
 import PlayAudio from '../../compoent/PlayAudio/PlayAudio';
+import localizationStrings from '../../Localization/Localization';
  
  
 
@@ -77,7 +78,7 @@ const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YY
       
     {loading ? <LoadingModal /> : null}
     <StatusBarComponent/> 
-    <CustomHeader label='Add a Photo Memory' imageSource={imageIndex?.backImg}/>
+    <CustomHeader label={localizationStrings?.AddMemory} imageSource={imageIndex?.backImg}/>
     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
   <View style={{
     flex:1,
@@ -85,10 +86,10 @@ const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YY
     flexDirection:"row",
     alignItems:"center"
   }}>
-  <Text style={[styles.subHeader,{
+  {/* <Text style={[styles.subHeader,{
             color:theme.text
 
-  }]}>Today</Text>
+  }]}>Today</Text> */}
   {/* <Text style={[styles.subHeader,{
     color:"red",
    }]}>4 records</Text> */}
@@ -105,13 +106,13 @@ const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YY
         scrollEnabled={false}
         ListEmptyComponent={() => {
           return(
-            <EmptyListComponent message="Not a data "/>
+            <EmptyListComponent message={localizationStrings?.Notdata}/>
           )
         }}
       />
     </ScrollView>
     <CustomButton
-            title= {"Upload File"}
+            title= {localizationStrings?.UploadFile}
             onPress={handleDocumentSelection
             }
             buttonStyle={{ marginHorizontal:15 ,marginBottom:20}}

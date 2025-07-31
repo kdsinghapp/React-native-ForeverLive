@@ -1,11 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
  import { useTheme } from '../../../theme/ThemeProvider';
 import { RootStackParamList } from '../../auth/login/LoginTypes';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenNameEnum from '../../../routes/screenName.enum';
 import { successToast } from '../../../utils/customToast';
+import localizationStrings from '../../../Localization/Localization';
 
 const useSetting = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -15,6 +16,8 @@ const useSetting = () => {
   const { theme, toggleTheme }:any = useTheme();
   const isEnabledDark = theme.mode === 'dark';
  const [isLogoutModalVisible,setisLogoutModalVisible] = useState(false)
+
+ 
 
  const handleLogout = async () => {
   try {

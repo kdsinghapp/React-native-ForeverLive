@@ -18,6 +18,7 @@ import UploadConfirmationModal from '../../compoent/UploadConfirmationModal';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
 import LoadingModal from '../../utils/Loader';
 import ScreenNameEnum from '../../routes/screenName.enum';
+import localizationStrings from '../../Localization/Localization';
  
 
 const VideoUpload = () => {
@@ -70,7 +71,7 @@ uploadFile,
         style={{ height: 33, width: 33 }} 
       />
       <Text style={[styles.uploadText, { color: theme.text }]}>
-      Upload a Video
+       {localizationStrings?.vidéo}
       </Text>
     </View>
   )}
@@ -92,7 +93,7 @@ uploadFile,
       style={{ height: 33, width: 33 }} 
     />
     <Text style={[styles.uploadText, { color: theme.text }]}>
-    Record 
+     {localizationStrings?.Record}
     </Text>
   </View>
 )}
@@ -110,8 +111,7 @@ uploadFile,
   style={{ marginTop: 30 }}
   columnWrapperStyle={{ justifyContent: 'space-between' }}
    renderItem={({ item }) =>  {
-    console.log("item",item)
-    return(
+     return(
       <TouchableOpacity onPress={()=>{
         navigation.navigate(ScreenNameEnum.VideoPlay,{
           item:item?.file_path

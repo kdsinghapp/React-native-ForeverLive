@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
      color: '#000',
     fontFamily:font.PoppinsRegular ,
     textAlign:"center" ,
-    marginLeft:10
+    marginLeft:5
   },
   contactCard: {
     flexDirection: 'row',
@@ -131,6 +131,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 6,
     marginRight: 10,
+    fontSize: 14,
+    flex:1
   },
   acceptButton: {
     backgroundColor: "#10B981",
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
   buttonText1: {
     color: "#fff",
     fontWeight: "600",
-    fontSize: 14,
+
   },
 });
 

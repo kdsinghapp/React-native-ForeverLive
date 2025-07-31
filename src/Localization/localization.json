@@ -4,7 +4,7 @@
       "yourPass":"PLEASE PUT YPUR MOBLIE NUMBER TO",
       "signup_form_prompt": "Fill your information below or register with your social account",
       "full_name": "Full Name",
-      "email": "email",
+      "email": "Email",
       "password": "Password",
       "confirm_password": "Confirm Password",
       "mobile": "Mobile",
@@ -18,6 +18,7 @@
       "mob":"Mobile Number is required",
       "reset_mobile_prompt": "PLEASE PUT YOUR MOBILE NUMBER TO RESET PASSWORD",
       "submit": "Submit",
+      "EmailAddress":"Email Address",
       "otp_required": "Please enter a 4-digit code.",
       "otp_invalid": "Please enter a valid 4-digit OTP.",
       "email_required": "Email is required",
@@ -44,9 +45,148 @@
 "Settings":"Open Setting" ,
 "language":"Language" ,
 "createAccount":"Create Account" ,
-"Network":"Network"
+"Network":"Network" ,
+"ProfileInfo":"Profile Info",
+"Update":"Update",
+"SubscriptionPlan":"Subscription Plan" ,
+"UpgradeNow":"Upgrade Now",
+"PrivacyPolicy":"Privacy Policy",
+"HelpSupport":"Help & Support" ,
+"can":"How can we help?",
+"Type":"Type Here...",
+"Submit":"Submit" ,
+"Yesout":"Yes Log out",
+"Log":"Log Out",
+"Setting":"Setting",
+"Cancel":"Cancel" ,
+"Please":"Please wait...",
+"Accesuser":"Acces user" ,
+"Accept":"Accept",
+"Reject":"Reject" ,
+"Add":"Add by Email" ,
+"byPhone":"Add by Phone",
+"Scan":"Scan QR Code",
+"Network":"Network" ,
+"Notifications":"Notifications",
+"ContactSuppor":"Contact Support",
+"DarkMODE":"Dark MODE" ,
+"PasswordReset":"Password Reset",
+"resettext":"Please put your mobile number to reset your password" ,
+"EmailAddress":"Email Address" ,
+"PHOTO":"PHOTO" ,
+"VOICE":"VOICE" ,
+"Logout":"Logout",
+"VoiceRecorder":"Voice Recorder" ,
+"Stop":"Stop" ,
+"Start":"Start" ,
+"Play":"Play" ,
+"Close":"Close" ,
+"Submit":"Submit" ,
+"AddMemory":"Add a Photo Memory",
+"Notdata":"Not a data" ,
+"UploadFile":"Upload File" ,
+"AudioPreview":"Audio Preview" ,
+"playback":"Use the buttons below to control playback.",
+"vidéo":"Upload a Video" ,
+"Record":"Record" ,
+"VideoView":"Video View" ,
+"YourTemplate":"Your Template" ,
+"CreateNote":"Create Note" ,
+"TaptoUpload":" Tap to Upload" ,
+"Take":"Take Photo"
       },
    "French": {
+    "Take":"Prendre une photo"
+,
+    "TaptoUpload":"Appuyez pour télécharger"
+,
+    "CreateNote":"Créer une note"
+,
+    "VideoView":"Vue vidéo"
+,
+"YourTemplate":"Votre modèle"
+,
+    "Record":"Enregistrer"
+,
+    "vidéo":"Télécharger une vidéo"
+,
+    "playback":"Utilisez les boutons ci-dessous pour contrôler la lecture."
+,
+    "UploadFile":"Télécharger le fichier"
+,
+    "Notdata":"Pas une donnée"
+,
+    "AddMemory":"Ajouter une photo souvenir"
+,
+    "Submit":"Soumettre"
+,
+    "Play":"Jouer"
+,
+"Close":"Fermer"
+,
+    "Start":"Commencer"
+,
+    "Stop":"Arrêt"
+,
+    "VoiceRecorder":"Enregistreur vocal"
+,
+    "Logout":"Déconnexion"
+,
+    "VOICE":"VOIX",
+    "EmailAddress":"Adresse email"
+,
+"PHOTO":"PHOTO",
+    "resettext":"Veuillez saisir votre numéro de téléphone portable pour réinitialiser votre mot de passe"
+,
+    "DarkMODE":"MODE sombre",
+    "PasswordReset":"Réinitialisation du mot de passe"
+,
+    "ContactSuppor":"Contacter le support"
+,
+    "Notifications":"Notifications"
+,
+    "Network":"Réseau"
+,
+    "Scan":"Scanner le code QR"
+,
+    "byPhone":"Ajouter éléphone"
+,
+    "Reject":"Rejeter"
+,
+"Add":"Ajouter par e-mail"
+,
+    "Accesuser":"Accès utilisateur"
+,
+"Accept":"Accepter"
+,
+    "Please":"S'il vous plaît, attendez..."
+,
+    "Setting":"Paramètre",
+
+    "Log":"Se déconnecter",
+
+    "Cancel":"Annuler"
+,
+    "Yesout":"Oui Déconnexiont"
+,
+    "Submit":"Soumettre"
+,
+    "Type":"Tapez ici..."
+,
+    "can":"Comment pouvons-nous vous aider?"
+,
+    "HelpSupport":"Aide et support"
+,
+    "PrivacyPolicy":"Politique de confidentialité"
+,
+    "UpgradeNow":"Mettre à niveau maintenant"
+,
+    "SubscriptionPlan":"Plan d'abonnement"
+,
+    "ProfileInfo":"Informations sur le profil"
+,
+"Update":"Mise à jour"
+,
     "Network":"Réseau"
 ,
     "createAccount":"Créer un compte",
@@ -95,7 +235,8 @@
   "yes": "Oui",
   "no": "Non",
   "logout_confirmation": "Êtes-vous sûr de vouloir vous déconnecter ?",
-"noData":"Aucune donnée disponible"
+"noData":"Aucune donnée disponible" ,
+"AudioPreview":"Aperçu audio"
 
 }
 

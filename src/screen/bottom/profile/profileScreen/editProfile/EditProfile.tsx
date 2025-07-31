@@ -13,6 +13,7 @@ import ImagePickerModal from "../../../../../compoent/ImagePickerModal";
  import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "../../../../../theme/ThemeProvider";
 import DatePicker from 'react-native-date-picker';
+import localizationStrings from "../../../../../Localization/Localization";
 
  const EditProfile = () => {
     const {
@@ -36,7 +37,7 @@ import DatePicker from 'react-native-date-picker';
             backgroundColor:theme.background
         }]}
         >
-                   <CustomHeader imageSource={imageIndex.backImg} label={"Profile Info"}/>
+                   <CustomHeader imageSource={imageIndex.backImg} label={localizationStrings.ProfileInfo}/>
                 <StatusBarComponent />
 
         <View
@@ -77,7 +78,7 @@ import DatePicker from 'react-native-date-picker';
                     <View style={{ marginHorizontal: 15 }}>
                     <View  >
                         <TextInputField
-                              placeholder={"FullName"}
+                              placeholder={localizationStrings?.full_name}
                             firstLogo={false}
                             img={imageIndex.prfoile}
                             text={credentials.fullName}
@@ -85,7 +86,7 @@ import DatePicker from 'react-native-date-picker';
                         />
                     </View>
                         <TextInputField
-                             placeholder={"Email"}
+                             placeholder={localizationStrings?.email}
                              firstLogo={false}
                              text={credentials.email}
                              onChangeText={(value: string) => handleChange('email', value)} 
@@ -95,7 +96,7 @@ import DatePicker from 'react-native-date-picker';
                     <View style={{ marginHorizontal: 15 }}>
                         <TextInputField
                             type={"decimal-pad"}
-                             placeholder={"Mobile"}
+                             placeholder={localizationStrings?.mobile}
                              firstLogo={false}
                              img={imageIndex.prfoile}
                              text={credentials.mobile}
@@ -123,7 +124,7 @@ import DatePicker from 'react-native-date-picker';
                     />
 
                 <View style={styles.buttView}>
-                    <CustomButton title={"update"} 
+                    <CustomButton title={localizationStrings?.Update} 
                     
                       onPress={() => handleSubmit()}
                      />

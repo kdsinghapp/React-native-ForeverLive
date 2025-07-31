@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,20 +14,34 @@ import ScreenNameEnum from '../../../routes/screenName.enum';
 import { SafeAreaView } from 'react-native-safe-area-context';
   import useSetting from './useSetting';
 import getStyles from './style';
+import localizationStrings from '../../../Localization/Localization';
+import { useFocusEffect } from '@react-navigation/native';
 
 const SettingScreen = () => {
   const settings = [
-    { icon:imageIndex.ProfileInfo, label: 'Profile Info' ,screen:ScreenNameEnum.editProfile },
-    { icon:imageIndex.Subscription, label: 'Subscription Plan',screen:ScreenNameEnum.SubscriptionPlan },
-    { icon:imageIndex.Language, label: 'Language',screen:ScreenNameEnum.ChangeLanguage },
-    { icon: imageIndex.Notifications, label: 'Notifications', toggle: true },
-    { icon: imageIndex.PrivacyPolicy, label: 'Privacy Policy',screen:ScreenNameEnum.PrivacyPolicy },
-    { icon: imageIndex.Support, label: 'Contact Support' ,screen:ScreenNameEnum.HelpSupport},
-    { icon: imageIndex.Logout1, label: 'Logout' },
-    { icon: imageIndex.dark1, label: 'Dark MODE', darktoggle: true },
+    { icon:imageIndex.ProfileInfo, label: localizationStrings.ProfileInfo ,screen:ScreenNameEnum.editProfile },
+    { icon:imageIndex.Subscription, label: localizationStrings.SubscriptionPlan,screen:ScreenNameEnum.SubscriptionPlan },
+    { icon:imageIndex.Language, label: localizationStrings.language,screen:ScreenNameEnum.ChangeLanguage },
+    // { icon: imageIndex.Notifications, label: 'Notifications', toggle: true },
+    { icon: imageIndex.PrivacyPolicy, label: localizationStrings.PrivacyPolicy,screen:ScreenNameEnum.PrivacyPolicy },
+    { icon: imageIndex.Support, label:localizationStrings.ContactSuppor ,screen:ScreenNameEnum.HelpSupport},
+    { icon: imageIndex.Logout1, label: localizationStrings.Logout,type:"Logout" },
+    { icon: imageIndex.dark1, label: localizationStrings?.DarkMODE, type:"Dark MODE",screen:"Logoutd" , darktoggle: true },
 
   ];
+  const [ns ,setname]= useState([])
+useEffect(()=>{
+},[])
+useFocusEffect(
+  useCallback(() => {
+    setname(settings)
 
+
+    return () => {
+      console.log('Screen is unfocused');
+    };
+  }, [ns])
+);
  const {        isEnabled,  
   theme, toggleTheme,
   isEnabledDark,
@@ -45,18 +59,16 @@ const SettingScreen = () => {
     }}>
       <StatusBarComponent/>
     <ScrollView  showsVerticalScrollIndicator={false} style={styles.container}>
-      <Text style={styles.header}>Setting</Text>
-      {settings.map((item, index) => (
+      <Text style={styles.header}>{localizationStrings?.Setting}</Text>
+      {ns.map((item, index) => (
   <TouchableOpacity
     key={index}
-    style={styles.row}
- 
-  >
+   >
     <TouchableOpacity
     key={index}
     style={styles.row}
     onPress={() => {
-      if (item?.label === "Logout") {
+      if (item?.type == "Logout") {
         setisLogoutModalVisible(true);
       } else {
         navigation.navigate(item?.screen);
@@ -66,7 +78,7 @@ const SettingScreen = () => {
     <View style={styles.iconWrapper}>
       <Image
        source={
-        item.label === 'Dark MODE'
+        item.type === 'Dark MODE'
           ? (isEnabledDark ? imageIndex.dark1 : imageIndex.dark)
           : item.icon
       }
@@ -82,8 +94,8 @@ const SettingScreen = () => {
     </TouchableOpacity>
     {item.toggle && (
       <Switch
-        style={{ marginLeft: 'auto' }}
-        trackColor={{ false: '#ccc', true: '#6A5AE0' }}
+      style={{ marginLeft: 'auto' ,bottom:50}}
+      trackColor={{ false: '#ccc', true: '#6A5AE0' }}
         thumbColor={'#fff'}
         ios_backgroundColor="#ccc"
         onValueChange={toggleSwitch}
@@ -92,7 +104,7 @@ const SettingScreen = () => {
     )}
    {item.darktoggle && (
               <Switch
-              style={{ marginLeft: 'auto' }}
+              style={{ marginLeft: 'auto' ,bottom:50}}
                 trackColor={{ false: '#ccc', true: '#6A5AE0' }}
                 thumbColor="#fff"
                 ios_backgroundColor="#ccc"

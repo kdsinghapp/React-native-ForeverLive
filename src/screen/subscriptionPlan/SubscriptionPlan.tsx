@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import useSubscriptionPlan from './useSubscriptionPlan';
 import LoadingModal from '../../utils/Loader';
 import EmptyListComponent from '../../compoent/EmptyListComponent';
+import localizationStrings from '../../Localization/Localization';
   
 const SubscriptionPlan = () => {
 const {    navigation,
@@ -18,31 +19,58 @@ const {    navigation,
   theme,
   plan, setplan} =useSubscriptionPlan()
 
-  const PlanCard = ({ item }) =>  {
+  const PlanCard = ({ item }) => {
+    // Parse price string
     const priceArray = item.price?.split(" or ") || [];
-    return(
+  
+    // Parse feature string safely
+    let priceArray1 = [];
+    try {
+      const fixedString = item.feacture?.replace(/'/g, '"');  // Replace ' with "
+      priceArray1 = fixedString ? JSON.parse(fixedString) : [];
+    } catch (e) {
+      console.warn('Failed to parse feacture:', e);
+      priceArray1 = [];
+    }
+  
+    return (
       <LinearGradient
-      start={{ x: 0, y: 2 }}
-      end={{ x: 2, y: 0 }}
-      colors={['#8F52CA', '#3658AE', '#19A3BD']}
-      style={styles.cardWrapper}
-    >
-      <View style={styles.card}>
-        <Image source={imageIndex?.free} style={styles.icon} />
-        <Text style={styles.planTitle}>{item.title} Plan</Text>
-        <Text style={styles.description}>{item.description ||"3 uploads, 1 trusted contact, 1 social platform"}</Text>
-        {priceArray.map((price, index) => (
-  <Text key={index} style={{ color: "black", fontSize: 15, marginBottom: 2 ,bottom:11 }}>
-    ₹{price}
-  </Text>
-))}
-        <TouchableOpacity style={styles.button}>
-          <CustomButton title={'Upgrade Now'} />
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
-    )
-  }
+        start={{ x: 0, y: 2 }}
+        end={{ x: 2, y: 0 }}
+        colors={['#8F52CA', '#3658AE', '#19A3BD']}
+        style={styles.cardWrapper}
+      >
+        <View style={styles.card}>
+          <Image source={imageIndex?.free} style={styles.icon} />
+          <Text style={styles.planTitle}>{item.title} Plan</Text>
+          {priceArray.map((price, index) => (
+            <Text key={index} style={{marginTop:11, color: "black", fontSize: 15, marginBottom: 2, bottom: 11 }}>
+               {price}
+            </Text>
+          ))}
+          {/* Render parsed features */}
+          {priceArray1.map((price, index) => (
+            <Text key={index} style={styles.description}>
+              {price}
+            </Text>
+          ))}
+  
+          {/* Description fallback */}
+          <Text style={styles.description}>
+            {item.description || "3 uploads, 1 trusted contact, 1 social platform"}
+          </Text>
+  
+          {/* Render price options */}
+       
+  
+          <TouchableOpacity style={styles.button}>
+            <CustomButton title={localizationStrings?.UpgradeNow} />
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
+    );
+  };
+  
   
   return (
    <SafeAreaView style={{
@@ -52,7 +80,7 @@ const {    navigation,
     <StatusBarComponent/>
     {loading ? <LoadingModal /> : null}
 
-                    <CustomHeader imageSource={imageIndex.backImg} label={"Subscription Plan"}/>
+                    <CustomHeader imageSource={imageIndex.backImg} label={localizationStrings.SubscriptionPlan}/>
 
      <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
      <FlatList
