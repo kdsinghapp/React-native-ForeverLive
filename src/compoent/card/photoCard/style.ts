@@ -63,8 +63,21 @@ const styles = StyleSheet.create({
     width: (width - 48) / 3,
     height: 120,
     borderRadius: 20,
+    borderColor:"#F3F4F5" ,
+    borderWidth:1,
+    borderStyle:"dotted",
     marginBottom: 12,
   },
+  vie: {
+    width: '32%',
+    aspectRatio: 1,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    overflow: 'hidden',
+
+  }
 });
 
 

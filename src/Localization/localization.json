@@ -93,9 +93,15 @@
 "YourTemplate":"Your Template" ,
 "CreateNote":"Create Note" ,
 "TaptoUpload":" Tap to Upload" ,
-"Take":"Take Photo"
+"Take":"Take Photo" ,
+"ImageView":"Image View" ,
+"Add":"Add"
       },
    "French": {
+    "Add":"Ajouter"
+,
+    "ImageView":"Vue d'image"
+,
     "Take":"Prendre une photo"
 ,
     "TaptoUpload":"Appuyez pour télécharger"

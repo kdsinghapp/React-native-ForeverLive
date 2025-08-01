@@ -14,6 +14,7 @@ import TextInputField from '../../utils/TextInputField';
   import { SafeAreaView } from 'react-native-safe-area-context';
 import useAddEmail from './useAddEmail';
 import LoadingModal from '../../utils/Loader';
+import localizationStrings from '../../Localization/Localization';
   
 const AddEmail = () => {
 
@@ -35,7 +36,7 @@ const { navigation,
     }]}>
         <StatusBarComponent/>
         {loading ? <LoadingModal /> : null}
-       <CustomHeader label={ type=="EMAIL" ?  "Add by Email" : "Add by Phone" }
+       <CustomHeader label={ type=="EMAIL" ?  localizationStrings?.Add : localizationStrings?.byPhone }
         imageSource={imageIndex.backImg}
         />
         <ScrollView 
@@ -65,7 +66,7 @@ const { navigation,
  )}
 
  <CustomButton
-            title= {"Add"}
+            title= {localizationStrings?.Add}
             onPress={() => AddType()
             }
 

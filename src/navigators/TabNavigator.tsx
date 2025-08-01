@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, Image, Keyboard, Platform } from "react-native";
+import {  Image, Keyboard, Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import _routes from "../routes/routes";
 import { useTheme } from "../theme/ThemeProvider";

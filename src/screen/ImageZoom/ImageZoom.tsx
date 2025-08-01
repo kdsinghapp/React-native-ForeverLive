@@ -6,6 +6,7 @@ import StatusBarComponent from '../../compoent/StatusBarCompoent';
 import CustomHeader from '../../compoent/CustomHeader';
 import imageIndex from '../../assets/imageIndex';
 import { useTheme } from '../../theme/ThemeProvider';
+import localizationStrings from '../../Localization/Localization';
 
 const ImageZoom = ({ route }: any) => {
   const { images } = route.params;
@@ -20,7 +21,7 @@ const ImageZoom = ({ route }: any) => {
         backgroundColor: theme.background,
     }]}>
       <StatusBarComponent />
-      <CustomHeader imageSource={imageIndex.backImg} label={"Image View"} />
+      <CustomHeader imageSource={imageIndex.backImg} label={localizationStrings.ImageView} />
 
       <View style={styles.viewerWrapper}>
         <ImageViewer

@@ -1,112 +1,185 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
   Image,
-   Platform,
- } from 'react-native';
- import imageIndex from '../../../assets/imageIndex';
+  ActivityIndicator,
+  ImageBackground,
+} from 'react-native';
+import imageIndex from '../../../assets/imageIndex';
 import StatusBarComponent from '../../../compoent/StatusBarCompoent';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../../../theme/ThemeProvider';
 import styles from './style';
-import Voice from '../../voice/Voice';
 import EmptyListComponent from '../../../compoent/EmptyListComponent';
- 
-const tabs = ['Capsules', 'Letters', 'Audio',  ];
+import useVault from './useVault';
+ import { Dimensions } from 'react-native';
+import PlayAudio from '../../../compoent/PlayAudio/PlayAudio';
+import moment from 'moment';
+import ScreenNameEnum from '../../../routes/screenName.enum';
 
-const data = [
-  { id: '1', title: 'My 40th Birthday Letter', date: '24 Dec 2035' },
-  { id: '2', title: 'Sofia 19th Birthday Letter', date: '24 Dec 2035' },
-  { id: '3', title: 'My 40th Birthday Letter', date: '24 Dec 2035' },
-];
+const tabs = ['Capsules', 'Photos', 'Audio'];
 
 const VaultScreen = () => {
   const [activeTab, setActiveTab] = useState('Capsules');
-  const { theme }:any = useTheme();
+  const [dataList, setDataList] = useState([]);
+  const { theme }: any = useTheme();
 
-  const renderItem = ({ item }:any) => (
-    <View style={styles.card}>
-      <Image
-        source={imageIndex.Group} // your local icon
-        style={styles.icon}
-      />
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.date}>{item.date}</Text>
+  const {
+    navigation,
+    loading,
+    fetchCapsules,
+    fetchLetters,
+    fetchAudio,
+    capsulesList,
+    lettersList,
+    audioList,
+    isModalVisible1, setModalVisible1 ,
+     recordedPath, setRecordedPath
+    
+  } = useVault();
+
+  useEffect(() => {
+    if (activeTab === 'Capsules') fetchCapsules();
+    else if (activeTab === 'Photos') fetchLetters();
+    else if (activeTab === 'Audio') fetchAudio();
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'Capsules') setDataList(capsulesList);
+    else if (activeTab === 'Photos') setDataList(lettersList);
+    else if (activeTab === 'Audio') setDataList(audioList);
+  }, [capsulesList, lettersList, audioList, activeTab]);
+
+  const CapsuleCard = ({ item }: any) => {
+    const formattedDate = item.created_at
+      ? moment(item.created_at).format('MMM DD, YYYY')
+      : 'No Date';
+  
+    return (
+      <View style={[styles.cardContainer]}>
+        <Image source={imageIndex.Group} style={styles.icon} />
+        <View style={styles.textContainer}>
+          <Text style={styles.titleText}>{item.title || 'Capsule Title'}</Text>
+          <Text style={styles.dateText}>{formattedDate}</Text>
+        </View>
+        <Image source={imageIndex.lock} style={styles.lockIcon} />
       </View>
-      <Image
-        source={imageIndex.lock} // your local icon
-        style={{
-          height:28,
-          width:28,
-          resizeMode:"contain"
-        }}
-      />
+    );
+  };
+  
+
+ 
+  const AudioCard = ({ item }: any) =>  {
+     const createdAt = item?.created_at;
+    const formattedDate = moment(createdAt, "YYYY-MM-DD HH:mm:ss").format("D MMMM YYYY, h:mm A");
+    return(
+      <View style={[styles.audioCard ]}>
+      <View style={styles.audioContent}>
+        <Image source={imageIndex.voies} style={styles.audioIcon} />
+        <View style={{
+          marginLeft:11
+        }}>
+          <Text style={styles.audioTitle}>{item.title || 'Audio Title'}</Text>
+          <Text style={styles.audioDate}>{formattedDate}</Text>
+        </View>
+      </View>
+      <TouchableOpacity 
+       onPress={() => {
+        setRecordedPath(item.file_path); // <-- Your audio URL here
+        setModalVisible1(true);
+      }}
+      >
+        <Image source={imageIndex.videoplay} style={styles.playIcon} />
+      </TouchableOpacity>
     </View>
-  );
+    )
+  }
+  const { width } = Dimensions.get('window');
+  const PhotoCard1 = ({ item }: any) => {
+    return (
+      <TouchableOpacity style={styles.photoCardContainer} 
+      activeOpacity={0.5}
+      onPress={() =>
+        navigation.navigate(ScreenNameEnum.ImageZoom, {
+          images: item.file_path,
+        })
+      }
+      >
+        <ImageBackground
+          source={{ uri: item.file_path }}
+          style={styles.imageBackground}
+          imageStyle={styles.imageStyle}
+        >
+           <View style={styles.overlay} />
+          <View style={styles.textContainer1}>
+            <Text style={styles.photoTitle}>{item?.file_name || 'Photo Title'}</Text>
+          </View>
+        </ImageBackground>
+      </TouchableOpacity>
+    );
+  };
+  
+  
+  const renderItem = ({ item }: any) => {
+    if (activeTab === 'Capsules') return <CapsuleCard item={item} />;
+    if (activeTab === 'Photos') return <PhotoCard1  item={item} />;
+    if (activeTab === 'Audio') return <AudioCard item={item} />;
+    return null;
+  };
 
   return (
-    <SafeAreaView style={[styles.container,{
-      backgroundColor:theme.background
-    }]}>
-      <StatusBarComponent/>
-      <Text style={[styles.header,{
-              color:theme.text
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <StatusBarComponent />
+      <Text style={[styles.header, { color: theme.text }]}>Vault</Text>
 
-      }]}>Vault</Text>
       <View style={styles.tabsContainer}>
         {tabs.map((tab) => (
-       
           <TouchableOpacity
             key={tab}
             onPress={() => setActiveTab(tab)}
-            style={[
-              styles.tab,
-              activeTab === tab && styles.activeTab,
-            ]}
+            style={[styles.tab, activeTab === tab && styles.activeTab]}
           >
-            <Text
-              style={[
-                styles.tabText,
-                activeTab === tab && styles.activeTabText,
-              ]}
-            >
+            <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>
               {tab}
             </Text>
           </TouchableOpacity>
-         ))}
+        ))}
       </View>
- 
-      <FlatList
-        data={[]}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem} 
-        ListEmptyComponent={() => <EmptyListComponent />}
 
+      {loading ? (
+        <ActivityIndicator size="large" color={theme.primary} style={{ marginTop: 20 }} />
+      ) : (
+        <FlatList 
         style={{
-          marginHorizontal:15 ,
-          marginTop:15
-
+          marginTop:18
         }}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      />
+          data={dataList}
+          keyExtractor={(item: any, index) => item?.id?.toString() || index.toString()}
+          renderItem={renderItem}
+           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={<EmptyListComponent />}
+            contentContainerStyle={{ paddingBottom: 100 }}
+        />
+      )}
 
-      <TouchableOpacity style={styles.fab}>
-       
-      <Image source={imageIndex?.flooter} style={{
-
-        height:60,
-        width:60
-      }}/>
+      <TouchableOpacity style={styles.fab} 
+      
+      onPress={() =>
+        navigation.navigate(ScreenNameEnum.PhotoUpload)
+      }
+      >
+        <Image source={imageIndex.flooter} style={{ height: 60, width: 60 }} />
       </TouchableOpacity>
+      <PlayAudio
+        visible={isModalVisible1}
+        onClose={() => setModalVisible1(false)}
+         audioUri={recordedPath}
+       />
     </SafeAreaView>
   );
 };
 
 export default VaultScreen;
-
-

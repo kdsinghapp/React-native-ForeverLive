@@ -189,10 +189,24 @@ const {
             color:theme.text
         }]}>{localizationStrings?.Scan}</Text>
       </TouchableOpacity>
+<View style={{
+  flexDirection:"row",
+  justifyContent:"space-between"
+}}>
+<Text 
 
-      <Text style={[styles.sectionTitle,{
+style={[styles.sectionTitle,{
           color:theme.text
       }]}>{localizationStrings?.Network}</Text>
+<Text 
+       onPress={()=>navigation.navigate(ScreenNameEnum.QRCodeScreen)}
+      style={[styles.sectionTitle,{
+          color:theme.text
+      }]}>QR Code</Text>
+</View>
+     
+
+
       
 
 <FlatList

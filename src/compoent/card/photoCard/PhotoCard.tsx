@@ -5,20 +5,12 @@ import styles from "./style";
 import ImagLoader from "../../ImagLoader";
 import ScreenNameEnum from "../../../routes/screenName.enum";
  
-const PhotoCard = ({ item }: any) => {
+const PhotoCard = ({ item ,style}: any,) => {
   const navigation = useNavigation();
   const [imgloading, setImgLoading] = useState(false);
    return (
     <View
-      style={{
-        width: '32%',
-        aspectRatio: 1,
-        marginBottom: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 15,
-        overflow: 'hidden',
-      }}
+      style={[styles.vie,style]}
     >
       {imgloading && <ImagLoader />}
       <TouchableOpacity

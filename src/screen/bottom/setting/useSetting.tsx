@@ -1,13 +1,15 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import {   useNavigation } from '@react-navigation/native';
   import { NativeStackNavigationProp } from '@react-navigation/native-stack';
  import { useTheme } from '../../../theme/ThemeProvider';
 import { RootStackParamList } from '../../auth/login/LoginTypes';
-import { useCallback, useEffect, useState } from 'react';
+import {   useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ScreenNameEnum from '../../../routes/screenName.enum';
-import { successToast } from '../../../utils/customToast';
-import localizationStrings from '../../../Localization/Localization';
-
+import { errorToast, successToast } from '../../../utils/customToast';
+ import { Alert } from 'react-native';
+ import ReactNativeBiometrics from 'react-native-biometrics';
+ 
+const rnBiometrics = new ReactNativeBiometrics();
 const useSetting = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [isEnabled, setIsEnabled] = useState(true);
@@ -17,7 +19,10 @@ const useSetting = () => {
   const isEnabledDark = theme.mode === 'dark';
  const [isLogoutModalVisible,setisLogoutModalVisible] = useState(false)
 
- 
+ const [isLocked, setIsLocked] = useState(false);       // Lock state
+ const [isAuthenticated, setIsAuthenticated] = useState(false);  // User biometric authenticated
+ const [loading, setLoading] = useState(true);          // For initial check
+
 
  const handleLogout = async () => {
   try {
@@ -32,6 +37,69 @@ const useSetting = () => {
     console.error("Error during logout:", error);
   }
 };
+useEffect(() => {
+  const checkLockAndAuthenticate = async () => {
+    const lockValue = await AsyncStorage.getItem('isLocked');
+    if (lockValue === 'true') {
+      setIsLocked(true);
+
+      // Prompt biometric since lock is active
+      rnBiometrics.simplePrompt({ promptMessage: 'Authenticate to unlock app' })
+        .then(result => {
+          if (result.success) {
+            setIsAuthenticated(true);
+            setLoading(false);
+          } else {
+            successToast("You cannot access without biometric")
+
+             setIsAuthenticated(false);
+            setLoading(false);
+          }
+        })
+        .catch(() => {
+           errorToast("Cancelled Authentication cancelled")
+
+           setIsAuthenticated(false);
+          setLoading(false);
+        });
+    } else {
+      // Lock not active
+      setIsLocked(false);
+      setIsAuthenticated(true);  // Allow access
+      setLoading(false);
+    }
+  };
+
+  checkLockAndAuthenticate();
+}, []);
+const handleToggle = async (value:any) => {
+  if (value) {
+    rnBiometrics.simplePrompt({ promptMessage: 'Authenticate to enable lock' })
+      .then(result => {
+        if (result.success) {
+          setIsLocked(true);
+          AsyncStorage.setItem('isLocked', 'true');
+            successToast("Lock enabled Success");  
+ 
+        } else {
+          setIsLocked(false);
+          AsyncStorage.setItem('isLocked', 'false');
+          errorToast("Cancelled Authentication cancelled")
+         }
+      })
+      .catch(() => {
+        setIsLocked(false);
+        AsyncStorage.setItem('isLocked', 'false');
+        errorToast("Biometric authentication failed")
+       });
+  } else {
+    setIsLocked(false);
+    await AsyncStorage.setItem('isLocked', 'false');
+    errorToast("Lock Disabled")
+
+    
+  }
+};
  
   return {
     isEnabled, setIsEnabled ,
@@ -40,8 +108,13 @@ const useSetting = () => {
     isLogoutModalVisible,setisLogoutModalVisible ,
     toggleSwitch ,
     navigation ,
-    handleLogout
+    handleLogout ,
+    isLocked, setIsLocked ,
+    isAuthenticated, setIsAuthenticated ,
+    loading, setLoading ,
+    handleToggle
    };
 };
 
 export default useSetting;
+ // For initial check

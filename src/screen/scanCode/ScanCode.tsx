@@ -160,3 +160,31 @@ const styles = StyleSheet.create({
 });
 
 export default ScanCode;
+// import React from 'react';
+// import { View, Text, StyleSheet, Linking } from 'react-native';
+// import QRCodeScanner from 'react-native-qrcode-scanner';
+// import { RNCamera } from 'react-native-camera';
+
+// const QRCodeScanScreen = () => {
+//   const onSuccess = (e) => {
+//     console.log('QR Code scanned value:', e.data);
+//     // Example action: Open URL
+//     Linking.openURL(e.data).catch(err => console.error('An error occurred', err));
+//   };
+
+//   return (
+//     <QRCodeScanner
+//       onRead={onSuccess}
+//       flashMode={RNCamera.Constants.FlashMode.off}
+//       topContent={<Text style={styles.centerText}>Scan your QR Code</Text>}
+//       bottomContent={<Text style={styles.bottomText}>Align QR code within frame</Text>}
+//     />
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   centerText: { fontSize: 18, padding: 16, textAlign: 'center' },
+//   bottomText: { fontSize: 14, textAlign: 'center', color: 'gray' },
+// });
+
+// export default QRCodeScanScreen;

@@ -31,7 +31,7 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 		<key>NSFaceIDUsageDescription</key>
-<string>We use Face ID to authenticate you</string>
+<string>We use Face ID to authenticate you securely</string>
 
 	</dict>
 	<key>NSCameraUsageDescription</key>

@@ -11,6 +11,7 @@
     HOME_SCREEN="HOME_SCREEN" ,
     VideoUpload="VideoUpload",
     LegacyCalendar="LegacyCalendar",
+    QRCodeScreen="QRCodeScreen",
     ImageZoom="ImageZoom",
     editProfile="editProfile",
     Countdown="Countdown",

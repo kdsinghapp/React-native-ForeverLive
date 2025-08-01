@@ -24,6 +24,7 @@ import ImageZoom from "../screen/ImageZoom/ImageZoom";
  import PhotoUpload from "../screen/photoUpload/PhotoUpload";
 import HelpSupportScreen from "../screen/privay/HelpSupport";
 import PrivacyPolicy from "../screen/privay/PrivacyPolicy";
+import QRCodeScreen from "../screen/qRCodeScreen/QRCodeScreen";
 import Reject from "../screen/reject/Reject";
 import ScanCode from "../screen/scanCode/ScanCode";
 import SubscriptionPlan from "../screen/subscriptionPlan/SubscriptionPlan";
@@ -33,8 +34,7 @@ import VideoUpload from "../screen/VideoUpload/VideoUpload";
 import Voice from "../screen/voice/Voice";
 import ScreenNameEnum from "./screenName.enum";
 import { useSelector } from "react-redux";
-
-const useAuth = () => {
+ const useAuth = () => {
   return useSelector((state: any) => state?.auth);
 };
 
@@ -44,6 +44,7 @@ const _routes = () => {
   return {
     REGISTRATION_ROUTE: [
       { name: ScreenNameEnum.SPLASH_SCREEN, Component: Splash },
+      { name: ScreenNameEnum.QRCodeScreen, Component: QRCodeScreen },
       { name: ScreenNameEnum.SignUpScreen, Component: SignUp },
       { name: ScreenNameEnum.LoginScreen, Component: Login },
       { name: ScreenNameEnum.OnboardingScreen, Component: OnboardingScreen },

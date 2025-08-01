@@ -27,6 +27,7 @@ const SettingScreen = () => {
     { icon: imageIndex.Support, label:localizationStrings.ContactSuppor ,screen:ScreenNameEnum.HelpSupport},
     { icon: imageIndex.Logout1, label: localizationStrings.Logout,type:"Logout" },
     { icon: imageIndex.dark1, label: localizationStrings?.DarkMODE, type:"Dark MODE",screen:"Logoutd" , darktoggle: true },
+    { icon: imageIndex.figr, label: "Face ID ", type:"Face ID ",screen:"Logoutd" , isLocked: true },
 
   ];
   const [ns ,setname]= useState([])
@@ -42,13 +43,19 @@ useFocusEffect(
     };
   }, [ns])
 );
- const {        isEnabled,  
+ const {
+  isEnabled, setIsEnabled ,
   theme, toggleTheme,
   isEnabledDark,
   isLogoutModalVisible,setisLogoutModalVisible ,
   toggleSwitch ,
   navigation ,
-  handleLogout} = useSetting()
+  handleLogout ,
+  isLocked, setIsLocked ,
+  isAuthenticated, setIsAuthenticated ,
+  loading, setLoading,
+  handleToggle,
+ } = useSetting()
   const styles = getStyles(theme); // 👈 dynamic style generation
 
    return (
@@ -112,8 +119,20 @@ useFocusEffect(
                 value={isEnabledDark}
               />
             )}
+   {item.isLocked && (
+              <Switch
+              style={{ marginLeft: 'auto' ,bottom:50}}
+                trackColor={{ false: '#ccc', true: '#6A5AE0' }}
+                thumbColor="#fff"
+                ios_backgroundColor="#ccc"
+                onValueChange={handleToggle}
+                value={isLocked}
+              />
+            )}
   </TouchableOpacity>
 ))}
+  
+   
 
         <LogoutModal
   visible={isLogoutModalVisible}
